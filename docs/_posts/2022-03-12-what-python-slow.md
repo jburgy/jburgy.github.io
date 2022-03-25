@@ -111,28 +111,29 @@ $$x_i=\mathbf{q}_i\mathbf{q}^T_i$$, and $$y_i=1$$.  Finally, `zhpmv` performs th
 displacement matrix multiplying the mass vector.  Pretty clever, uh.  All credit goes to 
 [Paul Panzer](https://stackoverflow.com/users/7207392/paul-panzer) for this amazing
 [stackoverflow answer](https://stackoverflow.com/a/52564537/8479938).  Putting it all together, the inner loop to
-calculate acceleration $$\mathbf{a}$$ from positions $$q$$ (where only `.astype(bool)` allocates memory) looks like
+calculate acceleration $$\mathbf{a}$$ from positions $$q$$ (with no significant memory allocations) looks like
 
 ```python
-z.real = q
-z.imag.fill(-1.0)
+a.real = x
+a.imag.fill(-1.0)
 ap.fill(0.0)
-# A += α z z*
-zhpr(n, alpha=-2.0, x=z[0], ap=ap[0], overwrite_ap=True)
-zhpr(n, alpha=-2.0, x=z[1], ap=ap[1], overwrite_ap=True)
-zhpr(n, alpha=-2.0, x=z[2], ap=ap[2], overwrite_ap=True)
+for i in range(3):  # A += α z z*
+    zhpr(n, alpha=-2.0, x=a[i], ap=ap[i], overwrite_ap=True)
 sum(ap.real, axis=0, out=xxT)
 xxT += 6
+take(xxT, trid, out=x2)
 # A += α (x yᵀ + y xᵀ)
-dspr2(n, alpha=-0.5, x=xxT[trid], y=ones, ap=xxT, overwrite_ap=True)
+dspr2(n, alpha=-0.5, x=x2, y=ones, ap=xxT, overwrite_ap=True)
 
 sqrt(xxT, out=d)
 multiply(xxT, d, out=xxT)
-divide(ap.imag, xxT, where=xxT.astype(bool), out=ap.imag)
+greater(xxT, 0.0, out=where)
+divide(ap.imag, xxT, where=where, out=ap.imag)
 
-# y = α A x + β y
-zhpmv(n, alpha=0.5, ap=ap[0], x=jm, beta=0.0, y=a[0], overwrite_y=True)
-zhpmv(n, alpha=0.5, ap=ap[1], x=jm, beta=0.0, y=a[1], overwrite_y=True)
-zhpmv(n, alpha=0.5, ap=ap[2], x=jm, beta=0.0, y=a[2], overwrite_y=True)
+for i in range(3):  # y = α A x + β y
+    zhpmv(n, alpha=0.5, ap=ap[i], x=jm, beta=0.0, y=a[i], overwrite_y=True)
+
+daxpy(a=dt, x=a.real, y=v)  # v += a dt
+daxpy(a=dt, x=v, y=x)  # x += v dt
 ```
 The full program can be found [here](https://github.com/jburgy/blog/blob/master/fun/nbody.py)
