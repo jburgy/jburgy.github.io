@@ -152,3 +152,100 @@ _interactively_.
 
 In conclusion, we should be more explicit when we say that a particular programming language is slow.  Slow to do
 what?  Let us not conflate iterating in tight inner loops with iterating in the problem domain.
+
+### Do it for yourself
+Click <a href="javascript:void(0)" id="fetch">here</a> to copy entire script to clipboard, paste it in the
+dialog below then hit <kbd>Shift</kbd> + <kbd>Enter</kbd> to run!
+
+<style>
+kbd {
+    background-color: #eee;
+    border-radius: 3px;
+    border: 1px solid #b4b4b4;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, .2), 0 2px 0 0 rgba(255, 255, 255, .7) inset;
+    color: #333;
+    display: inline-block;
+    font-size: .85em;
+    font-weight: 700;
+    line-height: 1;
+    padding: 2px 4px;
+    white-space: nowrap;
+}
+
+.hero-right {
+    display: flex;
+    flex-direction: column;
+    /* Black, with 10% opacity */
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+    background: rgb(238, 238, 238);
+    padding: 15px;
+}
+
+.numpy-shell-canvas {
+    min-height: 455px
+}
+
+.numpy-shell-container {
+    height: 100%;
+    display: flex;
+    position: relative;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: stretch;
+    max-width: 1500px;
+    margin: auto
+}
+
+.numpy-shell {
+    border: 0;
+    flex: 2;
+    min-height: 500px;
+    padding: 0 15px
+}
+
+.CodeMirror {
+    max-height: 124px;
+}
+
+.CodeMirror-lines {
+    min-height: 30px!important;
+}
+
+.CodeMirror pre {
+    color: #fff!important;
+}
+
+.CodeMirror-cursor {
+    color: #fff!important;
+    border-left: 1px solid #fff!important
+}
+
+@media only screen and (max-width: 800px) {
+    .numpy-shell-container {
+        flex-direction: column;
+        justify-content: space-around
+    }
+}
+</style>
+
+<script>
+window.addEventListener("DOMContentLoaded", () => 
+    document.getElementById("fetch").addEventListener("click", () =>
+        fetch("https://raw.githubusercontent.com/jburgy/blog/master/fun/nbody.py")
+        .then(response => response.text())
+        .then(text => navigator.clipboard.writeText(text))
+        .catch(error => console.error(error))
+    )
+)
+</script>
+
+<div class="hero-right">
+    <div class="numpy-shell-canvas">
+        <div class="numpy-shell-container">
+            <iframe
+                class="numpy-shell"
+                src="https://jupyterlite.github.io/demo/repl/?toolbar=1&kernel=python"
+            >
+        </div>
+    </div>
+</div>
