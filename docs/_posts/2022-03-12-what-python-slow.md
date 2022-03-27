@@ -106,7 +106,7 @@ contains information to compute $$\left\lVert \mathbf{q}_j - \mathbf{q}_i \right
 
 $$-2 xy = (x - y)^2 - x^2 - y^2$$
 
-Solving this equation is $$(x-y)^2$$ is precisely what `dspr2` does when $$\alpha=-½$$,
+Solving this equation for $$(x-y)^2$$ is precisely what `dspr2` does when $$\alpha=-½$$,
 $$x_i=\mathbf{q}_i\mathbf{q}^T_i$$, and $$y_i=1$$.  Finally, `zhpmv` performs the sum over $$j$$, seen as the scaled
 displacement matrix multiplying the mass vector.  Pretty clever, uh.  All credit goes to 
 [Paul Panzer](https://stackoverflow.com/users/7207392/paul-panzer) for this amazing
@@ -119,6 +119,7 @@ a.imag.fill(-1.0)
 ap.fill(0.0)
 for i in range(3):  # A += α z z*
     zhpr(n, alpha=-2.0, x=a[i], ap=ap[i], overwrite_ap=True)
+
 sum(ap.real, axis=0, out=xxT)
 xxT += 6
 take(xxT, trid, out=x2)
@@ -136,4 +137,18 @@ for i in range(3):  # y = α A x + β y
 daxpy(a=dt, x=a.real, y=v)  # v += a dt
 daxpy(a=dt, x=v, y=x)  # x += v dt
 ```
-The full program can be found [here](https://github.com/jburgy/blog/blob/master/fun/nbody.py)
+The full program can be found [here](https://github.com/jburgy/blog/blob/master/fun/nbody.py).
+
+### Postscript
+
+I came across this [excellent FORTRAN vs python anecdote](https://cerfacs.fr/coop/fortran-vs-python) a couple of weeks
+after originally publishing this post.  The authors make an important, albeit counterintuitive, point about the
+strength of high-level languages like python compared to low-level ones like FORTRAN.  "By definition, a higher level
+language will allow more explorations."  Few programmers will completely redesign hundreds or thousands of lines of
+working FORTRAN or C++.  Addressing compiler errors and warnings took [long enough](https://3d.xkcd.com/303/) that
+they're forced to move on to the next deadline.  But a few dozen lines of python is a different story.  And the
+[REPL](https://en.wikipedia.org/wiki/Read%E2%80%93eval%E2%80%93print_loop) even lets you explore different algorithms
+_interactively_.
+
+In conclusion, we should be more explicit when we say that a particular programming language is slow.  Slow to do
+what?  Let us not conflate iterating in tight inner loops with iterating in the problem domain.
