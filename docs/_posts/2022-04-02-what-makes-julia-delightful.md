@@ -12,10 +12,10 @@ skills. [K&R](https://en.wikipedia.org/wiki/The_C_Programming_Language),
 [TAOCP](https://en.wikipedia.org/wiki/The_Art_of_Computer_Programming), and Bentley's
 [Programming Pearls](https://www.oreilly.com/library/view/programming-pearls-second/9780134498058/) made big
 impressions. Then I heard about [an article](https://dl.acm.org/doi/10.1145/363347.363387_) where Ken Thompson
-explained how he implemented the original grep command as a JIT compiler on the IBM 790 and I _had_ to know more. 
+explained how he implemented the original grep command as a JIT compiler on the IBM 7094 and I _had_ to know more. 
 
 I found the PDF online (let me not digress into a rant about paywalls and academic journals) and slowly worked my
-way through it. I even reached out to Ken when I couldn't figure out some assembly syntax that was obviously central
+way through it. I even reached out to Ken when I couldn't figure out some assembly syntax that might be central
 to the paper. Ever the gentleman, Ken took time out of his busy MiG-29 flying schedule to answer esoteric
 questions from a nobody.  Specifically, I couldn't find any explanation for the `AXC **,7` syntax in the IBM 7094
 instruction manual. Ken was so kind and patient and I'm truly sad that I have lost access to the email address
@@ -27,7 +27,7 @@ code) by instruction such as PAC, PCA, and SCA."  This is part of a set of pages
 
 I was so intrigued by the fact that Ken's "implementation of this algorithm is a compiler that translates a
 regular expression into IBM 7094 code. [...] In the compiled code, the lists mentioned in the algorithm are not
-characters, but transfer instructions into the compiled code."  Pretty wild, uh.  earch algorithms like
+characters, but transfer instructions into the compiled code."  Pretty wild, uh.  Search algorithms like
 [Boyer-Moore](https://en.wikipedia.org/wiki/Boyer%E2%80%93Moore_string-search_algorithm) typically keep track of
 offsets into the pattern being searched for instead.  Translating the original IBM 7094 into x86 taught me
 assembly conventions like instruction encoding, immediate operands, etc.  The result is a buggy little hack
@@ -37,7 +37,7 @@ closely."  To be honest, I haven't enough because I started my first Wall Street
 programming took a back seat.
 
 Fast forward almost twenty years.  I probably have the 10,000 hours Malcolm Gladwell conjectures are required to master
-programming.  I wish I could say I see computers looks to me like the Matrix to Neo in that final fight scene but I'd
+programming.  I wish I could say computers looks to me like the Matrix to Neo in that final fight scene but I'd
 be lying.  I have, however, reached the point where I can read code and focus on intent rather than language specifics.
 Jumping around between languages instead of becoming an expert in any one of them will do that.  I have picked up Julia
 recently because of the (well deserved) hype around it and I'm a big fan.  Julia is known to be implemented as a
@@ -49,7 +49,7 @@ syntax sieve that allows only syntactically correct regular expressions to pass.
 "·" for juxtaposition of regular expressions.  The second stage converts the regular expression to reverse Polish form.
 The third stage is the object code producer.  The first two stages are straightforward and not discussed."  That
 description is entirely fair.  An immense body of literature describes lexical analysis and parsing.  Most of it feels
-like a chore, like opening a myriad oysters with no pearl.  So how do we turn this mundane task into a learning
+like a chore, "feeling that it's all a lot of oysters, but no pearls".  So how do we turn this mundane task into a learning
 opportunity?  Well, by using it as an excuse to explore Julia's
 [foreign function interface](https://docs.julialang.org/en/v1/manual/calling-c-and-fortran-code/) of course!
 
@@ -92,7 +92,7 @@ using Base.PCRE: INFO_NAME_COUNT, INFO_NAMENTRYSIZE, INFO_NAMETABLE, info
 
 name_count = info(ptr, INFO_NAMECOUNT, UInt32)
 name_entry_size = info(ptr, INFO_NAMEENTRYSIZE, UInt32)
-info(ptr, INFO_NAMETABLE, Ptr{UInt8}), name_count * name_entry_size + 1)
+info(ptr, INFO_NAMETABLE, Ptr{UInt8}) => (name_count * name_entry_size + 1)
 ```
 
 At this point, we have the absolute address of the beggining of the PCRE bytecode stream.  We need a little more logic
@@ -110,6 +110,8 @@ What's the most idiomatic way to decode it in Julia?  It took me a couple attemp
 this problem:
 
 ```julia
+using Base: Fix1
+
 const OpChar = Val{0x1d}
 const OpAlt = Val{0x78}
 const OpKet = Val{0x79}
@@ -118,12 +120,58 @@ const OpBra = Val{0x86}
 link(ptr::Ptr{UInt8}, i::Int) =
     UInt16(unsafe_load(ptr, i) << 8) | UInt16(unsafe_load(ptr, i + 1))
 
-opcode(::OpChar, ptr::Ptr{UInt8}, i::Int) = Char(unsafe_load(ptr, i))
-opcode(::OpAlt, ptr::Ptr{UInt8}, i::Int) = Alt(link(ptr, i))
-opcode(::OpKet, ptr::Ptr{UInt8}, i::Int) = Ket()
-opcode(::OpBra, ptr::Ptr{UInt8}, i::Int) = Bra(link(ptr, i))
+opcode(::OpChar, ptr::Ptr{UInt8}, i::Int) = Fix1(char!, Char(unsafe_load(ptr, i)))
+opcode(::OpAlt, ptr::Ptr{UInt8}, i::Int) = Fix1(alt!, link(ptr, i) << 2)
+opcode(::OpKet, ptr::Ptr{UInt8}, i::Int) = Fix1(ket!, link(ptr, i) << 2)
+opcode(::OpBra, ptr::Ptr{UInt8}, i::Int) = Fix1(bra!, link(ptr, i) << 2)
 ```
 
 Julia's [iteration interface](https://docs.julialang.org/en/v1/manual/interfaces/#man-interface-iteration) can also be
-used to produce opcodes lazily.  The `OpCodes` iterator returns `(Int, OpCode)` _pairs_ similar to `Base.Dict` because
-`link` arguments represent [ε transitions](https://en.wikipedia.org/wiki/Epsilon_transition) as absolute jumps.
+used to produce opcodes lazily.  The `OpCodes` iterator returns `Int => Fix1` _pairs_ similar to `Base.Dict` because
+`link` arguments represent relative jumps.  You're probably wondering what makes the left shift by 2 necessary.  We
+will get to it in a minute, I promise.  Let us first turn our attention to the the inner core of the matching
+engine:
+
+```julia
+function match(opcodes::Dict{Int,Function}, string::String)
+    curr = [2]
+    next = empty(curr)
+    for char ∈ string * "\0"
+        for i ∈ curr
+            opcodes[i>>2](curr, next, char, i) && return true
+        end
+        copy!(curr, next)
+        empty!(next)
+    end
+    false
+end
+```
+
+Code like this is sometimes called [call-threaded](https://en.wikipedia.org/wiki/Threaded_code#Subroutine_threading).
+Following Thompson's article, two lists are maintained (named `curr` and `next` instead of `CLIST` and `NLIST`).
+`curr` and `next` contain integers, not "TSX **,2 instructions" and, because of PCRE'2 internal representation,
+these integers represent both the next instruction (think [program counter](https://en.wikipedia.org/wiki/Program_counter))
+as well as information about the match so far packed into their two least significant bits.  The least significant bit
+tells us whether this is a matching path.  The next bit tells us to treat the next instruction as an
+[ε-move](https://en.wikipedia.org/wiki/Nondeterministic_finite_automaton#NFA_with_%CE%B5-moves).  PCRE2 compiles the
+[Kleene star](https://en.wikipedia.org/wiki/Kleene_star) in `"(ab)*"` as
+
+```julia
+OrderedDict{Int64, Function} with 7 entries:
+  0  => Fix1(bra!, 16 << 2)
+  3  => brazero!
+  4  => Fix1(cbra!, 9 << 2)  # jump to 13
+  9  => Fix1(char!, 'a')
+  11 => Fix1(char!, 'b')
+  13 => Fix1(ketrmax!, 9 << 2)  # jump to 4
+  16 => Fix1(ket!, 16 << 2)
+```
+
+The key difference between this and the simpler `"(ab)"` is the `brazero!` opcode at index `3`.  It indicates that the
+following group can be leap-frogged entirely since the Kleene star matches 0 or more times.  All of the clever bits can
+now be packed in the definitions of `alt!`, `char!`, `bra!`, and friends, see [here](https://github.com/jburgy/blog/blob/master/fun/regexp.jl).
+
+To summarize, Julia's foreign function interface and multiple dispatch let us explore PCRE2's internal representation
+and implement a bare bones call-threaded matching engine.  Julia's metaprogramming support should let us transform
+that call-threaded code to direct-thread code, essentially unrolling the "thread" of opcodes to get another step closer
+to Ken's original article.
