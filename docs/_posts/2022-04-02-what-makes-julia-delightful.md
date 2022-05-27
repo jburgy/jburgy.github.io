@@ -11,7 +11,7 @@ numerical problems. So when I left graduate school to enter the industry, I read
 skills. [K&R](https://en.wikipedia.org/wiki/The_C_Programming_Language),
 [TAOCP](https://en.wikipedia.org/wiki/The_Art_of_Computer_Programming), and Bentley's
 [Programming Pearls](https://www.oreilly.com/library/view/programming-pearls-second/9780134498058/) made big
-impressions. Then I heard about [an article](https://dl.acm.org/doi/10.1145/363347.363387_) where Ken Thompson
+impressions. Then I heard about [an article](https://dl.acm.org/doi/10.1145/363347.363387) where Ken Thompson
 explained how he implemented the original grep command as a JIT compiler on the IBM 7094 and I _had_ to know more. 
 
 I found the PDF online (let me not digress into a rant about paywalls and academic journals) and slowly worked my
