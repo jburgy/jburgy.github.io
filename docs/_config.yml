@@ -29,6 +29,11 @@ theme: minima
 plugins:
   - jekyll-feed
 
+webrick:
+  headers:
+    Cross-Origin-Embedder-Policy: require-corp
+    Cross-Origin-Opener-Policy: same-origin
+
 # Exclude from processing.
 # The following items will not be processed, by default. Create a custom list
 # to override the default setting.
