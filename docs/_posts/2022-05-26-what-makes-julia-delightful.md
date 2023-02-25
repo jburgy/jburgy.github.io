@@ -2,7 +2,6 @@
 layout: post
 title:  "What makes Julia delightful, cont'd?"
 date:   2022-05-26 20:37:34 -0500
-categories: jekyll update
 ---
 ## Or how I Finally Dipped my Toes into Macros
 

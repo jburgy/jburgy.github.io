@@ -2,7 +2,6 @@
 layout: post
 title:  "What makes Julia delightful?"
 date:   2022-04-02 15:04:31 -0500
-categories: jekyll update
 ---
 ## Or how I Learned to Stop Worrying and Love the JIT
 

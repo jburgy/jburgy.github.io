@@ -2,7 +2,6 @@
 layout: post
 title:  "Hello, World!"
 date:   2022-03-05 15:14:46 -0500
-categories: jekyll update
 ---
 I have been toying with the idea of assembling content for the public web for a while now.  At first, I thought it would be a neat way
 to really learn the inner workings of HTTP.  I even considered going at it without any framework, hand coding HTML directly and slowly

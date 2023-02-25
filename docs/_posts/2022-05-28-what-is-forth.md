@@ -2,7 +2,6 @@
 layout: post
 title:  "What is Forth?"
 date:   2022-05-28 12:01:36 -0500
-categories: jekyll update
 ---
 ## Or How I Stopped Complaining about the CPython Bytecode Compiler?
 

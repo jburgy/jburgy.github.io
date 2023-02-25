@@ -2,7 +2,6 @@
 layout: post
 title:  "What, python, slow? No"
 date:   2022-03-10 13:12:46 -0500
-categories: jekyll update
 ---
 ## Or Numerics like it's 1959
 ## Or Programming High and Low
