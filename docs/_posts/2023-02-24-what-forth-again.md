@@ -93,12 +93,10 @@ implement [syscall(2)](https://man7.org/linux/man-pages/man2/syscall.2.html).  I
 in a thin [xterm-pty](https://xterm-pty.netlify.app/) layer and got a rather more heterogeneous clone of
 [WAForth](https://el-tramo.be/blog/waforth/).  
 
-{::comment}
-# Many thanks to [stefnotch](https://github.com/stefnotch) for
-# explaining how a [Service Worker](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API) lets us
-# access the required [SharedArrayBuffer](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SharedArrayBuffer)
-# on [github pages](https://stefnotch.github.io/web/COOP%20and%20COEP%20Service%20Worker/)
-{:/comment}
+Many thanks to [stefnotch](https://github.com/stefnotch) for
+explaining how a [Service Worker](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API) lets us
+access the required [SharedArrayBuffer](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SharedArrayBuffer)
+on [github pages](https://stefnotch.github.io/web/COOP%20and%20COEP%20Service%20Worker/)
 
 <div id="terminal"></div>
 <script src="https://cdn.jsdelivr.net/npm/xterm@4.17.0/lib/xterm.min.js"></script>
