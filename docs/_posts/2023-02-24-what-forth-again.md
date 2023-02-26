@@ -7,7 +7,7 @@ date:   2023-02-24 06:43:57 -0500
 We already discussed [Chuck Moore](https://en.wikipedia.org/wiki/Charles_H._Moore)'s 
 [discovery](https://news.ycombinator.com/item?id=18227631) of [FORTH](https://colorforth.github.io/HOPL.html)
 in a [previous post](/2022/05/28/what-is-forth.html) but leveraging python bytecodes felt a lot like
-cheating.  Like many others, I started understanding FORTH through Richard VM Jones'
+cheating.  Like many others, I started understanding FORTH through Richard WM Jones'
 [jonesforth](https://rwmj.wordpress.com/2010/08/07/jonesforth-git-repository/).  I trudged through
 the unfamiliar assembly syntax and settled down with many cups of coffee to underestand the difference
 between direct and indirect [threaded code](http://home.claranet.nl/users/mhx/Forth_Bell.pdf).  And yet, after
@@ -44,14 +44,14 @@ the same register.  Fortunately, we don't need to worry about that.
 With this first challenge behind us, we move on to the precise memory layout of FORTH 
 [dictionary entries](https://en.wikipedia.org/wiki/Forth_(programming_language)#Dictionary_entry).  FORTH words
 can vary in length.  Words written in assembly (or in our case C) language only require a single address.  Words
-written in FORTH can refer to `N` previously defined words plus the special `DOCOL` label (since they were
+written in FORTH can refer to N previously defined words plus the special `DOCOL` label (since they were
 introduced by a `:`) that is at the center of _indirect_ threading.  Jones explains that extra indirection step
 in great details, complete with ASCII diagrams.  I will therefore not repeat it here.
 [Flexible array members](https://en.wikipedia.org/wiki/Flexible_array_member) were officially standardized
 in [C99](https://en.wikipedia.org/wiki/C99) so we will use them to store the collection of labels in the dictionary
 entry.  We could store the first label, aka `Code Field`, as a separate member but that only increases the
 cognitive load of remembering that following parameters are contiguous.  `jonesforth.S` words actually contain
-not one but _two_ flexible arrays (`name` and `code`) where C only allows one.  That's our first big deviation
+not one but _two_ flexible arrays (`name` and `code`) where C only allows _one_.  That's our first big deviation
 from `jonesforth.S` (there will be more, don't worry):
 ```c
 struct word_t {
@@ -62,7 +62,7 @@ struct word_t {
 };
 ```
 Looking at all the words written in assembly, the longest name (`"O_NONBLOCK"`) is 11 characters long.  Assuming
-8 bytes per word, we need two words to encode it.  That explains how `name[15]` was chosen.  It's marginally wasteful
+8 bytes per word, we need two words to encode it.  That explains how `name[15]` was chosen.  This choice is marginally wasteful
 on 32 bit chips (where words only occupy 4 bytes) but lets us get away with one fewer `__SIZEOF_POINTER__` conditional.
 Note that this choice doesn't impose a 15 character limit on FORTH words _provided_ our code never accesses the `.code`
 member directly and respects `.flags & F_LENMASK` instead.  We introduced `code_field_address(word)` for convenience.
@@ -85,7 +85,7 @@ The wikipedia is more advanced than strictly necessary but still incredibly usef
         return *sp++;
     };
 ```
-This might also be a good time to point out that our stacks grow downwards to match x86 `push`/`pop` conventions.
+This might also be a good time to point out that our stacks grow _downwards_ to match x86 `push`/`pop` conventions.
 
 Then I hit an [issue](https://github.com/emscripten-core/emscripten/issues/6708) where emscripten decided not to
 implement [syscall(2)](https://man7.org/linux/man-pages/man2/syscall.2.html).  I threw a simplistic
@@ -97,6 +97,9 @@ Many thanks to [stefnotch](https://github.com/stefnotch) for
 explaining how a [Service Worker](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API) lets us
 access the required [SharedArrayBuffer](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SharedArrayBuffer)
 on [github pages](https://stefnotch.github.io/web/COOP%20and%20COEP%20Service%20Worker/)
+
+Thanks also to [Richard Jones](https://rwmj.wordpress.com/) for pointing out I forgot to include a link to my
+GNU C translation of his code.  [Here](https://github.com/jburgy/blog/blob/master/fun/4th.c) it is.
 
 <div id="terminal"></div>
 <script src="https://cdn.jsdelivr.net/npm/xterm@4.17.0/lib/xterm.min.js"></script>
