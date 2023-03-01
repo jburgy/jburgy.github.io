@@ -17,10 +17,10 @@ all this time, I realized I didn't really understand it.  So I decided to transl
 
 The first bit of actual code in `jonesforth.S` is the `NEXT` macro:
 ```nasm
-	.macro NEXT
-	lodsl
-	jmp *(%eax)
-	.endm
+    .macro NEXT
+    lodsl
+    jmp *(%eax)
+    .endm
 ```
 `NEXT` is fundamental to `FORTH` and remarkably only requires two x86 instructions.  The second instruction
 reminds us of [What makes Julia delightful, cont'd?](/2022/05/26/what-makes-julia-delightful.html)  The
@@ -100,6 +100,29 @@ on [github pages](https://stefnotch.github.io/web/COOP%20and%20COEP%20Service%20
 
 Thanks also to [Richard Jones](https://rwmj.wordpress.com/) for pointing out I forgot to include a link to my
 GNU C translation of his code.  [Here](https://github.com/jburgy/blog/blob/master/fun/4th.c) it is.
+
+3/1 Update: I was really impressed by how `jonesforth.f` defines `ARGC`, `ARGV`, and `ENVIRON` so I set out to
+understand it better.  I came across two tremendly helpful blog posts about the subject:
+* [A General Overview of What Happens Before main()](https://embeddedartistry.com/blog/2019/04/08/a-general-overview-of-what-happens-before-main/)
+* [Where do argc and argv come from?](https://briancallahan.net/blog/20200808.html)
+
+These posts highlight that the variation between x86 and x86-64 makes it very difficult to write code that will "find" `argc` in 
+32-bit _and_ 64-bit environments.  That difficulty can be avoided with the [`-nostartfiles`](https://gcc.gnu.org/onlinedocs/gcc/Link-Options.html)
+link option.  This option lets us define a `void _start(void)` entry point instead of the standard
+`int main(int argc, char *argv[], char *envp[])`.  Furthermore, [`-mpreferred-stack-boundary=3`](https://gcc.gnu.org/onlinedocs/gcc/x86-Options.html)
+also avoids a one word padding difference between GCC and Clang.  The result is unfortunately still not ABI-compatible with `jonesforth.S` and
+requires a small tweak to the definition of `ARGC`:
+
+```diff
+< : ARGC S0 @ @ ;
+---
+> : ARGC 7 CELLS S0 @ + @ ;
+```
+
+`4th.fs` needs to keep 7 cells because neither GCC nor Clang [provide a way to avoid saving callee-saved registers](https://gcc.gnu.org/bugzilla/show_bug.cgi?id=92086).
+Visual inspection of the generated assembly code reveals that both compilers save 6 registers (`%r12`, `%r13`, `%r14`, `%r15`, `%rbp`, `%rbx` in 64-bit)
+plus an extra word that holds the base address of our `stack`.  Emscripten does not care for this low-level chicanery and will require a different
+(as of yet unidentified) approach.
 
 <div id="terminal"></div>
 <script src="https://cdn.jsdelivr.net/npm/xterm@4.17.0/lib/xterm.min.js"></script>
