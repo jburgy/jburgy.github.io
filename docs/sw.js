@@ -7,10 +7,16 @@ self.addEventListener("fetch", (event) => {
         return;
     }
 
+    const suffixes = [
+        "what-forth-again.html",
+        "what-do-you-mean-homoiconic.html",
+        "4th.worker.js",
+        "lisp.worker.js",
+    ];
     event.respondWith(
         fetch(event.request).then(
             (response) => {
-                if (!response.url.endsWith("what-forth-again.html") && !response.url.endsWith("4th.worker.js"))
+                if (!suffixes.some(suffix => response.url.endsWith(suffix)))
                     return response;
 
                 const newHeaders = new Headers(response.headers);
