@@ -10,8 +10,10 @@ self.addEventListener("fetch", (event) => {
     const suffixes = [
         "what-forth-again.html",
         "what-do-you-mean-homoiconic.html",
+        "put-it-in-a-brandy-snifter.html",
         "4th.worker.js",
         "lisp.worker.js",
+        "TinyBasic.worker.js",
     ];
     event.respondWith(
         fetch(event.request).then(
