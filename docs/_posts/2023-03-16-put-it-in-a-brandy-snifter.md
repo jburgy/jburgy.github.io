@@ -18,9 +18,9 @@ We recently covered [FORTH](/2023/02/24/what-forth-again.html), which uses
 [postfix notation](https://en.wikipedia.org/wiki/Reverse_Polish_notation),
 and [Lisp](docs/_posts/2023-03-09-what-do-you-mean-homoiconic.md), which uses
 [prefix notation](https://simple.wikipedia.org/wiki/Prefix_notation)
-(albeit with lots of parentheses).  It makes sense to pick an 
-[infix](https://en.wikipedia.org/wiki/Infix_notation) language now.  But it's also fun to stick with
-our retro theme.  Infix programming languages rely on a 
+(albeit with lots of parentheses).  It seems fair to pick an 
+[infix](https://en.wikipedia.org/wiki/Infix_notation) language at this point.  But it's also fun to stick with
+our retro theme.  Infix programming languages are trickier because they rely on a 
 [formal grammar](https://en.wikipedia.org/wiki/Context-free_grammar) to define their syntax as well
 as the precedence of their operators.  In computer science, these grammars are often written down
 in [Backus-Naur form](https://en.wikipedia.org/wiki/Backus%E2%80%93Naur_form) named after
@@ -45,6 +45,7 @@ they defined their own dialect called [Tiny BASIC](https://en.wikipedia.org/wiki
 [Dennis Allison](https://en.wikipedia.org/wiki/Dennis_Allison) wrote a technical specification
 for it.  His design was based on an intermediate language (TBIL) to aid porting and 
 [running light without overbyte](https://en.wikipedia.org/wiki/Dr._Dobb%27s_Journal).
+This makes for a very layered system, a bit [like an onion](https://troypress.com/the-tiny-basic-interpretive-language-il-and-onions/).
 As an interesting historical aside, the original [BASIC](https://en.wikipedia.org/wiki/BASIC) was
 designed by [John G. Kemeny](https://en.wikipedia.org/wiki/John_G._Kemeny) and
 [Thomas E. Kurtz](https://en.wikipedia.org/wiki/Thomas_E._Kurtz) who were both at
