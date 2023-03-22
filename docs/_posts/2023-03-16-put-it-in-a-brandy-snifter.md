@@ -98,15 +98,15 @@ their argument. In the case of loaders, the argument follows.  The inner loop co
         elif op is OpCode.LN:
             out.append(int(op))
             out.extend(struct.pack(">H", eval(arg)))
-        elif op in {OpCode.JS, OpCode.J}:
-            target = struct.pack(">H", offsets.get(arg, 0))
-            out.append(int(op) + target[0])
-            out.extend(target[1:])
-        elif op in {OpCode.BR, OpCode.BC, OpCode.BV, OpCode.BN, OpCode.BE}:
+        elif op >= OpCode.BR:
             offset = offsets.get(arg, here + 1) - (here + 1)
             if op is OpCode.BR:
                 offset += 0x20
             out.append(int(op) + offset)
+        elif op >= OpCode.JS:
+            target = struct.pack(">H", offsets.get(arg, 0))
+            out.append(int(op) + target[0])
+            out.extend(target[1:])
         else:
             out.append(int(op))
 ```
