@@ -120,7 +120,8 @@ machine was internally consistent.  I was wrong because of `LN`, `JS`, and `J`!
 
 Another interesting aspect of TBIL is that it, like most assembly, requires two passes.  The first pass constructs
 an incomplete byte stream and records the positions of labels. The second pass is identical to the first except it
-can compute jump offsets correctly from those positions. As a matter of fact, the outer loop of our assembler looks like
+can compute jump offsets correctly from those positions. As a matter of fact, the outer loop of our 
+[assembler](https://en.wikipedia.org/wiki/Assembly_language#Assembler) looks like
 
 ```python
 offsets = {}

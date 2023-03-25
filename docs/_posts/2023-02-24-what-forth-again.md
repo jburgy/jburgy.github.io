@@ -77,7 +77,7 @@ based on the [Clang](https://clang.llvm.org/)/[LLVM](https://llvm.org/) stack,
 not [GCC](https://gcc.gnu.org/)/[libgccjit](https://gcc.gnu.org/wiki/JIT).  Another GCC extension my code relies on,
 which I didn't bother to mention, are [Nested Functions](https://gcc.gnu.org/onlinedocs/gcc/Nested-Functions.html) to
 push on and pop from the data stack.  This led me to discover Clang's [Blocks](https://en.wikipedia.org/wiki/Blocks_(C_language_extension)).
-The wikipedia is more advanced than strictly necessary but still incredibly useful.  The basic syntax is reasonably intuitive:
+The wikipedia entry for them is more advanced than strictly necessary but still incredibly useful.  The basic syntax is reasonably intuitive:
 ```c
     intptr_t (^pop)(void) = ^(void)
     {
@@ -87,7 +87,7 @@ The wikipedia is more advanced than strictly necessary but still incredibly usef
 ```
 This might also be a good time to point out that our stacks grow _downwards_ to match x86 `push`/`pop` conventions.
 
-Then I hit an [issue](https://github.com/emscripten-core/emscripten/issues/6708) where emscripten decided not to
+Then I hit an [issue](https://github.com/emscripten-core/emscripten/issues/6708) where emscripten decided to not
 implement [syscall(2)](https://man7.org/linux/man-pages/man2/syscall.2.html).  I threw a simplistic
 [shim](https://en.wikipedia.org/wiki/Shim_(computing)) together and moved on.  Finally, I wrapped the whole thing
 in a thin [xterm-pty](https://xterm-pty.netlify.app/) layer and got a rather more heterogeneous clone of
@@ -119,10 +119,11 @@ requires a small tweak to the definition of `ARGC`:
 > : ARGC 7 CELLS S0 @ + @ ;
 ```
 
-`4th.fs` needs to keep 7 cells because neither GCC nor Clang [provide a way to avoid saving callee-saved registers](https://gcc.gnu.org/bugzilla/show_bug.cgi?id=92086).
+`4th.fs` needs to skip 7 cells because neither GCC nor Clang [provide a way to avoid saving callee-saved registers](https://gcc.gnu.org/bugzilla/show_bug.cgi?id=92086).
 Visual inspection of the generated assembly code reveals that both compilers save 6 registers (`%r12`, `%r13`, `%r14`, `%r15`, `%rbp`, `%rbx` in 64-bit)
 plus an extra word that holds the base address of our `stack`.  Emscripten does not care for this low-level chicanery and will require a different
-(as of yet unidentified) approach.
+(as of yet unidentified) approach.  Making `ARGC`, `ARGV`, and `ENVIRON` work in the browser is 
+[left as an exercise to the reader](https://en.wikipedia.org/wiki/Proof_by_intimidation).
 
 <div id="terminal"></div>
 <script src="https://cdn.jsdelivr.net/npm/xterm@4.17.0/lib/xterm.min.js"></script>
