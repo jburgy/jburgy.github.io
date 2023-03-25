@@ -88,7 +88,7 @@ A good exercise to appreciate how much thought went into the design of TBIL is t
 [assembler for it](https://github.com/jburgy/blog/blob/master/TinyBasic/assembler.py).
 That assembler must recognize opcodes that are followed by an argument, like branches (`BR`, `BV`, `BN`, `BE`, `BC`),
 jumps (`JS` and `J`), loads (`LB` and `LN`), and `SX`.  Most of them combine themselves with (the first byte of)
-their argument. In the case of loaders, the argument follows.  The inner loop could looks something like this:
+their argument. In the case of loaders, the argument follows.  The inner loop could look something like this:
 
 ```python
         if op is OpCode.SX:
@@ -116,7 +116,7 @@ Those two calls to `struct.pack(">H", ...)` determine the Tiny BASIC's
 [endianness](https://en.wikipedia.org/wiki/Endianness).  Tom picked big-endian while
 WASM is little-endian for [portability](https://webassembly.org/docs/portability/).
 I initially convinced myself that endianness didn't matter as long as the virtual
-machine was consistent.  I was wrong because of `LN`, `JS`, and `J`!
+machine was internally consistent.  I was wrong because of `LN`, `JS`, and `J`!
 
 Another interesting aspect of TBIL is that it, like most assembly, requires two passes.  The first pass constructs
 an incomplete byte stream and records the positions of labels. The second pass is identical to the first except it
