@@ -6,13 +6,13 @@ date:   2023-02-24 06:43:57 -0500
 
 We already discussed [Chuck Moore](https://en.wikipedia.org/wiki/Charles_H._Moore)'s 
 [discovery](https://news.ycombinator.com/item?id=18227631) of [FORTH](https://colorforth.github.io/HOPL.html)
-in a [previous post](/2022/05/28/what-is-forth.html) but leveraging python bytecodes felt a lot like
-cheating.  Like many others, I started understanding FORTH through Richard WM Jones'
+in a [previous post](/2022/05/28/what-is-forth.html) but leveraging python bytecodes to implement it felt
+like cheating.  Like many others, I started understanding FORTH through Richard WM Jones'
 [jonesforth](https://rwmj.wordpress.com/2010/08/07/jonesforth-git-repository/).  I trudged through
 the unfamiliar assembly syntax and settled down with many cups of coffee to underestand the difference
 between direct and indirect [threaded code](http://home.claranet.nl/users/mhx/Forth_Bell.pdf).  And yet, after
-all this time, I realized I didn't really understand it.  So I decided to translate 
-[jonesforth.S](http://home.claranet.nl/users/mhx/Forth_Bell.pdf) to 
+all this time, I realized I didn't _really_ understand it.  So I decided to translate 
+[jonesforth.S](https://github.com/nornagon/jonesforth/blob/master/jonesforth.S) to 
 [C](https://en.wikipedia.org/wiki/C_(programming_language)).
 
 The first bit of actual code in `jonesforth.S` is the `NEXT` macro:
@@ -22,7 +22,7 @@ The first bit of actual code in `jonesforth.S` is the `NEXT` macro:
     jmp *(%eax)
     .endm
 ```
-`NEXT` is fundamental to `FORTH` and remarkably only requires two x86 instructions.  The second instruction
+`NEXT` is fundamental to `FORTH` yet remarkably only requires two x86 instructions.  The second instruction
 reminds us of [What makes Julia delightful, cont'd?](/2022/05/26/what-makes-julia-delightful.html)  The
 wikipedia [entry on threaded code](https://en.wikipedia.org/wiki/Threaded_code) outlines a rather vast array
 of potential translations.  However, in the spirit of keeping our translation as faithful to the original as
@@ -62,7 +62,9 @@ struct word_t {
 };
 ```
 Looking at all the words written in assembly, the longest name (`"O_NONBLOCK"`) is 11 characters long.  Assuming
-8 bytes per word, we need two words to encode it.  That explains how `name[15]` was chosen.  This choice is marginally wasteful
+8 bytes per word, we need two words to encode it.  That (and a bit of
+[the lost art of structure packing](http://www.catb.org/esr/structure-packing/))
+explains how `name[15]` was chosen.  This choice is marginally wasteful
 on 32 bit chips (where words only occupy 4 bytes) but lets us get away with one fewer `__SIZEOF_POINTER__` conditional.
 Note that this choice doesn't impose a 15 character limit on FORTH words _provided_ our code never accesses the `.code`
 member directly and respects `.flags & F_LENMASK` instead.  We introduced `code_field_address(word)` for convenience.
@@ -102,7 +104,7 @@ Thanks also to [Richard Jones](https://rwmj.wordpress.com/) for pointing out I f
 GNU C translation of his code.  [Here](https://github.com/jburgy/blog/blob/master/fun/4th.c) it is.
 
 3/1 Update: I was really impressed by how `jonesforth.f` defines `ARGC`, `ARGV`, and `ENVIRON` so I set out to
-understand it better.  I came across two tremendly helpful blog posts about the subject:
+understand it better.  I came across two tremendously helpful blog posts about the subject:
 * [A General Overview of What Happens Before main()](https://embeddedartistry.com/blog/2019/04/08/a-general-overview-of-what-happens-before-main/)
 * [Where do argc and argv come from?](https://briancallahan.net/blog/20200808.html)
 
