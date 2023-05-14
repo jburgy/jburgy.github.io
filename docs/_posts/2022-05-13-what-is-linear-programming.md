@@ -21,8 +21,8 @@ _independent_ equations for a unique solution?  There are only two cases to cons
 * more equations than unknowns ([overdetermined system](https://en.wikipedia.org/wiki/Overdetermined_system))
 * fewer equations than unknowns ([underdetermined system](https://en.wikipedia.org/wiki/Underdetermined_system))
 
-An overdetermined system might not have a single solution. It's common practive in that case
-to pick the _least bad_ solution.  This involves measuring how much our hypothetical solution
+An overdetermined system does not have a solution. It's common practive in that case
+to pick the _least bad_ approximation.  This involves measuring how much our hypothetical solution
 "misses" each equation then searching for the solution that "misses" the least.  Specialists
 call this approach _minimizing the L₂ norm_ and the associated procedure 
 [Ordinary Least Squares](https://en.wikipedia.org/wiki/Ordinary_least_squares).  This technique
@@ -129,15 +129,22 @@ indptr = np.fromiter(
 )
 ```
 
-The `data` is equally trivial, we just need to flatten the `.values()` of `coefficients`:
+The `data` vector is equally trivial, we just need to flatten the `.values()` of `coefficients`:
 
 ```python
 from itertools import chain
 
 data = np.fromiter(
-    map(methodcaller("values"), coefficients), dtype=float, count=indptr[-1]
+    chain.from_iterable(map(methodcaller("values"), coefficients)),
+    dtype=float,
+    count=len(indices),
 )
 ```
+
+(Please forgive me if you're finding [operator](https://docs.python.org/3/library/operator.html)
+and [itertools](https://docs.python.org/3/library/itertools.html) hard to grok.
+[List comprehensions](https://docs.python.org/3/tutorial/datastructures.html#list-comprehensions)
+would have been equally suitable to express this logic)
 
 `indices` is a bit trickier.  It's precisely what
 [`np.unique`](https://numpy.org/doc/stable/reference/generated/numpy.unique.html) means by
