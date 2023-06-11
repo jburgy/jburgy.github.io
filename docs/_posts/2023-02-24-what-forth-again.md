@@ -9,7 +9,7 @@ We already discussed [Chuck Moore](https://en.wikipedia.org/wiki/Charles_H._Moor
 in a [previous post](/2022/05/28/what-is-forth.html) but leveraging python bytecodes to implement it felt
 like cheating.  Like many others, I started understanding FORTH through Richard WM Jones'
 [jonesforth](https://rwmj.wordpress.com/2010/08/07/jonesforth-git-repository/).  I trudged through
-the unfamiliar assembly syntax and settled down with many cups of coffee to underestand the difference
+the unfamiliar assembly syntax and settled down with many cups of coffee to understand the difference
 between direct and indirect [threaded code](http://home.claranet.nl/users/mhx/Forth_Bell.pdf).  And yet, after
 all this time, I realized I didn't _really_ understand it.  So I decided to translate 
 [jonesforth.S](https://github.com/nornagon/jonesforth/blob/master/jonesforth.S) to 
@@ -126,6 +126,30 @@ Visual inspection of the generated assembly code reveals that both compilers sav
 plus an extra word that holds the base address of our `stack`.  Emscripten does not care for this low-level chicanery and will require a different
 (as of yet unidentified) approach.  Making `ARGC`, `ARGV`, and `ENVIRON` work in the browser is 
 [left as an exercise to the reader](https://en.wikipedia.org/wiki/Proof_by_intimidation).
+
+6/10 Update: `SEE >CFA` and `SEE QUIT` used to segfault on [x86-64](https://en.wikipedia.org/wiki/X86-64) 
+and, while I understood the immediate cause (second `WHILE` loop in `SEE` went one step past the end of their
+respective `.code[]`), I struggled to fix it.  As luck would have it, I inspected the `asm` output (using gcc's
+`-S` and `-fverbose-asm` command line flags) and noticed that each word ends with an `.align 16` directive.  This
+indicates that gcc pads flexible array members to _double word_ boundaries.  Appending an unreachable `EXIT` to
+these two words fixes the decompilation.  This [kludge](https://en.wikipedia.org/wiki/Kludge) is significantly
+easier than influencing gcc's padding.
+
+While I had the patient on the table, I finally understood the
+[gcc doc](https://gcc.gnu.org/onlinedocs/cpp/Stringizing.html) explaining how to "stringize the result of
+expansion of a macro argument" and replaced several `#if __SIZEOF_POINTER__` by `XSTR(__SIZEOF_POINTER__)`.
+I also realized that our `DEFCONST` macro handles more than constants and simplified a number of short words.
+Then, I improved the `DEFCODE` macro to reduce boilerplate further.  Finally, I leveraged
+python's [subprocess](https://docs.python.org/3/library/subprocess.html) to write a simple unit test.
+This revealed another segmentation fault in my github action which runs on
+[ubuntu-latest](https://github.com/actions/runner-images) and [GCC 11](https://gcc.gnu.org/gcc-11/)
+whereas I still run [GCC 10](https://gcc.gnu.org/gcc-10/) locally.
+[gdb](https://www.sourceware.org/gdb/) could attribute the segmentation fault to an unaligned
+[MOVAPS](https://c9x.me/x86/html/file_module_x86_id_180.html) instruction but couldn't show the corresponding
+stack.  The root cause was the `-mpreferred-stack-boundary=3` switch I introduced to simplify `ARGC`.
+So I replaced it by `-mstackrealign`, adjusted the definition of `ARGC` accordingly (`7` → `8`) and added a test for it.
+I would never have figured any of this out without [nektos/act](https://github.com/nektos/act) and 
+[Visual Studio Code Dev Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers).
 
 <div id="terminal"></div>
 <script src="https://cdn.jsdelivr.net/npm/xterm@4.17.0/lib/xterm.min.js"></script>
