@@ -74,3 +74,34 @@ all work.  The first half of it might not even be necessary but I simply couldn'
 them into functions.  Easy enough but I'd welcome a solution which didn't require generating those functions as well.
 
 You've got to admit, that's pretty cute, isn't it.
+
+**9/10/23 Update**: Pretty cute but not cute enough.  The way
+[52b6b1d](https://github.com/jburgy/blog/commit/52b6b1d0225f0e7756558c196a8e1b718aa15091)
+dissected the matchers into bodies and argument lists bothered me because it hurts readability.
+Granted, this code was never particularly readable to begin with.  All the more reason to mitigate noise.
+This bothered me so much that I eventually asked a
+[question](https://discourse.julialang.org/t/how-would-macros-make-this-code-clearer/103702)
+on [https://discourse.julialang.org/](https://discourse.julialang.org/).  As is often the case, asking
+the question forced me to pinpoint what really bugged me so I could address it with
+[0e00457](https://github.com/jburgy/blog/commit/0e00457b606d9d6ab65b8c3ea8c202f2479832b2).  As a result,
+[0e00457/fun/regexp.jl](https://github.com/jburgy/blog/blob/0e00457b606d9d6ab65b8c3ea8c202f2479832b2/fun/regexp.jl)
+looks much more like
+[e3e5bc7/fun/regexp.jl](https://github.com/jburgy/blog/blob/e3e5bc76bed152fe4c8641c2204bb87af53af4b5/fun/regexp.jl)
+with the extra
+```julia
+matchers = quote
+# all function definitions
+end
+
+exprs = Dict{Symbol,Tuple{Expr,Vararg{Expr}}}(
+    expr.args[1].args[1] => (expr.args[2], expr.args[1].args[2:end-4]...)
+    for expr in matchers.args if is_expr(expr, :function)
+)
+
+eval(matchers)
+```
+In other words, define the matchers inside a _single_ 
+[`quote`](https://docs.julialang.org/en/v1/base/base/#quote) instead of dissecting them.
+This makes it possible
+to [`eval`](https://docs.julialang.org/en/v1/base/base/#Core.eval) them _and_
+access their names, parameters, and bodies.
