@@ -42,8 +42,8 @@ The United States heard that message in the early 1950s and set out to do
 something about it quickly.  Decades later, I'm not so sure about the
 continuously part of it.  I have misgivings about the current state
 of math education in this country. I fear we have a bunch of educators with
-a limited understanding of the subject looking for silver bullets by looking
-for the new hot method (new math, Singapore math, ...)  Instead, we should
+a limited understanding of the subject looking for silver bullets by chasing
+the new hot method (new math, Singapore math, ...)  Instead, we should
 take a hard look at the curriculum and edit it with a machete.  Math is 
 vibrant and, with the renewed excitement around Artificial Intelligence,
 more relevant than ever.  School kids need to be spending less time on tedious

@@ -25,7 +25,7 @@ The representation is known as [s-expressions](https://en.wikipedia.org/wiki/S-e
 
 <figure>
     <img src="http://upload.wikimedia.org/wikipedia/commons/thumb/1/11/S-expression_tree.svg/220px-S-expression_tree.svg.png" crossorigin="anonymous">
-    <figcaption>S-expression for <code class="language-lisp highlighter-rouge">(* 2 (+ 2 4))</code></figcaption>
+    <figcaption>S-expression for <code class="language-lisp highlighter-rouge">(* 2 (+ 3 4))</code></figcaption>
 </figure>
 
 This direct relationship between Lisp's syntax and its internal data structures is what we mean by
