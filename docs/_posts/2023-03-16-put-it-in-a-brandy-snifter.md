@@ -14,9 +14,9 @@ this is not part of an "increasingly inaccurately named" trilogy
 
 [//]: # ![Put It in a Brandy Snifter](https://img.nbc.com/sites/nbcunbc/files/images/2015/6/06/150602_2870520_Lasting_Impressions___Brandy.jpg){:class="img-responsive"}
 
-We recently covered [FORTH](/2023/02/24/what-forth-again.html), which uses
+We recently covered [FORTH]({% post_url 2023-02-24-what-forth-again %}), which uses
 [postfix notation](https://en.wikipedia.org/wiki/Reverse_Polish_notation),
-and [Lisp](docs/_posts/2023-03-09-what-do-you-mean-homoiconic.md), which uses
+and [Lisp]({% post_url 2023-03-09-what-do-you-mean-homoiconic %}), which uses
 [prefix notation](https://simple.wikipedia.org/wiki/Prefix_notation)
 (albeit with lots of parentheses).  It seems fair to pick an 
 [infix](https://en.wikipedia.org/wiki/Infix_notation) language at this point.  But it's also fun to stick with
