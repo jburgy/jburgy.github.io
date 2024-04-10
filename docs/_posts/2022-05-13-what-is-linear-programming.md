@@ -39,7 +39,7 @@ which is orthogonal to the vector $$(a, b, c)$$.  As a consequence, we can inter
 of an underdetermined system of equations as the intersection of these n-dimensional planes.  We struggle to
 interpret geometric objects in more than 2 or 3 dimensions.  Fortunately, we can _project_ them to lower
 dimensions.  Those projections are equivalent to dropping one of the dimensions (say $$z$$) and turning
-the equality into an equality.  The same concept lets us go the other way (turning inequalities into
+the equality into an inequality.  The same concept lets us go the other way (turning inequalities into
 equalities) by introducing [slack variables](https://en.wikipedia.org/wiki/Slack_variable).
 
 Recapping, having more unknowns than equations leads to infinitely many solutions.  We often choose
@@ -70,7 +70,7 @@ $$\begin{eqnarray}
 \left(
 \begin{array}{cc}
 1 & 1 \\
-2 & 6 \\
+3 & 6 \\
 4 & 2
 \end{array}
 \right) x \le
