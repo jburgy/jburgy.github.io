@@ -137,3 +137,23 @@ a well-defined signature.  It might be the
 [shiny object syndrome](https://en.wikipedia.org/wiki/Shiny_object_syndrome) but think that
 [`5th.c`](https://github.com/jburgy/blog/blob/master/fun/5th.c) is a reasonable
 [blueprint](https://en.wikipedia.org/wiki/Blueprint) for implementing your next interpreter. 
+
+<div id="terminal"></div>
+<script type="module">
+    import "https://unpkg.com/xterm@5.3.0/lib/xterm.js";
+    import "https://unpkg.com/xterm-pty/index.js";
+    import initEmscripten from "/assets/js/5th.mjs";
+
+    const xterm = new Terminal();
+    xterm.open(document.getElementById("terminal"));
+
+    const { master, slave } = openpty();
+    xterm.loadAddon(master);
+
+    const response = await fetch("https://raw.githubusercontent.com/nornagon/jonesforth/master/jonesforth.f");
+    const preamble = new Uint8Array(await response.arrayBuffer());
+    slave.ldisc.toUpperBuf.push(...preamble);
+
+    await initEmscripten({ pty: slave });
+    slave.ldisc.flushToUpper();
+</script>
