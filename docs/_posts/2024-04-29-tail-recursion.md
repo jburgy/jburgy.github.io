@@ -126,6 +126,35 @@ The first three lines actually swap `sp[0]` and `sp[1]` (using `pshufd` to
 The last four lines dereference `ip` _twice_ (_indirect_ threading)
 the perform the tail call using an [indirect branch](https://en.wikipedia.org/wiki/Indirect_branch).
 
+The [webassembly](https://webassembly.org/) version, courtesy of
+[wasm2wat](https://webassembly.github.io/wabt/demo/wasm2wat/), is only slightly longer:
+```lisp
+(module $5th.wasm
+  (type $t0 (func (param i32 i32 i32 i32 i32) (result i32)))
+  ...
+  (func $SWAP (type $t0) (param $p0 i32) (param $p1 i32) (param $p2 i32) (param $p3 i32) (param $p4 i32) (result i32)
+    (i64.store align=4
+      (local.get $p1)
+      (i64.rotl
+        (i64.load align=4
+          (local.get $p1))
+        (i64.const 32)))
+    (return_call_indirect (type $t0)
+      (local.get $p0)
+      (local.get $p1)
+      (local.get $p2)
+      (i32.add
+        (local.get $p3)
+        (i32.const 4))
+      (local.tee $p3
+        (i32.load
+          (local.get $p3)))
+      (i32.load
+        (local.get $p3))))
+  ...
+)
+```
+
 In summary, [`5th.c`](https://github.com/jburgy/blog/blob/master/fun/5th.c) looks
 different from [`4th.c`](https://github.com/jburgy/blog/blob/master/fun/4th.c), at least
 when considering their C sources. Turns out that compilers generate very similar code
