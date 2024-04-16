@@ -152,22 +152,21 @@ I would never have figured any of this out without [nektos/act](https://github.c
 [Visual Studio Code Dev Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers).
 
 <div id="terminal"></div>
-<script src="https://cdn.jsdelivr.net/npm/xterm@4.17.0/lib/xterm.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/xterm-pty@0.9.4/index.js"></script>
-<script>
+<script type="module">
+    import "https://unpkg.com/xterm@5.3.0/lib/xterm.js";
+    import "https://unpkg.com/xterm-pty/index.js";
+    import initEmscripten from "/assets/js/4th.mjs";
+
     const xterm = new Terminal();
     xterm.open(document.getElementById("terminal"));
 
     const { master, slave } = openpty();
     xterm.loadAddon(master);
 
-    const worker = new Worker("/assets/js/4th.worker.js");
-    const server = new TtyServer(slave);
+    const response = await fetch("https://raw.githubusercontent.com/nornagon/jonesforth/master/jonesforth.f");
+    const preamble = new Uint8Array(await response.arrayBuffer());
+    slave.ldisc.toUpperBuf.push(...preamble);
 
-    fetch("https://raw.githubusercontent.com/nornagon/jonesforth/master/jonesforth.f")
-        .then((response) => response.arrayBuffer())
-        .then((buffer) => {
-            server.toWorkerBuf.push(...new Uint8Array(buffer));
-            server.start(worker);
-        });
+    await initEmscripten({ pty: slave });
+    slave.ldisc.flushToUpper();
 </script>
