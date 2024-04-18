@@ -174,8 +174,8 @@ a well-defined signature.  It might be the
 
 <div id="terminal"></div>
 <script type="module">
-    import "https://unpkg.com/xterm@5.3.0/lib/xterm.js";
-    import "https://unpkg.com/xterm-pty/index.js";
+    import "/assets/js/xterm.js";
+    import "/assets/js/xterm-pty.js";
     import initEmscripten from "/assets/js/5th.mjs";
 
     const xterm = new Terminal();
