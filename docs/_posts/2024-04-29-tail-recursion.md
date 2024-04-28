@@ -130,6 +130,17 @@ The first three lines actually swap `sp[0]` and `sp[1]` (using `pshufd` to
 [shuffle packed doublewords](https://www.felixcloutier.com/x86/pshufd)).
 The last four lines dereference `ip` _twice_ (_indirect_ threading)
 the perform the tail call using an [indirect branch](https://en.wikipedia.org/wiki/Indirect_branch).
+Staring at that generated assembly highlights a clever bit of
+[code golf](https://en.wikipedia.org/wiki/Code_golf) in 
+[Richard WM Jones](https://rwmj.wordpress.com/)'s handcrafted 
+[jonesforth.S](https://github.com/nornagon/jonesforth/blob/master/jonesforth.S):
+he condensed the last 4 instructions above into just 2 
+(`lodsl` is equivalent to `mov (%esi), %eax; add $4, %esi` while
+`jmp *(%eax)` is equivalent to `mov (%eax), %eax; jmp *%eax`)!
+[97e00d7](https://github.com/jburgy/blog/blob/97e00d7795ee0c97cbea901aae46d98a7bb5ebf5/fun/5th.c)
+is a (failed) attempt at using [extended asm](https://gcc.gnu.org/onlinedocs/gcc/Extended-Asm.html)
+to achieve the same compression.  Unfortunately, I found no better way to enforce
+pre-conditions than explicit `mov` instructions (which more than offset the saving).
 
 The [webassembly](https://webassembly.org/) version, courtesy of
 [wasm2wat](https://webassembly.github.io/wabt/demo/wasm2wat/), is only slightly longer:
