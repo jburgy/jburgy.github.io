@@ -6,7 +6,7 @@ date:   2023-02-24 06:43:57 -0500
 
 We already discussed [Chuck Moore](https://en.wikipedia.org/wiki/Charles_H._Moore)'s 
 [discovery](https://news.ycombinator.com/item?id=18227631) of [FORTH](https://colorforth.github.io/HOPL.html)
-in a [previous post](/2022/05/28/what-is-forth.html) but leveraging python bytecodes to implement it felt
+in a [previous post]({% post_url 2022-05-28-what-is-forth %}) but leveraging python bytecodes to implement it felt
 like cheating.  Like many others, I started understanding FORTH through Richard WM Jones'
 [jonesforth](https://rwmj.wordpress.com/2010/08/07/jonesforth-git-repository/).  I trudged through
 the unfamiliar assembly syntax and settled down with many cups of coffee to understand the difference
@@ -23,7 +23,7 @@ The first bit of actual code in `jonesforth.S` is the `NEXT` macro:
     .endm
 ```
 `NEXT` is fundamental to `FORTH` yet remarkably only requires two x86 instructions.  The second instruction
-reminds us of [What makes Julia delightful, cont'd?](/2022/05/26/what-makes-julia-delightful.html)  The
+reminds us of [What makes Julia delightful, cont'd?]({% post_url 2022-05-26-what-makes-julia-delightful %})  The
 wikipedia [entry on threaded code](https://en.wikipedia.org/wiki/Threaded_code) outlines a rather vast array
 of potential translations.  However, in the spirit of keeping our translation as faithful to the original as
 possible, I chose [GNU C's Labels as Values](https://gcc.gnu.org/onlinedocs/gcc/Labels-as-Values.html). This

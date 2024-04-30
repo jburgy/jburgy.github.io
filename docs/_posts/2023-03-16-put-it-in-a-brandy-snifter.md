@@ -25,7 +25,7 @@ our retro theme.  Infix programming languages are trickier because they rely on 
 as the precedence of their operators.  In computer science, these grammars are often written down
 in [Backus-Naur form](https://en.wikipedia.org/wiki/Backus%E2%80%93Naur_form) named after
 [John Backus](https://en.wikipedia.org/wiki/John_Backus) of 
-[FORTRAN](docs/_posts/2023-01-15-what-to-about-fortran.md) fame and
+[FORTRAN]({% post_url 2023-01-15-what-to-about-fortran %}) fame and
 [Peter Naur](https://en.wikipedia.org/wiki/Peter_Naur) who contributed to
 [ALGOL 60](https://en.wikipedia.org/wiki/ALGOL_60).
 
