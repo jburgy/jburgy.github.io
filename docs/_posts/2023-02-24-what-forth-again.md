@@ -93,7 +93,7 @@ Then I hit an [issue](https://github.com/emscripten-core/emscripten/issues/6708)
 implement [syscall(2)](https://man7.org/linux/man-pages/man2/syscall.2.html).  I threw a simplistic
 [shim](https://en.wikipedia.org/wiki/Shim_(computing)) together and moved on.  Finally, I wrapped the whole thing
 in a thin [xterm-pty](https://xterm-pty.netlify.app/) layer and got a rather more heterogeneous clone of
-[WAForth](https://el-tramo.be/blog/waforth/).  
+[WAForth](https://mko.re/blog/waforth/).  
 
 Many thanks to [stefnotch](https://github.com/stefnotch) for
 explaining how a [Service Worker](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API) lets us
