@@ -30,7 +30,7 @@ Similarly, memory allocations are prominent in the
 ### Contrast with FORTRAN
 Early versions of FORTRAN had a big drawback: they did not allow for dynamic memory allocation, forcing re-compilation
 when array sizes changed.  Work started on the first FORTRAN compiler in
-[1954](https://www.ibm.com/ibm/history/ibm100/us/en/icons/fortran/).  Lisp 1.5 already supported garbage collection
+[1954](https://www.ibm.com/history/fortran).  Lisp 1.5 already supported garbage collection
 around that time, although the first lisp compiler did not appear until 1962.  According to
 [Henry Spencer](https://compilers.iecc.com/comparch/article/97-10-017), "Backus and his team sweated quite hard on
 optimization in the FORTRAN I compiler [...], and so their objective was to generate code that was *better* than the
