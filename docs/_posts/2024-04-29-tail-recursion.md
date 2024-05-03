@@ -7,7 +7,7 @@ date:   2024-03-29 08:00:07 -0500
 Previous posts highlight my interest in (obsession with?) interpreters.  I keep marveling at
 techniques people have come up with over the years to make our interactions with computers feel conversational.
 I was recently reminded of [Guy Steele](https://en.wikipedia.org/wiki/Guy_L._Steele_Jr.)'s seminal 
-[Lambda: The Ultimate GOTO](https://dspace.mit.edu/handle/1721.1/5753)
+[Lambda: The Ultimate GOTO](https://en.wikisource.org/wiki/Lambda:_The_Ultimate_GOTO)
 article.  Around the same time, I came across old release notes for
 [Clang 13.0.0](https://releases.llvm.org/13.0.0/tools/clang/docs/ReleaseNotes.html) announcing, among other things, a
 [musttail attribute](https://clang.llvm.org/docs/AttributeReference.html#musttail).  This immediately reminded me

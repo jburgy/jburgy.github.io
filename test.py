@@ -20,7 +20,9 @@ class LinkFinder(HTMLParser):
         self.hrefs.update(val for key, val in attrs if key == "href")
 
 
-async def head(session: aiohttp.ClientSession, href: str) -> tuple[str, HTTPStatus]:
+async def head(
+    session: aiohttp.ClientSession, href: str
+) -> tuple[str, HTTPStatus]:
     status = HTTPStatus.NOT_FOUND
     if href.startswith(r"/"):
         href = "https://bur.gy" + href
@@ -41,8 +43,8 @@ async def statuses(hrefs: set[str]) -> dict[str, int]:
             if status
             not in {
                 HTTPStatus.OK,
-                HTTPStatus.MOVED_PERMANENTLY,
-                HTTPStatus.FOUND,
+                # HTTPStatus.MOVED_PERMANENTLY,
+                # HTTPStatus.FOUND,
                 HTTPStatus.FORBIDDEN,
                 HTTPStatus.METHOD_NOT_ALLOWED,
                 HTTPStatus.NOT_ACCEPTABLE,
@@ -54,7 +56,9 @@ async def statuses(hrefs: set[str]) -> dict[str, int]:
 
 link_finder = LinkFinder()
 
-for file in (Path.home() / "jburgy.github.io" / "docs" / "_site").glob("**/*.html"):
+for file in (
+    Path.home() / "jburgy.github.io" / "docs" / "_site"
+).glob("**/*.html"):
     link_finder.feed(file.read_text())
 
 result = asyncio.run(statuses(link_finder.hrefs))
