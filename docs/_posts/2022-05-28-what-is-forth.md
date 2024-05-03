@@ -67,7 +67,7 @@ performant stack code.
 I lack the attention span to tackle any significant fraction of these challenges.  This leaves me no choice but to seek
 a different approach.  Koopman's article on optimized stack code generation as well as Brunthaler's on Quickening 
 feature [Forth](https://en.wikipedia.org/wiki/Forth_(programming_language)) more or less prominently.  This piqued my
-interest.  In the words of its creator, Forth is a [Problem-Oriented Language](http://www.forth.org/POL.pdf)
+interest.  In the words of its creator, Forth is a [Problem-Oriented Language](https://www.forth.org/POL.pdf)
 whose concatenative syntax fits certain [problem domains](https://www.forth.com/starting-forth/1-forth-stacks-dictionary/)
 particularly well.  To me, Forth is a standardized notation for stack code much in the same sense that
 [S-expressions](https://en.wikipedia.org/wiki/S-expression) are a standardized notation for
@@ -114,7 +114,7 @@ prefer typing all of that, feel free to use this [bytecode assembler](https://gi
 
 Now that our objective is defined, what should the interface look like?  Compiling one function at a time is reasonable
 for toy micro-optimizations.  That said, where should the Forth sit relative to the python function?  We could use
-multi-line strings and parse Forth [Stack Comments](http://www.forth.org/forth_intro/comments.htm) to guess the python
+multi-line strings and parse Forth [Stack Comments](https://www.forth.org/forth_intro/comments.htm) to guess the python
 signature.  That's rather hacky.  A nicer [kluge](http://catb.org/jargon/html/K/kluge.html) would be to save the Forth
 implementation in the python's [docstring](https://docs.python.org/3/glossary.html#term-docstring).
 

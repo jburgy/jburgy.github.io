@@ -9,7 +9,7 @@ As [my previous post]({% post_url 2022-03-12-what-python-slow %}) shows, my earl
 numerical problems. So when I left graduate school to enter the industry, I read books and articles to pick up new
 skills. [K&R](https://en.wikipedia.org/wiki/The_C_Programming_Language),
 [TAOCP](https://en.wikipedia.org/wiki/The_Art_of_Computer_Programming), and Bentley's
-[Programming Pearls](https://www.oreilly.com/library/view/programming-pearls-second/9780134498058/) made big
+[Programming Pearls](https://www.oreilly.com/library/view/programming-pearls-2nd/9780134498058/) made big
 impressions. Then I heard about [an article](https://dl.acm.org/doi/10.1145/363347.363387) where Ken Thompson
 explained how he implemented the original grep command as a JIT compiler on the IBM 7094 and I _had_ to know more. 
 
@@ -66,7 +66,7 @@ Ptr{Nothing} @0x0000000002950e00
 ```
 
 Great, we have a raw C pointer to a `pcre2_code` struct, now what?  We could read the
-[PCRE source](https://github.com/PhilipHazel/pcre2) and guess field offsets.  That sounds tedious and not particularly fun.
+[PCRE source](https://github.com/PCRE2Project/pcre2) and guess field offsets.  That sounds tedious and not particularly fun.
 Fortunately, I noticed two things when I started doing exactly that:
 
 ```c
@@ -75,14 +75,14 @@ Fortunately, I noticed two things when I started doing exactly that:
 code = (PCRE2_UCHAR *)((uint8_t *)re + sizeof(pcre2_real_code)) +
   re->name_entry_size * re->name_count;
 ```
-in [pcre2_study.c](https://github.com/PhilipHazel/pcre2/blob/master/src/pcre2_study.c) and
+in [pcre2_study.c](https://github.com/PCRE2Project/pcre2/blob/master/src/pcre2_study.c) and
 
 ```c
   case PCRE2_INFO_NAMETABLE:
   *((PCRE2_SPTR *)where) = (PCRE2_SPTR)((char *)re + sizeof(pcre2_real_code));
   break;
 ```
-in [pcre2_pattern_info.c](https://github.com/PhilipHazel/pcre2/blob/master/src/pcre2_pattern_info.c).
+in [pcre2_pattern_info.c](https://github.com/PCRE2Project/pcre2/blob/master/src/pcre2_pattern_info.c).
 [pcre2_pattern_info](https://www.pcre.org/current/doc/html/pcre2_pattern_info.html) is conveniently exposed as `Base.PCRE.info`
 so we can "find start of compiled code" in Julia with
 
@@ -96,7 +96,7 @@ info(ptr, INFO_NAMETABLE, Ptr{UInt8}) => (name_count * name_entry_size + 1)
 
 At this point, we have the absolute address of the beggining of the PCRE bytecode stream.  We need a little more logic
 to decode its contents.  Fortunately, [Philip Hazel](https://en.wikipedia.org/wiki/Philip_Hazel) included a handy text
-document named [HACKING](https://github.com/PhilipHazel/pcre2/blob/master/HACKING).  This document begins with some
+document named [HACKING](https://github.com/PCRE2Project/pcre2/blob/master/HACKING).  This document begins with some
 historical context then goes on to describe PCRE's internals.  We quickly learn that the "compiled form of a pattern is
 a vector of unsigned code units (bytes in 8-bit mode, shorts in 16-bit mode, 32-bit words in 32-bit mode), containing
 <mark>items of variable length</mark>.  The first code unit in an item contains an opcode, and the length of the item
