@@ -10,7 +10,7 @@ in a [previous post]({% post_url 2022-05-28-what-is-forth %}) but leveraging pyt
 like cheating.  Like many others, I started understanding FORTH through Richard WM Jones'
 [jonesforth](https://rwmj.wordpress.com/2010/08/07/jonesforth-git-repository/).  I trudged through
 the unfamiliar assembly syntax and settled down with many cups of coffee to understand the difference
-between direct and indirect [threaded code](http://home.claranet.nl/users/mhx/Forth_Bell.pdf).  And yet, after
+between direct and indirect [threaded code](https://dl.acm.org/doi/pdf/10.1145/362248.362270).  And yet, after
 all this time, I realized I didn't _really_ understand it.  So I decided to translate 
 [jonesforth.S](https://github.com/nornagon/jonesforth/blob/master/jonesforth.S) to 
 [C](https://en.wikipedia.org/wiki/C_(programming_language)).
@@ -98,7 +98,7 @@ in a thin [xterm-pty](https://xterm-pty.netlify.app/) layer and got a rather mor
 Many thanks to [stefnotch](https://github.com/stefnotch) for
 explaining how a [Service Worker](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API) lets us
 access the required [SharedArrayBuffer](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SharedArrayBuffer)
-on [github pages](https://stefnotch.github.io/web/COOP%20and%20COEP%20Service%20Worker/)
+on [github pages](https://dev.to/stefnotch/enabling-coop-coep-without-touching-the-server-2d3n)
 
 Thanks also to [Richard Jones](https://rwmj.wordpress.com/) for pointing out I forgot to include a link to my
 GNU C translation of his code.  [Here](https://github.com/jburgy/blog/blob/master/fun/4th.c) it is.
@@ -149,7 +149,7 @@ whereas I still run [GCC 10](https://gcc.gnu.org/gcc-10/) locally.
 stack.  The root cause was the `-mpreferred-stack-boundary=3` switch I introduced to simplify `ARGC`.
 So I replaced it by `-mstackrealign`, adjusted the definition of `ARGC` accordingly (`7` → `8`) and added a test for it.
 I would never have figured any of this out without [nektos/act](https://github.com/nektos/act) and 
-[Visual Studio Code Dev Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers).
+[Visual Studio Code Dev Containers](https://code.visualstudio.com/docs/devcontainers/containers).
 
 <div id="terminal"></div>
 <script type="module">

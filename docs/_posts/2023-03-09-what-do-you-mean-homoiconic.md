@@ -82,4 +82,4 @@ An enthusiastic reader looking for a learning challenge might want to tweak the 
 (use [wasm2wat](https://webassembly.github.io/wabt/demo/wasm2wat/) if necessary) and pickup some 
 [stack optimizations](http://users.ece.cmu.edu/~koopman/stack_compiler/stack_co.html)
 (particularly [intra-block stack scheduling](http://users.ece.cmu.edu/~koopman/stack_compiler/stack_co.html#intrablock) ones)
-which [binaryen](http://webassembly.github.io/binaryen/) missed.
+which [binaryen](https://github.com/WebAssembly/binaryen) missed.

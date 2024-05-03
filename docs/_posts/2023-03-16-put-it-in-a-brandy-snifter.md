@@ -58,7 +58,7 @@ Luckily, [Tom Pittman](https://en.wikipedia.org/wiki/Tom_Pittman_(computer_scien
 a bunch of content about his amazing contributions to Tiny BASIC on 
 [http://www.ittybittycomputers.com](http://www.ittybittycomputers.com/IttyBitty/TinyBasic/).
 In particular, the [Tiny BASIC Experimenter's Kit](http://www.ittybittycomputers.com/IttyBitty/TinyBasic/TBEK.txt)
-(also in [HTML](http://retro.hansotten.nl/uploads/files/tbek.html))
+(also in [HTML](http://retro.hansotten.nl/uploads/tinybasic/tbek.html))
 describes every "Interpretive Language Operation Code" starting on page 15.  Some of these
 opcodes are geared towards parsing like `BC` (String Match Branch).  Its behavior is best understood by
 looking at a specific use case, like its first appearance in the "Original Tiny Basic Intermediate Interpreter"
