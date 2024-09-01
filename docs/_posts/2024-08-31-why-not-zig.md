@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Why not try zig next?"
+title:  "Why not try Zig next?"
 date:   2024-08-31 07:41:26 -0500
 ---
 
@@ -165,6 +165,8 @@ const Instr = packed union {
     word: [*]const Instr,
 };
 
+const offset = @divTrunc(@sizeOf(Word), @sizeOf(Instr));
+
 fn defword_(
     comptime last: ?[]const Instr,
     comptime flag: Flag,
@@ -190,7 +192,7 @@ guarantee this very specific memory layout.  I'm doing this to respect as many
 details of the [jonesforth](https://github.com/nornagon/jonesforth) implementation
 as possible in order to make fiddly words like `CFA>` and `ID.` work.  Those
 meta words exploit the precise memory layout to go from a word's first instruction
-to the word itself or compute the number of instructions in a word.
+to the word itself as well as compute the number of instructions in a word.
 
 We used one more `comptime` trick to keep our code [DRY](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself): abusing `struct` to create
 [closures](https://gencmurat.com/en/posts/zig-anonymus-functions-and-closures/).
@@ -210,10 +212,10 @@ Zig compiler an opportunity to generate bound checks.
 [5th.zig](https://github.com/jburgy/blog/blob/master/fun/5th.zig) mostly works.
 It executes the bootstrapping FORTH code that adds control structures, strings,
 introspection, and a bunch of other goodies.  I don't love how I skirted
-memory allocation.  I would prefer
+memory allocation.  I would prefer switching to
 [SbrkAllocator](https://github.com/ziglang/zig/blob/master/lib/std/heap/sbrk_allocator.zig)
-to support `MORECORE` seamlessly.  It would also be neat to generate a 
+and support `MORECORE` seamlessly.  It would also be neat to generate a 
 [WebAssembly](https://webassembly.org/) build to include on this page.  Finally,
 this is my first ever Zig code.  The compiler and VSCode language server
 already act as style guides but I would appreciate feedback from experienced
-Zig devs.  
+Ziguanas.  
