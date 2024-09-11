@@ -156,7 +156,7 @@ which all ultimately call
 const Word = extern struct {
     link: ?*const Word,
     flag: u8,
-    name: [@intFromEnum(Flag.LENMASK)]u8 align(1),
+    name: [F_LENMASK]u8 align(1),
 };
 
 const Instr = packed union {
@@ -178,7 +178,7 @@ fn defword_(
     p.link = if (last == null) null else @ptrCast(last.?.ptr);
     p.flag = name.len | @intFromEnum(flag);
     @memcpy(p.name[0..name.len], name);
-    @memset(p.name[name.len..@intFromEnum(Flag.LENMASK)], 0);
+    @memset(p.name[name.len..F_LENMASK], 0);
     @memcpy(instrs[offset..], code);
     return instrs;
 }
