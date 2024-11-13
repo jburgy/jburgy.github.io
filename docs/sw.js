@@ -12,8 +12,10 @@ self.addEventListener("fetch", (event) => {
         "what-do-you-mean-homoiconic.html",
         "put-it-in-a-brandy-snifter.html",
         "tail-recursion.html",
+        "why-not-zig.html",
         "4th.worker.mjs",
         "5th.worker.mjs",
+        "zorth.worker.mjs",
         "lisp.worker.js",
         "TinyBasic.worker.js",
     ];
