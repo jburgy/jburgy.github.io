@@ -31,10 +31,10 @@ print(*device(66171486), sep=",")
 So far so good.  Part 2 gets hairy and involves searching for the smallest argument `a` that
 makes the device into a [quine](https://en.wikipedia.org/wiki/Quine_(computing)).  Simplifiying
 the program as shown below highlights the fact that `device` yields one value per octal digit
-of `a`.  So we're looking for an `a` with 16 octal digits.  There are $$2^48$$ of those!
+of `a`.  So we're looking for an `a` with 16 octal digits.  There are $$2^{48}$$ of those!
 This reminds us of the [wheat and chessboard problem](https://en.wikipedia.org/wiki/Wheat_and_chessboard_problem)
 and we quickly realize that a 
-[brute-force search](https://en.wikipedia.org/wiki/Brute-force_search) will be run into
+[brute-force search](https://en.wikipedia.org/wiki/Brute-force_search) will run into
 [heat death of the universe](https://en.wikipedia.org/wiki/Heat_death_of_the_universe) issues
 (although not quite a quickly as I would like to admit).
 
