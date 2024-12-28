@@ -29,14 +29,14 @@ print(*device(66171486), sep=",")
 ```
 
 So far so good.  Part 2 gets hairy and involves searching for the smallest argument `a` that
-makes the device into a [quine](https://en.wikipedia.org/wiki/Quine_(computing)).  Simplifiying
+turns the device into a [quine](https://en.wikipedia.org/wiki/Quine_(computing)).  Simplifiying
 the program as shown below highlights the fact that `device` yields one value per octal digit
 of `a`.  So we're looking for an `a` with 16 octal digits.  There are $$2^{48}$$ of those!
 This reminds us of the [wheat and chessboard problem](https://en.wikipedia.org/wiki/Wheat_and_chessboard_problem)
 and we quickly realize that a 
 [brute-force search](https://en.wikipedia.org/wiki/Brute-force_search) will run into
 [heat death of the universe](https://en.wikipedia.org/wiki/Heat_death_of_the_universe) issues
-(although not quite a quickly as I would like to admit).
+(although not quite as quickly as I would like to admit).
 
 ```python
 def device(b: int) -> Iterable[int]:
@@ -46,7 +46,7 @@ def device(b: int) -> Iterable[int]:
 ```
 
 I could vaguely remember reading something about [SAT solvers](https://en.wikipedia.org/wiki/SAT_solver)
-and [Bit Twiddling Hacks](https://graphics.stanford.edu/~seander/bithacks.html).  The combine search
+and [Bit Twiddling Hacks](https://graphics.stanford.edu/~seander/bithacks.html).  The combined search
 took me to [this page](https://ericpony.github.io/z3py-tutorial/guide-examples.htm) and the following
 Z3-based solution:
 
@@ -81,7 +81,7 @@ tech.
 Still, I couldn't help but feel that I [brought a gun to a knife fight](https://xkcd.com/1890/).
 (Don't get me wrong, I absolutely took the AoC credit but I didn't love the 
 [black box](https://en.wikipedia.org/wiki/Black_box) solution).  So I stared at the short
-implementation for a while longer and realize an alternative solution:
+implementation for a while longer and found an alternative solution:
 
 ```python
 a = {0}
@@ -96,4 +96,4 @@ min(a)
 Ultimately, this amounts of [backward induction](https://en.wikipedia.org/wiki/Backward_induction)
 which is likely one of the many strategies that `Z3` implements.  Unlike the brute-force approach,
 this implementation [prunes](https://en.wikipedia.org/wiki/Prune_and_search) aggressively which
-keeps its complexity much manageable.
+keeps its complexity manageable.
