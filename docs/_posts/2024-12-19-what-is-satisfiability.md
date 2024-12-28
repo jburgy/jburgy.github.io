@@ -93,7 +93,7 @@ for out in reversed([2, 4, 1, 6, 7, 5, 4, 6, 1, 4, 5, 5, 0, 3, 3, 0]):
 min(a)
 ```
 
-Ultimately, this amounts of [backward induction](https://en.wikipedia.org/wiki/Backward_induction)
+Ultimately, this amounts to [backward induction](https://en.wikipedia.org/wiki/Backward_induction)
 which is likely one of the many strategies that `Z3` implements.  Unlike the brute-force approach,
 this implementation [prunes](https://en.wikipedia.org/wiki/Prune_and_search) aggressively which
 keeps its complexity manageable.
