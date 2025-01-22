@@ -47,10 +47,9 @@ const Node = struct {
 ```
 
 [Cloudef suggested an arena](https://discord.com/channels/605571803288698900/1325848433965400105/1325857847917154325)
-but I was reluctant because I fear it would create too much
+but I was reluctant because I feared it would create too much
 [coupling](https://en.wikipedia.org/wiki/Coupling_(computer_programming)) between a type and the allocator
-to create its instances.
-Teralux warned that
+that creates its instances.  Teralux also warned that
 ["[f]reeing graphs is generally a slow operation."](https://discord.com/channels/605571803288698900/1325848433965400105/1325860143820439585)  Furthermore, echoes of Andrew's "Data Oriented Design" talk were still brewing in my
 left hippocampus.  I put them all together into
 
@@ -73,6 +72,7 @@ footprint of the old `Node` was `10 + 8n` bytes where `n = node.args.len`:
 * `.args.len`: `8` bytes
 * each additional `arg: *const Node`: `8` bytes
 
+The new `Node`, by contrast, only occupies `4` bytes.
 That's a 2½-fold size reduction for a node with zero arguments and 2⅙-fold for a binary node!
 Of course, the main attraction is that `nodes` can be freed using either `nodes.deinit()`
 if you're still holding a reference to the `std.ArrayList` or `allocator.free(nodes)` if you
