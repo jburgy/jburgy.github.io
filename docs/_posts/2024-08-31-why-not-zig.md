@@ -152,7 +152,7 @@ that association list, keyed by `"+"` and linked to `name_DECR4`.
 
 In Zig, preprocessor macros are replaced by a handful of comptime functions
 which all ultimately call
-```c
+```zig
 const Word = extern struct {
     link: ?*const Word,
     flag: u8,
@@ -197,7 +197,7 @@ to the word itself as well as compute the number of instructions in a word.
 We used one more `comptime` trick to keep our code [DRY](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself): abusing `struct` to create
 [closures](https://gencmurat.com/en/posts/zig-anonymus-functions-and-closures/).
 This let us implement `+` as
-```c
+```zig
 inline fn _add(sp: []isize) ![]isize {
     sp[1] += sp[0];
     return sp[1..];

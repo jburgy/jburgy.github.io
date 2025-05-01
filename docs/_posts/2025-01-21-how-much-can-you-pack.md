@@ -33,7 +33,7 @@ the specific flavor I'm interested in here _data structure flattening_."  My ini
 was that I didn't like how a seemingly simple `Node` data structure required such a complex
 `.destroy` method:
 
-```c
+```zig
 const Node = struct {
     token: Token,
     args: []const *const Node,
@@ -53,7 +53,7 @@ that creates its instances.  Teralux also warned that
 ["[f]reeing graphs is generally a slow operation."](https://discord.com/channels/605571803288698900/1325848433965400105/1325860143820439585)  Furthermore, echoes of Andrew's "Data Oriented Design" talk were still brewing in my
 left hippocampus.  I put them all together into
 
-```c
+```zig
 pub const Node = packed union {
     head: packed struct(u32) { token: u24, count: u8 },
     node: u32,
@@ -94,7 +94,7 @@ individual bytes (for `C!` and `@`), words (for `C!` and `C@`), and code address
 I didn't make the effort to understand `std.ArrayList` to see which parts lent themselves to my
 purpose.  The trick turned out to be
 
-```c
+```zig
 fn InterpAligned(comptime alignment: u29) type {
     return struct {
         state: isize,
