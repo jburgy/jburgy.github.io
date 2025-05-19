@@ -63,7 +63,7 @@ pub const Node = packed union {
 This definition replaces a _copy_ of each token by an index _into_ `[]const Token`
 (weighing in at a mere `3` bytes intead of `24`).  It also broke up `[]const *const Node` into
 a 1-byte `count` squeezed with the token followed by _indices_ into `[]const Node`.  The memory
-footprint of the old `Node` was `10 + 8n` bytes where `n = node.args.len`:
+footprint of the old `Node` was `40 + 8n` bytes where `n = node.args.len`:
 
 * `.token.tag`: `8` bytes
 * `.token.src.ptr`: `8` bytes
