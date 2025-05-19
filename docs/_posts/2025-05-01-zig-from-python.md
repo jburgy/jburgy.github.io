@@ -130,3 +130,6 @@ And for that,
     <iframe src="https://gifer.com/embed/RJ8L" width="100%" height="100%" style='position:absolute;top:0;left:0;' frameBorder="0" allowFullScreen>
     </iframe>
 </div>
+
+* Updated on 5/19/25: See my [Zig NYC](https://zignyc.github.io/)
+[slides](https://github.com/jburgy/blog/blob/main/talks/pydust.html)
