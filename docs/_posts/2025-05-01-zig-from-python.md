@@ -4,6 +4,9 @@ title:  "How do you call Zig from python?"
 date:   2025-05-01 09:27:41 -0500
 ---
 
+5/19/25 update: See my [Zig NYC #4](https://zignyc.github.io/)
+[slides](https://html-preview.github.io/?url=https://github.com/jburgy/blog/blob/main/talks/pydust.html)
+
 As this [previous post]({% post_url 2024-08-31-why-not-zig %}) demonstrates,
 I rather enjoy [Zig](https://ziglang.org/).  However, software I write
 professionally is almost exclusively in [python](https://www.python.org/).
@@ -130,6 +133,3 @@ And for that,
     <iframe src="https://gifer.com/embed/RJ8L" width="100%" height="100%" style='position:absolute;top:0;left:0;' frameBorder="0" allowFullScreen>
     </iframe>
 </div>
-
-* Updated on 5/19/25: See my [Zig NYC](https://zignyc.github.io/)
-[slides](https://html-preview.github.io/?url=https://github.com/jburgy/blog/blob/main/talks/pydust.html)
