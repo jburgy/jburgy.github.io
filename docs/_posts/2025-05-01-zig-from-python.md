@@ -132,4 +132,4 @@ And for that,
 </div>
 
 * Updated on 5/19/25: See my [Zig NYC](https://zignyc.github.io/)
-[slides](https://github.com/jburgy/blog/blob/main/talks/pydust.html)
+[slides](https://html-preview.github.io/?url=https://github.com/jburgy/blog/blob/main/talks/pydust.html)
