@@ -85,7 +85,7 @@ Tiny BASIC is getting quite cute here.  It matches `"GOTO"` as `"GO"` + `"TO"` s
 if the first segment matched but not the second one, like a [radix tree](https://en.wikipedia.org/wiki/Radix_tree).
 
 A good exercise to appreciate how much thought went into the design of TBIL is to write an
-[assembler for it](https://github.com/jburgy/blog/blob/master/TinyBasic/assembler.py).
+[assembler for it](https://github.com/jburgy/blog/blob/main/TinyBasic/assembler.py).
 That assembler must recognize opcodes that are followed by an argument, like branches (`BR`, `BV`, `BN`, `BE`, `BC`),
 jumps (`JS` and `J`), loads (`LB` and `LN`), and `SX`.  Most of them combine themselves with (the first byte of)
 their argument. In the case of loaders, the argument follows.  The inner loop could look something like this:

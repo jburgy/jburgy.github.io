@@ -29,7 +29,7 @@ utility is to provide a connection between Python and Fortran." Large chunks of
 Now we need an interesting piece of Fortran to experiment with `F2PY`.
 
 I have chosen a frightfully clever implementation of the [Cooley-Tukey FFT algorithm](https://en.wikipedia.org/wiki/Cooley%E2%80%93Tukey_FFT_algorithm)
-by [Dr Norman Brenner](https://home.gwu.edu/~nbrenner/), now at The George Washington University.
+by [Dr Norman Brenner](https://ieeexplore.ieee.org/document/1162805), now at The George Washington University.
 Dr Brenner's is a multi-radix, arbitrary dimension, real or complex fast fourier transform.
 It is described in detail in a [technical note](https://apps.dtic.mil/sti/pdfs/AD0657019.pdf)
 published in 1967 "with the support of the U.S. Air Force under Contract AF 19(628)-5167".

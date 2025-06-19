@@ -110,7 +110,7 @@ accordingly.  In Forth, the same expression reads
 ```
 
 Forth is not just more compact than python bytecode, it also requires no numerical offsets.  Of course, if you really
-prefer typing all of that, feel free to use this [bytecode assembler](https://github.com/jburgy/blog/blob/master/fun/assemble.py).
+prefer typing all of that, feel free to use this [bytecode assembler](https://github.com/jburgy/blog/blob/main/fun/assemble.py).
 
 Now that our objective is defined, what should the interface look like?  Compiling one function at a time is reasonable
 for toy micro-optimizations.  That said, where should the Forth sit relative to the python function?  We could use
@@ -139,7 +139,7 @@ drop nip ;
 
 and apply a [higher-order function](https://en.wikipedia.org/wiki/Higher-order_function) or
 [decorator](https://docs.python.org/3/glossary.html#term-decorator) to return a new python function whose
-bytecode was derived from the Forth text.  This is precisely what [forth.py](https://github.com/jburgy/blog/blob/master/fun/forth.py)
+bytecode was derived from the Forth text.  This is precisely what [forth.py](https://github.com/jburgy/blog/blob/main/fun/forth.py)
 achieves with a little [metaprogramming](https://docs.python.org/3/reference/datamodel.html#metaclasses) and
 [self-modifying code](https://en.wikipedia.org/wiki/Self-modifying_code) thrown in.  The self-modifying code occurs
 when methods of `class ForthCompiler` redefine its `emit_default` method based on the current Forth

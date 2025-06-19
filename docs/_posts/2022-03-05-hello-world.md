@@ -7,7 +7,7 @@ I have been toying with the idea of assembling content for the public web for a 
 to really learn the inner workings of HTTP.  I even considered going at it without any framework, hand coding HTML directly and slowly
 evolving my own framework as I went.  Fortunately, I quickly realized that I'm much too lazy for that approach to go anywhere.  So I looked
 for the highest ROI approach instead and settled on [GitHub Pages](https://pages.github.com).  You probably wonder how come you're not reading
-this at the expected [https://jburgy.github.io](https://jburgy.github.io) address.  I realized a few years back that my last name ends like
+this at the expected [https://jburgy.github.io](https://bur.gy) address.  I realized a few years back that my last name ends like
 the [Top-Level Domain](https://en.wikipedia.org/wiki/Country_code_top-level_domain) for [Guyana](https://en.wikipedia.org/wiki/.gy).  So I
 naturally registered the corresponding domain.
 

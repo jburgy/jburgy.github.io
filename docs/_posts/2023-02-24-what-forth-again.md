@@ -23,7 +23,7 @@ The first bit of actual code in `jonesforth.S` is the `NEXT` macro:
     .endm
 ```
 `NEXT` is fundamental to `FORTH` yet remarkably only requires two x86 instructions.  The second instruction
-reminds us of [What makes Julia delightful, cont'd?]({% post_url 2022-05-26-what-makes-julia-delightful %})  The
+reminds us of {% post_url 2022-05-26-what-makes-julia-delightful %}.  The
 wikipedia [entry on threaded code](https://en.wikipedia.org/wiki/Threaded_code) outlines a rather vast array
 of potential translations.  However, in the spirit of keeping our translation as faithful to the original as
 possible, I chose [GNU C's Labels as Values](https://gcc.gnu.org/onlinedocs/gcc/Labels-as-Values.html). This
@@ -101,7 +101,7 @@ access the required [SharedArrayBuffer](https://developer.mozilla.org/en-US/docs
 on [github pages](https://dev.to/stefnotch/enabling-coop-coep-without-touching-the-server-2d3n)
 
 Thanks also to [Richard Jones](https://rwmj.wordpress.com/) for pointing out I forgot to include a link to my
-GNU C translation of his code.  [Here](https://github.com/jburgy/blog/blob/master/fun/4th.c) it is.
+GNU C translation of his code.  [Here](https://github.com/jburgy/blog/blob/main/fun/4th.c) it is.
 
 3/1 Update: I was really impressed by how `jonesforth.f` defines `ARGC`, `ARGV`, and `ENVIRON` so I set out to
 understand it better.  I came across two tremendously helpful blog posts about the subject:
@@ -149,7 +149,7 @@ whereas I still run [GCC 10](https://gcc.gnu.org/gcc-10/) locally.
 stack.  The root cause was the `-mpreferred-stack-boundary=3` switch I introduced to simplify `ARGC`.
 So I replaced it by `-mstackrealign`, adjusted the definition of `ARGC` accordingly (`7` → `8`) and added a test for it.
 I would never have figured any of this out without [nektos/act](https://github.com/nektos/act) and 
-[Visual Studio Code Dev Containers](https://code.visualstudio.com/docs/devcontainers/containers).
+[Visual Studio Code Dev Containers](https://github.com/microsoft/vscode-docs/blob/main/docs/devcontainers/containers.md).
 
 <div id="terminal"></div>
 <script type="module">

@@ -136,7 +136,7 @@ for i in range(3):  # y = α A x + β y
 daxpy(a=dt, x=a.real, y=v)  # v += a dt
 daxpy(a=dt, x=v, y=x)  # x += v dt
 ```
-The full program can be found [here](https://github.com/jburgy/blog/blob/master/fun/nbody.py).
+The full program can be found [here](https://github.com/jburgy/blog/blob/main/fun/nbody.py).
 
 ### Postscript
 

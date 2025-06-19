@@ -168,7 +168,7 @@ OrderedDict{Int64, Function} with 7 entries:
 
 The key difference between this and the simpler `"(ab)"` is the `brazero!` opcode at index `3`.  It indicates that the
 following group can be leap-frogged entirely since the Kleene star matches 0 or more times.  All of the clever bits can
-now be packed in the definitions of `alt!`, `char!`, `bra!`, and friends, see [here](https://github.com/jburgy/blog/blob/master/fun/regexp.jl).
+now be packed in the definitions of `alt!`, `char!`, `bra!`, and friends, see [here](https://github.com/jburgy/blog/blob/main/fun/regexp.jl).
 
 To summarize, Julia's foreign function interface and multiple dispatch let us explore PCRE2's internal representation
 and implement a bare bones call-threaded matching engine.  Julia's metaprogramming support should let us transform

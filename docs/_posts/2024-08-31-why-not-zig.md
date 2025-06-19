@@ -209,7 +209,7 @@ is a [slice](https://ziglang.org/documentation/master/#Slices) which gives the
 Zig compiler an opportunity to generate bound checks.
 
 ## Next steps
-[5th.zig](https://github.com/jburgy/blog/blob/master/fun/5th.zig) mostly works.
+[5th.zig](https://github.com/jburgy/blog/blob/main/fun/5th.zig) mostly works.
 It executes the bootstrapping FORTH code that adds control structures, strings,
 introspection, and a bunch of other goodies.  I don't love how I skirted
 memory allocation.  I would prefer switching to
@@ -294,7 +294,7 @@ does a really good job of converting them to
 
 I presented Zorth to the first NYC zig meetup!
 
-[![ZORTH](http://img.youtube.com/vi/Bar4IFc1NpM/0.jpg)](http://www.youtube.com/watch?v=Bar4IFc1NpM "FORTH in Zig")
+[![ZORTH](http://img.youtube.com/vi/Bar4IFc1NpM/0.jpg)](https://www.youtube.com/watch?v=Bar4IFc1NpM "FORTH in Zig")
 
 ## Update 2: 11/12/2024
 

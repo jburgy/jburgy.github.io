@@ -5,7 +5,7 @@ date:   2023-03-09 22:25:13 -0500
 ---
 
 Emboldened by the [previous post]({% post_url 2023-02-24-what-forth-again %}) on bringing FORTH to your browser
-and still intrigued by [xterm.js](http://xtermjs.org/), this post explores a different dynamic language
+and still intrigued by [xterm.js](https://xtermjs.org/), this post explores a different dynamic language
 in Webassembly.  We also want to learn new things as we go so we will take a slightly different approach
 this time.
 
@@ -61,7 +61,7 @@ does not tolerate negative offsets the way C does
 (instead it throws `RuntimeError: memory access out of bounds`). This forced me to use `load<u8>(i, M)` when `i > 0` and
 `load<T>(M + (i << align))` otherwise.
 
-You can read the finished product [here](https://github.com/jburgy/blog/blob/master/lisp/assembly/index.ts)
+You can read the finished product [here](https://github.com/jburgy/blog/blob/main/lisp/assembly/index.ts)
 but it's much more fun to interact with it directly:
 
 <div id="terminal"></div>
