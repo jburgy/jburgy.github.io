@@ -1,0 +1,12 @@
+[project]
+name = "jburgy.github.io"
+version = "0.1.0"
+readme = "README.md"
+requires-python = ">=3.12"
+license = {file = "LICENSE"}
+urls = {Homepage = "https://bur.gy"}
+
+[dependency-groups]
+dev = [
+    "pre-commit>=4.2.0",
+]

@@ -5,8 +5,6 @@
 # ]
 # ///
 
-from __future__ import annotations
-
 import asyncio
 from contextlib import suppress
 from html.parser import HTMLParser
@@ -24,12 +22,16 @@ class LinkFinder(HTMLParser):
     def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]):
         if tag != "a":
             return
-        self.hrefs.update(val for key, val in attrs if key == "href")
+        self.hrefs.update(
+            val
+            for key, val in attrs
+            if key == "href"
+            and isinstance(val, str)
+            and not val.startswith("https://news.ycombinator.com/item?id=")
+        )
 
 
-async def head(
-    session: aiohttp.ClientSession, href: str
-) -> tuple[str, HTTPStatus]:
+async def head(session: aiohttp.ClientSession, href: str) -> tuple[str, HTTPStatus]:
     status = HTTPStatus.NOT_FOUND
     href = href.removeprefix("http://localhost:4000")
     if href.startswith(r"/"):
@@ -51,11 +53,9 @@ async def statuses(hrefs: set[str]) -> dict[str, HTTPStatus]:
             if status
             not in {
                 HTTPStatus.OK,
-                # HTTPStatus.MOVED_PERMANENTLY,
                 HTTPStatus.FOUND,
                 HTTPStatus.FORBIDDEN,
-                HTTPStatus.METHOD_NOT_ALLOWED,
-                HTTPStatus.NOT_ACCEPTABLE,
+                HTTPStatus.IM_A_TEAPOT,
             }
         }
 
@@ -68,6 +68,5 @@ for file in (Path("docs") / "_site").glob("**/*.html"):
     link_finder.feed(file.read_text())
 
 result = asyncio.run(statuses(link_finder.hrefs))
-
-print(result)
-
+if result:
+    exit(1)

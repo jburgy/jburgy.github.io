@@ -31,7 +31,7 @@ is what my `NEXT` macro looks like in C:
 ```c
 #define NEXT do { target = *ip++; goto **target; } while (0)
 ```
-Checking the generated assembly (using [-fverbose-asm](https://renenyffenegger.ch/notes/development/languages/C-C-plus-plus/GCC/options/f/verbose-asm)),
+Checking the generated assembly (using [-fverbose-asm](https://gcc.gnu.org/onlinedocs/gcc/Code-Gen-Options.html#index-fverbose-asm)),
 we see that GCC always translates `goto **target` to
 ```nasm
     movq    (%rdx), %rax

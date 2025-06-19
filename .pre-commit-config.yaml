@@ -1,0 +1,14 @@
+repos:
+  - repo: https://github.com/astral-sh/uv-pre-commit
+    rev: 0.7.13
+    hooks:
+      - id: uv-sync
+  - repo: local
+    hooks:
+      - id: find-broken-links
+        name: find-broken-links
+        description: Scan pages for broken URLs
+        entry: uv run --script find_broken_links.py
+        language: python
+        pass_filenames: false
+        always_run: true
