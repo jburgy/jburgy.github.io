@@ -23,7 +23,7 @@ The first bit of actual code in `jonesforth.S` is the `NEXT` macro:
     .endm
 ```
 `NEXT` is fundamental to `FORTH` yet remarkably only requires two x86 instructions.  The second instruction
-reminds us of {% post_url 2022-05-26-what-makes-julia-delightful %}.  The
+reminds us of [What makes Julia delightful, cont'd?]({% post_url 2022-05-26-what-makes-julia-delightful %}).  The
 wikipedia [entry on threaded code](https://en.wikipedia.org/wiki/Threaded_code) outlines a rather vast array
 of potential translations.  However, in the spirit of keeping our translation as faithful to the original as
 possible, I chose [GNU C's Labels as Values](https://gcc.gnu.org/onlinedocs/gcc/Labels-as-Values.html). This
