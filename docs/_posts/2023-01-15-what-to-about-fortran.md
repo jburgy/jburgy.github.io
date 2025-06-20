@@ -59,3 +59,45 @@ and learned [meson](https://mesonbuild.com/) because that's what [SciPy](https:/
 To be frank, I take exception about the nasty line about `make` in the
 [f2py documentation](https://numpy.org/doc/stable/f2py/buildtools/index.html).  Call me old-fashioned
 but I find it hard to place a high value on the investment it took me to pick up `meson`. 
+
+## Update: 6/20/205
+
+I finally crossed the [pons asinorum](https://en.wikipedia.org/wiki/Pons_asinorum) and embraced
+modern python packaging practices!  In typical [DevOps](https://en.wikipedia.org/wiki/DevOps) fashion,
+this took a **lot** of trial and error!  In the end, I made the following changes:
+
+```toml
+# pyproject.toml
+[build-system]
+requires = ["meson-python", "ninja", "numpy"]
+build-backend = "mesonpy"
+```
+
+```meson
+# meson.build
+project('fourt2py', 'c', ...)
+py = import('python').find_installation()
+subdir('fourt2py')
+```
+
+```meson
+# fourt2py/meson.build
+add_languages('fortran')
+binding = custom_target('fourt2pymodule.c', ...)
+py.extension_module('fourt2py', 'FOURT.F', binding, ..., install : true)
+```
+
+Some of the bigger stumbling blocks along the way:
+* [`"meson-python"`](https://mesonbuild.com/meson-python/) in `build-system.requires`
+* [`UV_NO_EDITABLE`](https://docs.astral.sh/uv/reference/environment/#uv_no_editable)
+(see [astral-sh/uv#10214](https://github.com/astral-sh/uv/issues/10214))
+* [`--build-dir`](https://numpy.org/doc/stable/f2py/usage.html) argument to `numpy.f2py` custom target
+(see [this SO answer](https://stackoverflow.com/a/49513750/8479938))
+* [`install : true`](https://mesonbuild.com/Reference-manual_functions.html#shared_module) argument
+to [`py.extension_module`](https://mesonbuild.com/Python-module.html#extension_module)
+
+These tools remind me of Ulysses having to prove himself by shooting an arrow through the
+holes of twelve axe heads.  I sometimes wonder whether that's where
+[the twelve-factor app](https://12factor.net/) comes from.
+
+![TSG_Entertainment_logo](https://upload.wikimedia.org/wikipedia/en/b/b8/TSG_Entertainment_logo.png)
