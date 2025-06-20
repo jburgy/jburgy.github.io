@@ -101,7 +101,7 @@ access the required [SharedArrayBuffer](https://developer.mozilla.org/en-US/docs
 on [github pages](https://dev.to/stefnotch/enabling-coop-coep-without-touching-the-server-2d3n)
 
 Thanks also to [Richard Jones](https://rwmj.wordpress.com/) for pointing out I forgot to include a link to my
-GNU C translation of his code.  [Here](https://github.com/jburgy/blog/blob/main/fun/4th.c) it is.
+GNU C translation of his code.  [Here](https://github.com/jburgy/blog/blob/main/forth/4th.c) it is.
 
 3/1 Update: I was really impressed by how `jonesforth.f` defines `ARGC`, `ARGV`, and `ENVIRON` so I set out to
 understand it better.  I came across two tremendously helpful blog posts about the subject:

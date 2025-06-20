@@ -171,8 +171,8 @@ The [webassembly](https://webassembly.org/) version, courtesy of
 )
 ```
 
-In summary, [`5th.c`](https://github.com/jburgy/blog/blob/main/fun/5th.c) looks
-different from [`4th.c`](https://github.com/jburgy/blog/blob/main/fun/4th.c), at least
+In summary, [`5th.c`](https://github.com/jburgy/blog/blob/main/forth/5th.c) looks
+different from [`4th.c`](https://github.com/jburgy/blog/blob/main/forth/4th.c), at least
 when considering their C sources. Turns out that compilers generate very similar code
 from those difference sources.  That code is also reminiscent of
 [jonesforth.S](https://github.com/nornagon/jonesforth/blob/master/jonesforth.S)
@@ -180,7 +180,7 @@ which was hand-crafted in 32-bit x86.  `5th.c` is probably the easiest to extend
 of the bunch.  New native instructions only require implementing a new C function with
 a well-defined signature.  It might be the
 [shiny object syndrome](https://en.wikipedia.org/wiki/Shiny_object_syndrome) but think that
-[`5th.c`](https://github.com/jburgy/blog/blob/main/fun/5th.c) is a reasonable
+[`5th.c`](https://github.com/jburgy/blog/blob/main/forth/5th.c) is a reasonable
 [blueprint](https://en.wikipedia.org/wiki/Blueprint) for implementing your next interpreter. 
 
 <div id="terminal"></div>

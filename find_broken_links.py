@@ -69,4 +69,5 @@ for file in (Path("docs") / "_site").glob("**/*.html"):
 
 result = asyncio.run(statuses(link_finder.hrefs))
 if result:
+    print(result)
     exit(1)

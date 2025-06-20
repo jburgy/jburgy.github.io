@@ -139,7 +139,7 @@ drop nip ;
 
 and apply a [higher-order function](https://en.wikipedia.org/wiki/Higher-order_function) or
 [decorator](https://docs.python.org/3/glossary.html#term-decorator) to return a new python function whose
-bytecode was derived from the Forth text.  This is precisely what [forth.py](https://github.com/jburgy/blog/blob/main/fun/forth.py)
+bytecode was derived from the Forth text.  This is precisely what [forth.py](https://github.com/jburgy/blog/blob/main/forth/forth.py)
 achieves with a little [metaprogramming](https://docs.python.org/3/reference/datamodel.html#metaclasses) and
 [self-modifying code](https://en.wikipedia.org/wiki/Self-modifying_code) thrown in.  The self-modifying code occurs
 when methods of `class ForthCompiler` redefine its `emit_default` method based on the current Forth
