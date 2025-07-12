@@ -27,7 +27,9 @@ class LinkFinder(HTMLParser):
             for key, val in attrs
             if key == "href"
             and isinstance(val, str)
-            and not val.startswith("https://news.ycombinator.com/item?id=")
+            and not val.startswith(
+                ("https://bur.gy/", "https://news.ycombinator.com/item?id=", "#fn")
+            )
         )
 
 
