@@ -144,11 +144,11 @@ order:
 | ---------------------------- | ---- | ----------------------------------------------------------- |
 | Linux Signals                | 1972 | Handle SIGWINCH to truncate lines and erase correctly       |
 | Control Sequence Introducers | 1976 | Manipulate standard output beyond appending to it           |
-| ZIP file format              | 1989 | Because that's what AWS chose in 2014                       |
+| ZIP file format[^1]          | 1989 | Because that's what AWS chose in 2014                       |
 | Python                       | 1989 | High-level and general-purpose                              |
 | Meson                        | 2013 | Best build backend for compiled extension                   |
 | Zig                          | 2016 | "programming language designed for making perfect software" |
-| Ziggy Pydust[^1]             | 2023 | "Framework for building native Python extension in Zig"     |
+| Ziggy Pydust[^2]             | 2023 | "Framework for building native Python extension in Zig"     |
 | uv                           | 2024 | "extremely fast Python package installer and resolver"      |
 
 If anything, this proves that, in the world of software, maybe you _can_ teach old dogs new tricks!
@@ -157,4 +157,5 @@ Obviously, all of this goes back to the
 but that's true of every software project so I chose to leave it out.  The above selection
 is trying to enumerate choices that are particularly salient to the tool being discussed.
 
-[^1]: "It's not the destination, it's the journey." ― Ralph Waldo Emerson
+[^1]: [Truncating](https://discuss.python.org/t/disable-shell-word-wrapping/4297/5) is one way to avoid line wraps but the [VT100](https://en.wikipedia.org/wiki/VT100) has escape sequences to control [auto wrap](https://www.vt100.net/docs/vt102-ug/chapter5.html#S5.5.2.8) (`"\N{escape}[?7l"`)
+[^2]: "It's not the destination, it's the journey." ― Ralph Waldo Emerson
