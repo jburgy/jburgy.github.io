@@ -28,7 +28,7 @@ an [`.always_tail`](https://ziglang.org/documentation/master/#call) call modifie
 Alright then, porting a C program that uses `musttail` to a "better C than C" that
 supports `.always_tail` should be
 [like shooting fish in a barrel](https://en.wiktionary.org/wiki/like_shooting_fish_in_a_barrel).
-But things rarely go as you with they would.  Which brings us to our first challenge:
+But things rarely go as you wish they would.  Which brings us to our first challenge:
 
 ## Macros
 
