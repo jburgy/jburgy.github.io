@@ -31,7 +31,7 @@ jobs:
 
     environment:
       name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+      url: ${{ format('{0}/jupyter', steps.deployment.outputs.page_url) }}
 
     runs-on: ubuntu-latest
     steps:
