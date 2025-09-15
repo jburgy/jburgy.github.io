@@ -17,7 +17,7 @@ jobs:
         with:
           python-version: '3.13'
       - run: uv sync
-      - run: uv run jupyter lite build --contents docs/jupyter/content --output-dir dist
+      - run: uv run --directory docs/jupyter jupyter lite build --contents content --output-dir dist
       - uses: actions/upload-pages-artifact@v3
         with:
           path: ./dist
