@@ -24,7 +24,7 @@ jobs:
 
   deploy:
     needs: build
-    if: github.ref == 'refs/heads/gh-pages'
+    if: github.ref == 'refs/heads/main'
     permissions:
       pages: write
       id-token: write
