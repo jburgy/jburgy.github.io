@@ -20,7 +20,7 @@ jobs:
       - run: uv run --directory docs/jupyter jupyter lite build --contents content --output-dir dist
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: ./dist
+          path: ./docs/jupyter/dist
 
   deploy:
     needs: build
