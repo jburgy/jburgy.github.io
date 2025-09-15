@@ -130,7 +130,3 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
-
-# jupyterlite
-*.doit.db
-_output

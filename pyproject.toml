@@ -5,12 +5,6 @@ readme = "README.md"
 requires-python = ">=3.12"
 license = {file = "LICENSE"}
 urls = {Homepage = "https://bur.gy"}
-dependencies = [
-    "jupyterlab>=4.4.7",
-    "jupyterlite-core>=0.6.4",
-    "jupyterlite-pyodide-kernel>=0.6.1",
-    "notebook>=7.4.5",
-]
 
 [dependency-groups]
 dev = [
