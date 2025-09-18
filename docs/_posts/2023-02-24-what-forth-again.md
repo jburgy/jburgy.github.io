@@ -155,7 +155,7 @@ I would never have figured any of this out without [nektos/act](https://github.c
 <script type="module">
     import "/assets/js/xterm.js";
     import "/assets/js/xterm-pty.js";
-    import initEmscripten from "/assets/js/4th.mjs";
+    import initEmscripten from "/blog/4th.mjs";
 
     const xterm = new Terminal();
     xterm.open(document.getElementById("terminal"));

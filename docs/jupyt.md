@@ -1,4 +1,4 @@
 ---
 title: Jupyter
-redirect_to: /jupyter
+redirect_to: /jupyter/lab/index.html
 ---

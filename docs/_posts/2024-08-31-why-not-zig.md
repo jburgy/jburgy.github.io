@@ -209,7 +209,7 @@ is a [slice](https://ziglang.org/documentation/master/#Slices) which gives the
 Zig compiler an opportunity to generate bound checks.
 
 ## Next steps
-[5th.zig](https://github.com/jburgy/blog/blob/main/forth/5th.zig) mostly works.
+[6th.zig](https://github.com/jburgy/blog/blob/main/forth/6th.zig) mostly works.
 It executes the bootstrapping FORTH code that adds control structures, strings,
 introspection, and a bunch of other goodies.  I don't love how I skirted
 memory allocation.  I would prefer switching to
