@@ -185,9 +185,9 @@ a well-defined signature.  It might be the
 
 <div id="terminal"></div>
 <script type="module">
-    import "/assets/js/xterm.js";
-    import "/assets/js/xterm-pty.js";
-    import initEmscripten from "/assets/js/5th.mjs";
+    import "/blog/node_modules/@xterm/xterm/lib/xterm.js";
+    import { openpty } from "/blog/node_modules/xterm-pty/index.mjs";
+    import initEmscripten from "/blog/5th.mjs";
 
     const xterm = new Terminal();
     xterm.open(document.getElementById("terminal"));

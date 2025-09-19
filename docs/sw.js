@@ -13,9 +13,9 @@ self.addEventListener("fetch", (event) => {
         "put-it-in-a-brandy-snifter.html",
         "tail-recursion.html",
         "why-not-zig.html",
-        "4th.worker.mjs",
-        "5th.worker.mjs",
-        "zorth.worker.mjs",
+        "4th.mjs",
+        "5th.mjs",
+        "6th.mjs",
         "lisp.worker.js",
         "TinyBasic.worker.js",
     ];
