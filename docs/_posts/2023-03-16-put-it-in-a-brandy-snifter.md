@@ -139,7 +139,7 @@ Can you imagine feverishly unboxing your brand new laptop only to discover that 
 
 <div id="terminal"></div>
 <script type="module">
-    import {Terminal } from "/blog/node_modules/@xterm/xterm/lib/xterm.js";
+    import "/blog/node_modules/@xterm/xterm/lib/xterm.js";
     import { openpty } from "/blog/node_modules/xterm-pty/index.mjs";
     import { TtyServer } from "/blog/dist/ttyServer.js";
 
