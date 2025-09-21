@@ -65,16 +65,18 @@ You can read the finished product [here](https://github.com/jburgy/blog/blob/mai
 but it's much more fun to interact with it directly:
 
 <div id="terminal"></div>
-<script src="https://cdn.jsdelivr.net/npm/xterm@4.17.0/lib/xterm.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/xterm-pty@0.9.4/index.js"></script>
 <script>
+    import "/blog/node_modules/@xterm/xterm/lib/xterm.js";
+    import { openpty } from "/blog/node_modules/xterm-pty/index.mjs";
+    import { TtyServer } from "/blog/dist/ttyServer.js";
+
     const xterm = new Terminal();
     xterm.open(document.getElementById("terminal"));
 
     const { master, slave } = openpty();
     xterm.loadAddon(master);
 
-    const worker = new Worker("/assets/js/lisp.worker.js");
+    const worker = new Worker("/assets/js/lisp.worker.js", { type: "module" });
     new TtyServer(slave).start(worker);
 </script>
 
