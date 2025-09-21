@@ -65,7 +65,7 @@ You can read the finished product [here](https://github.com/jburgy/blog/blob/mai
 but it's much more fun to interact with it directly:
 
 <div id="terminal"></div>
-<script>
+<script type="module">
     import "/blog/node_modules/@xterm/xterm/lib/xterm.js";
     import { openpty } from "/blog/node_modules/xterm-pty/index.mjs";
     import { TtyServer } from "/blog/dist/ttyServer.js";
