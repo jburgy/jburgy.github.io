@@ -138,15 +138,17 @@ Can you imagine feverishly unboxing your brand new laptop only to discover that 
 [hex](https://en.wikipedia.org/wiki/Hexadecimal)? 
 
 <div id="terminal"></div>
-<script src="https://cdn.jsdelivr.net/npm/xterm@4.17.0/lib/xterm.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/xterm-pty@0.9.4/index.js"></script>
-<script>
+<script type="module">
+    import {Terminal } from "/blog/node_modules/@xterm/xterm/lib/xterm.js";
+    import { openpty } from "/blog/node_modules/xterm-pty/index.mjs";
+    import { TtyServer } from "/blog/dist/ttyServer.js";
+
     const xterm = new Terminal();
     xterm.open(document.getElementById("terminal"));
 
     const { master, slave } = openpty();
     xterm.loadAddon(master);
 
-    const worker = new Worker("/assets/js/TinyBasic.worker.js");
+    const worker = new Worker("/assets/js/TinyBasic.worker.js", { type: "module" });
     new TtyServer(slave).start(worker);
 </script>
