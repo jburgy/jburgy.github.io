@@ -154,16 +154,17 @@ what?  Let us not conflate iterating in tight inner loops with iterating in the 
 
 ### See it for yourself
 
-I feel pretty strongly that [pyodide](https://pyodide.org/en/stable/) fits
+I feel pretty strongly that [JupyterLite](https://jupyter.org/try-jupyter/lab/) fits
 [Arthur C. Clarke](https://en.wikipedia.org/wiki/Arthur_C._Clarke)'s 
-[third law](https://en.wikipedia.org/wiki/Clarke%27s_three_laws): it lets you run
-python in the browser via the techno-magic of [WebAssembly](https://webassembly.org/).
-So while you were reading this post, your browser downloaded a Wasm port of
-[cpython](https://en.wikipedia.org/wiki/CPython), pip installed 
-[matplotlib](https://matplotlib.org/), [scipy](https://scipy.org/)
-(as well as the [transitive closure](https://en.wikipedia.org/wiki/Transitive_closure) of
-their dependencies), generated the trajectories of 
-[Jovian planets](https://en.wikipedia.org/wiki/Giant_planet), and rendered them
-to the HTML animation you can see below.  All of this _inside your browser_!
+[third law](https://en.wikipedia.org/wiki/Clarke%27s_three_laws): it is a 
+[JupyterLab](https://jupyter.org/)
+distribution that **runs entirely in the browser**.  Being a
+[Progressive Web App](https://en.wikipedia.org/wiki/Progressive_web_app) makes it relatively 
+straightforward to host.  The JupyterLite documentation walks you through how you can
+[deploy your first JupyterLite website on GitHub Pages](https://jupyterlite.readthedocs.io/en/stable/quickstart/deploy.html)
+and I did just that.  Below is an
+[iframe](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/iframe)
+which embeds a notebook that ties a bow around the ideas presented on this page.  You
+can see the full effect by pressing ⏩ (Restart the kernel and run all cells).
 
 <iframe src="/jupyter/notebooks/index.html?path=nbody.ipynb" width="100%" height="900px"></iframe>
