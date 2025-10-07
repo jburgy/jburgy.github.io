@@ -4,12 +4,14 @@ const pattern = new RegExp([
     "6th.mjs$",
     "lisp.worker.js$",
     "put-it-in-a-brandy-snifter.html$",
+    "sqlite3-opfs-async-proxy-[^.]+.js$",
     "sqlite3-worker1-bundler-friendly-[^.]+.js$",
     "tail-recursion.html$",
     "TinyBasic.worker.js$",
     "what-do-you-mean-homoiconic.html$",
     "what-forth-again.html$",
     "why-not-zig.html$",
+    "widget.mjs$",
 ].join("|"));
 
 self.addEventListener("install", () => self.skipWaiting());
