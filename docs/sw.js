@@ -1,3 +1,17 @@
+const pattern = new RegExp([
+    "4th.mjs$",
+    "5th.mjs$",
+    "6th.mjs$",
+    "lisp.worker.js$",
+    "put-it-in-a-brandy-snifter.html$",
+    "sqlite3-worker1-bundler-friendly-[^.]+.js$",
+    "tail-recursion.html$",
+    "TinyBasic.worker.js$",
+    "what-do-you-mean-homoiconic.html$",
+    "what-forth-again.html$",
+    "why-not-zig.html$",
+].join("|"));
+
 self.addEventListener("install", () => self.skipWaiting());
 
 self.addEventListener("activate", (event) => event.waitUntil(self.clients.claim()));
@@ -7,22 +21,10 @@ self.addEventListener("fetch", (event) => {
         return;
     }
 
-    const suffixes = [
-        "what-forth-again.html",
-        "what-do-you-mean-homoiconic.html",
-        "put-it-in-a-brandy-snifter.html",
-        "tail-recursion.html",
-        "why-not-zig.html",
-        "4th.mjs",
-        "5th.mjs",
-        "6th.mjs",
-        "lisp.worker.js",
-        "TinyBasic.worker.js",
-    ];
     event.respondWith(
         fetch(event.request).then(
             (response) => {
-                if (!suffixes.some(suffix => response.url.endsWith(suffix)))
+                if (!pattern.test(response.url))
                     return response;
 
                 const newHeaders = new Headers(response.headers);
