@@ -2,6 +2,7 @@ const pattern = new RegExp([
     "4th.mjs$",
     "5th.mjs$",
     "6th.mjs$",
+    "jupyter",
     "lisp.worker.js$",
     "put-it-in-a-brandy-snifter.html$",
     "sqlite3-opfs-async-proxy-[^.]+.js$",
