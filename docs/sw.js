@@ -34,6 +34,8 @@ self.addEventListener("fetch", (event) => {
                 newHeaders.set("Cross-Origin-Embedder-Policy", "require-corp");
                 newHeaders.set("Cross-Origin-Opener-Policy", "same-origin");
 
+                console.log("sw.js modified headers for ", response.url);
+
                 return new Response(response.body, {
                     status: response.status,
                     statusText: response.statusText,
