@@ -20,27 +20,31 @@ self.addEventListener("install", () => self.skipWaiting());
 self.addEventListener("activate", (event) => event.waitUntil(self.clients.claim()));
 
 self.addEventListener("fetch", (event) => {
-    if (event.request.cache === "only-if-cached" && event.request.mode !== "same-origin") {
+    const { request } = event;
+
+    if (request.cache === "only-if-cached" && request.mode !== "same-origin") {
+        return;
+    } else if (request.url.endsWith("/api/service-worker-heartbeat")) {
+        event.respondWith(new Response("ok"));
         return;
     }
 
     event.respondWith(
-        fetch(event.request).then(
-            (response) => {
-                if (!pattern.test(response.url))
-                    return response;
+        fetch(request).then(
+            (response) => pattern.test(response.url)
+                ? response.blob().then((blob) => {
+                    const headers = new Headers(response.headers);
+                    headers.set("Cross-Origin-Embedder-Policy", "require-corp");
+                    headers.set("Cross-Origin-Opener-Policy", "same-origin");
 
-                const newHeaders = new Headers(response.headers);
-                newHeaders.set("Cross-Origin-Embedder-Policy", "require-corp");
-                newHeaders.set("Cross-Origin-Opener-Policy", "same-origin");
-
-                console.log("sw.js modified headers for ", response.url);
-
-                return new Response(response.body, {
-                    status: response.status,
-                    statusText: response.statusText,
-                    headers: newHeaders,
-                });
-            }, console.error)
+                    console.log("sw.js modifying headers for", response.url);
+                    return new Response(blob, {
+                        status: response.status,
+                        statusText: response.statusText,
+                        headers: headers,
+                    });
+                }, console.error)
+                : response
+            , console.error)
     );
 });
