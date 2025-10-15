@@ -19,32 +19,38 @@ self.addEventListener("install", () => self.skipWaiting());
 
 self.addEventListener("activate", (event) => event.waitUntil(self.clients.claim()));
 
+/**
+ * Add Cross-Origin Isolation headers if necessary.
+ * @param {Request} request
+ * @param {Response} response
+ */
+async function fetchWithHeaders(request) {
+    if (request.url.endsWith("/api/service-worker-heartbeat")) {
+        return new Response("ok");
+    }
+
+    const response = await fetch(request);
+    if (!pattern.test(request.url)) {
+        return response;
+    }
+
+    const headers = new Headers(response.headers);
+    headers.set("Cross-Origin-Embedder-Policy", "require-corp");
+    headers.set("Cross-Origin-Opener-Policy", "same-origin");
+    console.log("sw.js modified headers for", response.url);
+
+    return new Response(response.body, {
+        status: response.status,
+        statusText: response.statusText,
+        headers: headers,
+    });
+}
+
 self.addEventListener("fetch", (event) => {
     const { request } = event;
 
     if (request.cache === "only-if-cached" && request.mode !== "same-origin") {
         return;
-    } else if (request.url.endsWith("/api/service-worker-heartbeat")) {
-        event.respondWith(new Response("ok"));
-        return;
     }
-
-    event.respondWith(
-        fetch(request).then(
-            (response) => pattern.test(response.url)
-                ? response.blob().then((blob) => {
-                    const headers = new Headers(response.headers);
-                    headers.set("Cross-Origin-Embedder-Policy", "require-corp");
-                    headers.set("Cross-Origin-Opener-Policy", "same-origin");
-
-                    console.log("sw.js modifying headers for", response.url);
-                    return new Response(blob, {
-                        status: response.status,
-                        statusText: response.statusText,
-                        headers: headers,
-                    });
-                }, console.error)
-                : response
-            , console.error)
-    );
+    event.respondWith(fetchWithHeaders(request));
 });
