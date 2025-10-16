@@ -19,7 +19,7 @@ You would think that would be enough, wouldn't you.
 
 Yet somehow that itch still needed scratching.  I also thought it was time to
 learn a new programming language that would accommodate my most recent
-implementation.  I obviously thought of [Rust](https://www.rust-lang.org/)
+implementation.  I obviously thought of [Rust](https://rust-lang.org)
 first because of all the buzz but [#81](https://github.com/rust-lang/rfcs/pull/81)
 put the kibosh on that idea.  [Zig](https://ziglang.org/) seemed a natural choice
 as well, particularly because of the "better C than C" tagline.  And `Zig` supports

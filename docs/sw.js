@@ -9,6 +9,7 @@ const pattern = new RegExp([
     "sqlite3-worker1-bundler-friendly-[^.]+.js$",
     "tail-recursion.html$",
     "TinyBasic.worker.js$",
+    "veg-o-matic.html$",
     "what-do-you-mean-homoiconic.html$",
     "what-forth-again.html$",
     "why-not-zig.html$",

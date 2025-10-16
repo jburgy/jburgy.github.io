@@ -14,7 +14,7 @@ complex [Boolean expressions](https://en.wikipedia.org/wiki/Boolean_expression)
 with a few mouse clicks.  That was _so_ helpful and I miss it to this day.
 
 After I left, I started looking around for a substitute and came across
-[PivotTable.js](http://pivottable.js.org/).  I liked it but was immediately
+[PivotTable.js](https://pivottable.js.org/).  I liked it but was immediately
 [nerd sniped](https://xkcd.com/356/) by 
 [this comment](https://github.com/nicolaskruchten/pivottable/wiki/Frequently-Asked-Questions#input-data-size).
 I looked at the code and thought that implementing 
@@ -27,7 +27,7 @@ so I worked my through the quirky Web SQL API and did a thing.
 
 [React](https://react.dev) and [Angular](https://angular.dev) were the leading Web UI
 frameworks at the time but frameworks just irked me and I wanted something more
-lightweight so I reached for `<gasp>`[Web Components](https://www.webcomponents.org/)`</gasp>`!
+lightweight so I reached for `<gasp>`[Web Components](https://developer.mozilla.org/en-US/docs/Web/API/Web_components)`</gasp>`!
 [PivotTable.js](https://github.com/nicolaskruchten/pivottable) also relied on
 [jQuery](https://jquery.com/) and I wouldn't stand for that so I learned
 the [HTML Drag and Drop API](https://developer.mozilla.org/en-US/docs/Web/API/HTML_Drag_and_Drop_API).
