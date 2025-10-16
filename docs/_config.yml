@@ -39,6 +39,17 @@ minima:
     - jupyt.md
     - index.md
 
+comments:
+  giscus:
+    enabled: true
+    repo: "jburgy/jburgy.github.io"
+    repo_id: "MDEwOlJlcG9zaXRvcnkzMTY5NzMyNTA="
+    category: "General"
+    category_id: "DIC_kwDOEuSgws4Cwu73"
+    mapping: "pathname"
+    reactions_enabled: "1"
+    theme: "preferred_color_scheme"
+
 # Exclude from processing.
 # The following items will not be processed, by default. Create a custom list
 # to override the default setting.
