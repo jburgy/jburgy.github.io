@@ -89,7 +89,12 @@ violations, massages it with [`pandas`](https://pandas.pydata.org/docs/index.htm
 saving it to a SQLite file in OPFS.  The widget uses
 [`@slite.org/sqlite-wasm`](https://sqlite.org/wasm) to summarize that data.
 
-<iframe src="https://ogoz.jburgy.workers.dev/jupyter/notebooks/index.html?path=data_grid.ipynb" width="100%" height="900px"></iframe>
+<iframe 
+    src="https://ogoz.jburgy.workers.dev/jupyter/notebooks/index.html?path=data_grid.ipynb"
+    width="100%"
+    height="900px"
+    allow="cross-origin-isolated"
+></iframe>
 
 And if you read that far, first of all congratulations!  I realize you might still like an answer
 to the question posed in this article's title.  Besides sounding like a
