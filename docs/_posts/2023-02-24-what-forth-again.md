@@ -2,6 +2,7 @@
 layout: post
 title:  "What, Forth, Again?"
 date:   2023-02-24 06:43:57 -0500
+giscus: https://giscus.jburgy.workers.dev/client.js
 ---
 
 We already discussed [Chuck Moore](https://en.wikipedia.org/wiki/Charles_H._Moore)'s 

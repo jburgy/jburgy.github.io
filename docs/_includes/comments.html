@@ -1,5 +1,5 @@
 {{ if site.comments.giscus.enabled }}
-<script src="https://ogoz.jburgy.workers.dev/client.js?host=giscus.app"
+<script src="{{ page.giscus | default(https://giscus.app/client.js) }}"
         data-repo="{{site.comments.giscus.repo}}"
         data-repo-id="{{site.comments.giscus.repo_id}}"
         data-category="{{site.comments.giscus.category}}"
