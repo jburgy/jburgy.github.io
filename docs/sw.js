@@ -30,9 +30,7 @@ async function fetchWithHeaders(request) {
         return new Response("ok");
     }
 
-    const response = await fetch(
-        request, request.url == "https://giscus.app/default.css" ? { mode: "cors" } : {}
-    );
+    const response = await fetch(request);
     if (!pattern.test(request.url)) {
         return response;
     }
