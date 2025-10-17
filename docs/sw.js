@@ -34,9 +34,8 @@ async function fetchWithHeaders(request) {
     const response = await fetch(request);
 
     const headers = new Headers(response.headers);
-    headers.set("Cross-Origin-Embedder-Policy", "require-corp");
+    headers.set("Cross-Origin-Embedder-Policy", "credentialless");
     headers.set("Cross-Origin-Opener-Policy", "same-origin");
-    headers.set("Cross-Origin-Resource-Policy", "cross-origin");
 
     console.log("sw.js modified headers for", response.url);
 
