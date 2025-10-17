@@ -1,4 +1,5 @@
 const pattern = new RegExp([
+    "/api/service-worker-heartbeat$",
     "4th.mjs$",
     "5th.mjs$",
     "6th.mjs$",
@@ -31,9 +32,6 @@ async function fetchWithHeaders(request) {
     }
 
     const response = await fetch(request);
-    if (!pattern.test(request.url)) {
-        return response;
-    }
 
     const headers = new Headers(response.headers);
     headers.set("Cross-Origin-Embedder-Policy", "require-corp");
@@ -52,7 +50,7 @@ async function fetchWithHeaders(request) {
 self.addEventListener("fetch", (event) => {
     const { request } = event;
 
-    if (request.cache === "only-if-cached" && request.mode !== "same-origin") {
+    if ((request.cache === "only-if-cached" && request.mode !== "same-origin") || !pattern.test(request.url)) {
         return;
     }
     event.respondWith(fetchWithHeaders(request));

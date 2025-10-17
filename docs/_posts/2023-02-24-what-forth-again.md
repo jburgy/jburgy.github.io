@@ -2,7 +2,6 @@
 layout: post
 title:  "What, Forth, Again?"
 date:   2023-02-24 06:43:57 -0500
-comments: false
 ---
 
 We already discussed [Chuck Moore](https://en.wikipedia.org/wiki/Charles_H._Moore)'s 
