@@ -2,7 +2,7 @@
 layout: post
 title:  "What's a Veg-O-Matic?"
 date:   2025-10-16 14:01:51 -0500
-comments: false
+giscus: https://giscus.jburgy.workers.dev/client.js
 ---
 ## Or How do you Slice and Dice Data?
 

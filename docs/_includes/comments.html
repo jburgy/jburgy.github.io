@@ -1,5 +1,6 @@
 {{ if site.comments.giscus.enabled }}
-<script src="{{ page.giscus | default(https://giscus.app/client.js) }}"
+{% assign giscus = page.giscus | default: "https://giscus.app/client.js" %}
+<script src="{{ giscus }}"
         data-repo="{{site.comments.giscus.repo}}"
         data-repo-id="{{site.comments.giscus.repo_id}}"
         data-category="{{site.comments.giscus.category}}"

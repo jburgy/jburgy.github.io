@@ -2,7 +2,7 @@
 layout: post
 title:  "Why not try Zig next?"
 date:   2024-08-31 07:41:26 -0500
-comments: false
+giscus: https://giscus.jburgy.workers.dev/client.js
 ---
 
 As this blog shows, I am deeply interested in interpreters.  I find the meta
