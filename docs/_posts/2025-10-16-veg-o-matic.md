@@ -24,7 +24,7 @@ probably contributed to data size limitations.  Around the same time, I noticed
 that Chrome, like many industrial applications, embedded [SQLite](https://sqlite.org).
 Not only that, it even [exposed it to JavaScript](https://www.w3.org/TR/webdatabase/).
 Yes, the W3C page already sported the deprecation warning but I was young and naive
-so I worked my through the quirky Web SQL API and did a thing.
+so I worked my way through the quirky Web SQL API and did a thing.
 
 [React](https://react.dev) and [Angular](https://angular.dev) were the leading Web UI
 frameworks at the time but frameworks just irked me and I wanted something more
@@ -39,21 +39,21 @@ And that crazy gizmo kinda worked back in 2019!
 issue to [Replace Web SQL](https://github.com/jburgy/data-grid/issues/1) on the
 Spring Equinox.  You see, Chrome finally did
 [deprecate and remove Web SQL](https://developer.chrome.com/blog/deprecating-web-sql)
-as ~~promised~~ threatened.  And just the little spark that set `data-grid` apart
-was estinguished.  However, a great many things happened on the Web during that time.
+as ~~threatened~~ promised.  And just like that, lthe little spark that set `data-grid` apart
+was estinguished.  However, a great many things happened to the Web during that time.
 Most importantly, [WebAssembly](https://webassembly.org/) democratized embedding
 non-web software in web browsers.  Much to their credit, the SQLite maintainers decided
 to offer an official [WASM port](https://sqlite.org/wasm) of their awesome product.
 
 [`@sqlite.org/sqlite-wasm`](https://www.npmjs.com/package/@sqlite.org/sqlite-wasm)
-brought `data-grid` from the brink.  I should also say that its 
+brought `data-grid` back from the brink.  I should also say that its 
 [Promise-based Wrapper](https://sqlite.org/wasm/doc/trunk/api-worker1.md#promiser)
 is much less quirky that the old Web SQL API.  That first step was the easy part.
-The heavy lift comes from the fact that I insist on embedding a demo in this blog
+The heavy lift came from the fact that I insisted on embedding a demo in this blog
 post.  For better or worse, I really liked how the most recent iteration of the
 [What, python, slow?]({% post_url 2022-03-12-what-python-slow %}) post turned out:
 using [`JupyterLite`](https://jupyterlite.readthedocs.io/).  Had I known how much
-additional worked it would have created, I might have chosen a different approach.
+additional worked it would have created, I might have chosen a simpler approach.
 (Nah, who am I kidding, since when do I do these because they're easy)
 
 2019 `data-grid` also came as an incredibly clunky custom
@@ -68,7 +68,7 @@ about bundling dependencies).
 Fortunately, many of the pieces were already in place.  Unfortunately, previous demos
 on this blog pale in comparison with the complexity of this one, particularly when it
 comes to [`import`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import)
-depth.  [gzuidhof/coi-serviceworker](https://github.com/gzuidhof/coi-serviceworker), who
+depth.  [gzuidhof/coi-serviceworker](https://github.com/gzuidhof/coi-serviceworker), which
 let me circumvent GitHub's persistent lack of
 [custom headers](https://github.com/orgs/community/discussions/54257) many times before,
 just [wouldn't work this time](https://stackoverflow.com/questions/79790645/active-service-worker-logging-but-not-intercepting-requests).
@@ -88,7 +88,7 @@ The notebook below runs entirely in your browser.  After installing
 [anywidget](https://pypi.org/project/anywidget/), it fetches a public dataset on traffic
 violations, massages it with [`pandas`](https://pandas.pydata.org/docs/index.html) before
 saving it to a SQLite file in OPFS.  The widget uses
-[`@slite.org/sqlite-wasm`](https://sqlite.org/wasm) to summarize that data.
+[`@sqlite.org/sqlite-wasm`](https://sqlite.org/wasm) to summarize that data.
 
 <iframe 
     src="https://ogoz.jburgy.workers.dev/jupyter/notebooks/index.html?path=data_grid.ipynb"

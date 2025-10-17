@@ -38,7 +38,7 @@ async def head(session: aiohttp.ClientSession, href: str) -> tuple[str, HTTPStat
     href = href.removeprefix("http://localhost:4000")
     if href.startswith(r"/"):
         href = "https://bur.gy" + href
-    with suppress(aiohttp.InvalidURL):
+    with suppress(aiohttp.InvalidURL, aiohttp.ConnectionTimeoutError):
         async with session.head(href) as response:
             status = HTTPStatus(response.status)
     return href, status
