@@ -168,9 +168,4 @@ and I did just that.  Below is an
 which embeds a notebook that ties a bow around the ideas presented on this page.  You
 can see the full effect by pressing ⏩ (Restart the kernel and run all cells).
 
-<iframe src="/jupyter/notebooks/index.html?path=nbody.ipynb"
-        width="100%"
-        height="900px"
-        style="display: none;"
-        onload="this.style.display='block';">
-</iframe>
+<iframe src="/jupyter/notebooks/index.html?path=nbody.ipynb" width="100%" height="900px"></iframe>

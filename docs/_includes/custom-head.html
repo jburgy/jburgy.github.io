@@ -30,6 +30,9 @@
         },
         (err) => console.log("COOP/COEP Service Worker failed to register", err)
     );
+    document.addEventListener("DOMContentLoaded", () => {
+        document.querySelectorAll("iframe").forEach(node => node.focus({ preventScroll: true }));
+    }, {once: true});
 </script>
 <style>
     video {
@@ -38,16 +41,5 @@
         border-radius: 8px;
         max-width: 90vw;
         max-height: 60vh;
-    }
-    .giscus, .giscus-frame {
-        width: 100%;
-        min-height: 150px;
-    }
-    .giscus-frame {
-        border: none;
-        color-scheme: light dark;
-    }
-    .giscus-frame--loading {
-        opacity: 0;
     }
 </style>
