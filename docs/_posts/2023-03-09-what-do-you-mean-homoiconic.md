@@ -2,6 +2,7 @@
 layout: post
 title:  "What do you mean, homoiconic?"
 date:   2023-03-09 22:25:13 -0500
+comments: false
 ---
 
 Emboldened by the [previous post]({% post_url 2023-02-24-what-forth-again %}) on bringing FORTH to your browser

@@ -2,6 +2,7 @@
 layout: post
 title:  "When did Basic become insulting?"
 date:   2023-03-16 23:24:18 -0500
+comments: false
 ---
 
 Two thoughts come to mind at the start of this third post along the same theme:

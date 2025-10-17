@@ -2,6 +2,7 @@
 layout: post
 title:  "Why not try Zig next?"
 date:   2024-08-31 07:41:26 -0500
+comments: false
 ---
 
 As this blog shows, I am deeply interested in interpreters.  I find the meta

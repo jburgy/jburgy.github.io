@@ -2,6 +2,7 @@
 layout: post
 title:  "What is Tail Call Elimination?"
 date:   2024-03-29 08:00:07 -0500
+comments: false
 ---
 
 Previous posts highlight my interest in (obsession with?) interpreters.  I keep marveling at
