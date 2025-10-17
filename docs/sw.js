@@ -30,7 +30,9 @@ async function fetchWithHeaders(request) {
         return new Response("ok");
     }
 
-    const response = await fetch(request);
+    const response = await fetch(
+        request, request.url == "https://giscus.app/default.css" ? { mode: "cors" } : {}
+    );
     if (!pattern.test(request.url)) {
         return response;
     }
@@ -38,7 +40,7 @@ async function fetchWithHeaders(request) {
     const headers = new Headers(response.headers);
     headers.set("Cross-Origin-Embedder-Policy", "require-corp");
     headers.set("Cross-Origin-Opener-Policy", "same-origin");
-    headers.set("Cross-Origin-Resource-Policy", "cross-origin");
+
     console.log("sw.js modified headers for", response.url);
 
     return new Response(response.body, {
