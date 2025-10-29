@@ -26,7 +26,7 @@ my [Grug brain](https://grugbrain.dev/).  [dc.js](https://dc-js.github.io/dc.js/
 is slightly less intimidating, yet retains many of D3's cool features (like
 [Scalable Vector Graphics](https://developer.mozilla.org/en-US/docs/Web/SVG) and
 transitions).  I wondered whether [PyScript](https://pyscript.net/) was flexible
-enough to support the [dc.js](https://dc-js.github.io/dc.js/).  Turns out, it does:
+enough to support the [dc.js](https://dc-js.github.io/dc.js/).  Turns out, it was:
 
 <iframe 
     src="https://janburgy.pyscriptapps.com/dc-js/latest/"
@@ -35,7 +35,7 @@ enough to support the [dc.js](https://dc-js.github.io/dc.js/).  Turns out, it do
     allow="cross-origin-isolated"
 ></iframe>
 
-No discussion on data visualization's without mention of 
+No discussion on data visualization is complete without a mention of 
 [Hans Rosling](https://en.wikipedia.org/wiki/Hans_Rosling)'s excellent
 2006 TED Talk:
 
