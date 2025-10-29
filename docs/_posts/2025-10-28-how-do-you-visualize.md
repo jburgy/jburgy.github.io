@@ -29,7 +29,7 @@ transitions).  I wondered whether [PyScript](https://pyscript.net/) was flexible
 enough to support the [dc.js](https://dc-js.github.io/dc.js/).  Turns out, it was:
 
 <iframe 
-    src="https://janburgy.pyscriptapps.com/dc-js/latest/"
+    src="https://examples.pyscriptapps.com/dc-js-dimensional-charting-library/latest/"
     width="100%"
     height="1337.5px"
     allow="cross-origin-isolated"
