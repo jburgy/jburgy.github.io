@@ -196,7 +196,7 @@ a well-defined signature.  It might be the
     const { master, slave } = openpty();
     xterm.loadAddon(master);
 
-    const response = await fetch("https://raw.githubusercontent.com/nornagon/jonesforth/master/jonesforth.f");
+    const response = await fetch("/blog/jonesforth.f");
     const preamble = new Uint8Array(await response.arrayBuffer());
     slave.ldisc.toUpperBuf.push(...preamble);
 
