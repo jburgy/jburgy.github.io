@@ -145,7 +145,7 @@ pre-conditions than explicit `mov` instructions (which more than offset the savi
 
 The [webassembly](https://webassembly.org/) version, courtesy of
 [wasm2wat](https://webassembly.github.io/wabt/demo/wasm2wat/), is only slightly longer:
-```lisp
+```scheme
 (module $5th.wasm
   (type $t0 (func (param i32 i32 i32 i32 i32) (result i32)))
   ...
