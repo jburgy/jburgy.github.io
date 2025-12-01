@@ -107,8 +107,7 @@ words consisting _entirely_ of builtin words.  One could imagine an implementati
 [inlines](https://github.com/jburgy/blog/blob/main/forth/wasm/jonesforth.wast) aggressively
 to maintain that invariant but that would lead to 
 [code bloat](https://en.wikipedia.org/wiki/Code_bloat) and is certainly not how JONESFORTH
-works.  
-[2eb3615](https://github.com/jburgy/blog/pull/17/commits/2eb361565961b22dcd3a0768f123ebe0a808a208)
+works. [2eb3615](https://github.com/jburgy/blog/pull/17/commits/2eb361565961b22dcd3a0768f123ebe0a808a208)
 converted to _indirect threading_ and the following two lines go a long way to
 explain the difference:
 ```diff
