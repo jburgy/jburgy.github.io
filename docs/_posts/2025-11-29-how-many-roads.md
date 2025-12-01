@@ -130,12 +130,12 @@ _code field_!  Oh, the joys of pointer arithmetic!
 
 To recap, it's somehow fitting that this should be my fourth Forth!
 
-| Language | Strategy               | Source                                                                                            |
-|:---------|:-----------------------|--------------------------------------------------------------------------------------------------:|
-| C        | Labels as Values       | [4th.c](https://github.com/jburgy/blog/blob/main/forth/4th.c)                                     |
-| C        | `musttail`             | [5th.c](https://github.com/jburgy/blog/blob/main/forth/5th.c)                                     |
-| Zig      | `.always_tail`         | [6th.zig](https://github.com/jburgy/blog/blob/main/forth/6th.zig)                                 |
-| WAT      | `return_call_indirect` | [jonesforth.wast]([6th.zig](https://github.com/jburgy/blog/blob/main/forth/wasm/jonesforth.wast)) |
+|#| Language | Strategy               | Source                                                                                 |
+|-|:---------|:-----------------------|---------------------------------------------------------------------------------------:|
+|1| C        | Labels as Values       | [4th.c](https://github.com/jburgy/blog/blob/main/forth/4th.c)                          |
+|2| C        | `musttail`             | [5th.c](https://github.com/jburgy/blog/blob/main/forth/5th.c)                          |
+|3| Zig      | `.always_tail`         | [6th.zig](https://github.com/jburgy/blog/blob/main/forth/6th.zig)                      |
+|4| WAT      | `return_call_indirect` | [jonesforth.wast](https://github.com/jburgy/blog/blob/main/forth/wasm/jonesforth.wast) |
 
 And it's entirely unacceptable that the "native" WebAssembly implementation is the only one to
 **not** have a browser demo!  That's because I developed it on [WASI](https://wasi.dev/) to
