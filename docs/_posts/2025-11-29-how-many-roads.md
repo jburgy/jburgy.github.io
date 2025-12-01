@@ -83,15 +83,15 @@ and `funcref` registrations (using
 [`elem`](https://developer.mozilla.org/en-US/docs/WebAssembly/Guides/Understanding_the_text_format#webassembly_tables)).
 Take `SWAP` for example:
 ```scheme
-    (data (i32.const 0x5054) "\44\50\00\00\04SWAP\00\00\00\02\00\00\00")
-    (func $swap (type 0)
-        (local $t i32)
-        (local.set $t (i32.load offset=4 (global.get $sp)))
-        (i32.store offset=4 (global.get $sp) (i32.load (global.get $sp)))
-        (i32.store (global.get $sp) (local.get $t))
-        (return_call $next)
-    )
-    (elem (i32.const 0x2) $swap)
+(data (i32.const 0x5054) "\44\50\00\00\04SWAP\00\00\00\02\00\00\00")
+(func $swap (type 0)
+    (local $t i32)
+    (local.set $t (i32.load offset=4 (global.get $sp)))
+    (i32.store offset=4 (global.get $sp) (i32.load (global.get $sp)))
+    (i32.store (global.get $sp) (local.get $t))
+    (return_call $next)
+)
+(elem (i32.const 0x2) $swap)
 ```
 Its header starts at address `0x5054` with a link to the start of the preceding word
 (in this case `DROP` at address `0x5044` and yes, WebAssembly is
@@ -140,4 +140,7 @@ To recap, it's somehow fitting that this should be my fourth Forth!
 And it's entirely unacceptable that the "native" WebAssembly implementation is the only one to
 **not** have a browser demo!  That's because I developed it on [WASI](https://wasi.dev/) to
 iterate quickly in the command line.  I'll work on a [shim](https://en.wikipedia.org/wiki/Shim_(computing))
-real soon.
+~~real soon~~ now:
+
+<div id="terminal"></div>
+<script src="/blog/main.js" type="module"></script>

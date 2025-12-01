@@ -3,6 +3,8 @@ const pattern = new RegExp([
     "4th.mjs$",
     "5th.mjs$",
     "6th.mjs$",
+    "how-many-roads.html$",
+    "jonesforth.wasm$",
     "jupyter",
     "lisp.worker.js$",
     "put-it-in-a-brandy-snifter.html$",
