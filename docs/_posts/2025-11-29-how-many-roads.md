@@ -31,7 +31,7 @@ following prompt (with `jonesforth.S` in the context window):
 
 >Please translate `jonesforth.S` from x86 assembly to WAT the textual Webassembly representation
 
-And of it went, quickly producing reams of code.  I saved everything it produced
+And off it went, quickly producing reams of code.  I saved everything it produced
 as a [GitHub gist](https://gist.github.com/jburgy/56c16cb3d5e366a1217949ac9d05ba7a).
 It looked great at first but soon hit a bunch of "pointer out of bounds" errors
 and Claude is not great at debugging, at least not yet.  I took a crack at it myself
