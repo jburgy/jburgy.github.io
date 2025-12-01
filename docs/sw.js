@@ -7,6 +7,7 @@ const pattern = new RegExp([
     "jonesforth.wasm$",
     "jupyter",
     "lisp.worker.js$",
+    "main.js$",
     "put-it-in-a-brandy-snifter.html$",
     "sqlite3-opfs-async-proxy-[^.]+.js$",
     "sqlite3-worker1-bundler-friendly-[^.]+.js$",
@@ -16,7 +17,7 @@ const pattern = new RegExp([
     "what-do-you-mean-homoiconic.html$",
     "what-forth-again.html$",
     "why-not-zig.html$",
-    "widget.mjs$",
+    "worker.js$",
 ].join("|"));
 
 self.addEventListener("install", () => self.skipWaiting());
