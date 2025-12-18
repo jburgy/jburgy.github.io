@@ -144,3 +144,73 @@ iterate quickly in the command line.  I'll work on a [shim](https://en.wikipedia
 
 <div id="terminal"></div>
 <script src="/blog/main.js" type="module"></script>
+
+## Epilogue ##
+
+I had so much fun writing [jonesforth.wast](https://github.com/jburgy/blog/blob/main/forth/wasm/jonesforth.wast)
+that I continued to experiment.  First I replaced the 4 most often modified global variables by local ones.
+With that, `$swap` becomes
+```scheme
+(data (i32.const 0x5054) "\44\50\00\00\04SWAP\00\00\00\02\00\00\00")
+(func $swap (param $cfa i32) (param $ip i32) (param $sp i32) (param $rsp i32)
+    (local i32)
+    (local.set 4 (i32.load offset=4 (local.get $sp)))
+    (i32.store offset=4 (local.get $sp) (i32.load (local.get $sp)))
+    (i32.store (local.get $sp) (local.get 4))
+    (return_call $next (local.get $cfa) (local.get $ip) (local.get $sp) (local.get $rsp))
+)
+(elem (i32.const 0x2) $swap)
+```
+You can see the whole thing in [localize.wast](https://github.com/jburgy/blog/blob/main/forth/wasm/localize.wast).
+
+After that, I remembered something Remko shared on Discord: [uxn.wasm](https://mko.re/blog/uxn-wasm/).
+He uses [`br_table`](https://developer.mozilla.org/en-US/docs/WebAssembly/Reference/Control_flow/br_table)
+to implement the [UXN](https://100r.co/site/uxn.html) virtual machine.  That's quite cool so I took a
+crack at it.  The result is in [tabulate.wast](https://github.com/jburgy/blog/blob/main/forth/wasm/tabulate.wast).
+The whole point is how parentheses are balanced.  More than a hundred are _opened_ between lines 223 and 234 to
+introduce the nested blocks that `br_table` requires.  They are _closed_ one at a time after each builtin word, e.g.
+```scheme
+    ;; swap
+    (local.set 4 (i32.load offset=4 (local.get $sp)))
+    (i32.store offset=4 (local.get $sp) (i32.load (local.get $sp)))
+    (i32.store (local.get $sp) (local.get 4))
+    (br $next)) ;; ⇐ note 2 right parentheses here! 
+```
+The only clever bit I came up with in that implementation are the jumps in `INTERPRET` and `EXECUTE`.
+I realized I could simply branch "in the middle" of `NEXT` (after the _first_ indirection from `ip`
+into `cfa` but before the _second_ one).  All this takes is another label, which I named (rather
+unimaginatively) `$dispatch`.
+
+That led me to realize that good ole [C](https://en.wikipedia.org/wiki/C_(programming_language)) offers
+just enough flexibilty to achieve the same thing without non-standard extensions like labels as values 
+or tail calls.  `break` and `continue` offer just enough daylight to skip to the end of a `switch`
+statement or the top of the surrounding loop.  This lends itself to the following scheme:
+```c
+    while (1) {
+        switch (memory[cfa]) {
+            case DOCOL:
+                memory[--rsp] = ip;
+                ip = cfa + 1;
+                break;
+            case DROP:
+                ++sp;
+                break;
+            ...
+            case EXECUTE:
+                cfa = memory[sp++] >> 2;
+                continue;
+            ...
+        }
+        cfa = memory[ip++] >> 2;
+    }
+```
+(extracted from [here](https://github.com/jburgy/blog/blob/main/forth/jansforth.c)).
+As an added bonus, this last implementation (and I hope to everything I hold dear this is
+the last one) is [relocatable](https://en.wikipedia.org/wiki/Relocation_(computing)).
+Addresses are _relative_ to `memory` (which explains the `SYSCALL1` hack).  The left shifts
+are required to conform to 
+[jonesforth.f](https://github.com/nornagon/jonesforth/blob/master/jonesforth.f) address arithmetic,
+specifically around control structures (`IF`, `THEN`, ...) and decompilation (`CFA>`, `SEE`).
+
+In hindsight, my long and convoluted arc with JONESFORTH reminds me of
+[this joke](https://www.smart-words.org/jokes/programmer-evolution.html).
