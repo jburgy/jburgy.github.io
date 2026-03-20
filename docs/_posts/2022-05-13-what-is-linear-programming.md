@@ -173,3 +173,36 @@ define the `c` vector.
 
 And there you have it, just learning the absolute minimum about `sympy`'s rich API lets us
 convert a linear optimization problem to canonical form.
+
+## Update: 3/20/2026
+
+I went looking online for an early FORTRAN implementation of the simplex method and came
+across the [NSWC Library of Mathematics Subroutines](https://apps.dtic.mil/sti/tr/pdf/ADA261511.pdf)
+(where NSWC stands for Naval Surface Warface Center).  It appeared several years _after_
+Dantzig's original discovery yet still has that musty old code smell.  I slapped some python
+bindings on it using [f2py](https://numpy.org/doc/stable/f2py/f2py.getting-started.html#the-smart-way)
+then looked for a classical problem to test it.  I came across an articled called
+[Sudoku, Linear Optimization, and the Ten Cent Diet](https://research.google/blog/sudoku-linear-optimization-and-the-ten-cent-diet/) with a great line:
+
+> The [Simplex algorithm](https://en.wikipedia.org/wiki/Simplex_algorithm) for linear optimization
+> was two years away from being invented, so Stigler had to do his best, arriving at a diet that cost
+> $39.93 per year (in 1939 dollars), or just over ten cents per day. Even that wasn’t the cheapest diet.
+> In 1947, Jack Laderman used Simplex, nine calculator-wielding clerks, and 120 person-days to arrive
+> at the optimal solution.
+
+Holy contributing to the delinquency of minors, Batman, 120 person-days!  The revised simplex
+implementation converges in just 8 iterations.  It's so fast that its runtime is largely
+irrelevant.  And the [python call site](https://github.com/jburgy/blog/blob/main/simplex/test_smplx.py) 
+isn't even scary:
+```python
+ind, x, z, iter = smplx(
+    a=np.column_stack([*data.values()]),
+    b0=np.r_[*nutrients.values()],
+    c=-np.ones(len(data)),  # The routine maximizes Σⱼcⱼxⱼ so flip sign to minimize
+    numge=len(nutrients),
+)
+```
+where `ind` reports the status of the results (0 meaning solution found), `x` is the
+solution vector, in this case dollars spent on each of the 77 foods plus 9
+[slack variables](https://en.wikipedia.org/wiki/Slack_variable) to accommodate the inequality
+constraints, `z` is the objective value, and `iter` the number of iterations that were performed.
