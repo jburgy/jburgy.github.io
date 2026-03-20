@@ -10,6 +10,7 @@ from contextlib import suppress
 from html.parser import HTMLParser
 from http import HTTPStatus
 from pathlib import Path
+from typing import cast
 
 import aiohttp  # type: ignore[missing-imports]
 
@@ -38,7 +39,7 @@ async def head(session: aiohttp.ClientSession, href: str) -> tuple[str, HTTPStat
     href = href.removeprefix("http://localhost:4000")
     if href.startswith(r"/"):
         href = "https://bur.gy" + href
-    with suppress(aiohttp.InvalidURL, aiohttp.ConnectionTimeoutError):
+    with suppress(aiohttp.InvalidURL, aiohttp.ConnectionTimeoutError, aiohttp.ClientConnectorCertificateError):
         async with session.head(href) as response:
             status = HTTPStatus(response.status)
     return href, status
@@ -48,7 +49,7 @@ async def statuses(hrefs: set[str]) -> dict[str, HTTPStatus]:
     result = {}
     async with aiohttp.ClientSession() as session:
         result = {
-            href: status
+            href: cast("HTTPStatus", status)
             for href, status in await asyncio.gather(
                 *[head(session, href) for href in link_finder.hrefs]
             )

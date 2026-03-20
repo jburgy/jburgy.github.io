@@ -63,7 +63,7 @@ banned [global mutable comptime state](https://ziggit.dev/t/comptime-mutable-mem
 Ziggy Pydust [relied on heavily](https://github.com/spiraldb/ziggy-pydust/discussions/428).
 Ziggy Pydust was stuck on Zig 0.11 and upgrading "isn't an easy thing to do."  Such was the
 state of affairs when I came across Ziggy Pydust.  And that's when I remembered
-[Larry Wall](http://www.wall.org/~larry/)'s [three virtues](https://threevirtues.dev/).
+[Larry Wall](https://en.wikipedia.org/wiki/Larry_Wall)'s [three virtues](https://threevirtues.dev/).
 
 Laziness
 : There are so many thing I should be doing instead of this, sounds like a great excuse to procrastinate!

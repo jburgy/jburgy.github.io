@@ -12,7 +12,7 @@ coined the term "data-ink ratio" and introduced other best practices.
 That's all well and good but how are mere mortals supposed to apply these theories
 on the web?  As with most things web, we are faced with an overwhelming
 [paradox of choice](https://en.wikipedia.org/wiki/The_Paradox_of_Choice).  Type
-[dashboard framework](https://lmgtfy.app/?q=dashboard+framework) in your favorite
+[dashboard framework](https://letmegooglethat.com/?q=dashboard+framework) in your favorite
 search engine if you don't believe me.
 
 I have tried many of these "build dashboards in 10 easy steps" tutorials.  Some are

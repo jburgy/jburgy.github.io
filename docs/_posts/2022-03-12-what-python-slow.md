@@ -54,7 +54,7 @@ the "Python buffer protocol [...] is a framework in which Python objects can exp
 objects."  And when those "other Python objects" are thin wrappers around excellent low-level numerical libraries
 like [BLAS](https://docs.scipy.org/doc/scipy/reference/linalg.blas.html) or
 [LAPACK](https://docs.scipy.org/doc/scipy/reference/linalg.blas.html), we can _embrace_ the
-[Two-Language Problem](https://juliadatascience.io/julia_accomplish#sec:two_language) instead of avoid it.
+[Two-Language Problem](https://en.wikipedia.org/wiki/Ousterhout%27s_dichotomy) instead of avoid it.
 And all of that without writing a single line in a language other than python.  To be fair, the resulting code will
 **not** be particularly [idiomatic](https://peps.python.org/pep-0020/).  But it will still be python and offer the
 readability and portability we have come to expect.
