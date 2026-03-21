@@ -48,7 +48,7 @@ for [sectorlisp](https://copy.sh/v86/?profile=sectorlisp)!  In the spirit of min
 do more to end up with less.  So we translated lisp.c to [assemblyscript](https://www.assemblyscript.org/).
 Assemblyscript is to WASM what early C was to ASM: a high-level assembler.  Search and replace got us
 90% of the way there. The remaining 10% (measured in LoC, not time) were spent figuring out the precise
-semantics of [`load<T>`](https://developer.mozilla.org/en-US/docs/WebAssembly/Reference/Memory/Load) and
+semantics of [`load<T>`](https://developer.mozilla.org/en-US/docs/WebAssembly/Reference/Memory/load) and
 connecting to the [pseudo-terminal](https://xterm-pty.netlify.app/).
 
 I wished I had read Justine's post more closely, particularly the section about their
@@ -57,7 +57,7 @@ I wished I had read Justine's post more closely, particularly the section about 
 ```c
 #define M (RAM + sizeof(RAM) / sizeof(RAM[0]) / 2)
 ```
-Unfortunately, [`load<T>`](https://developer.mozilla.org/en-US/docs/WebAssembly/Reference/Memory/Load)
+Unfortunately, [`load<T>`](https://developer.mozilla.org/en-US/docs/WebAssembly/Reference/Memory/load)
 does not tolerate negative offsets the way C does
 (instead it throws `RuntimeError: memory access out of bounds`). This forced me to use `load<u8>(i, M)` when `i > 0` and
 `load<T>(M + (i << align))` otherwise.
