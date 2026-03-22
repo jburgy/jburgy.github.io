@@ -39,7 +39,7 @@ async def head(session: aiohttp.ClientSession, href: str) -> tuple[str, HTTPStat
     href = href.removeprefix("http://localhost:4000")
     if href.startswith(r"/"):
         href = "https://bur.gy" + href
-    with suppress(aiohttp.InvalidURL, aiohttp.ConnectionTimeoutError, aiohttp.ClientConnectorCertificateError):
+    with suppress(aiohttp.InvalidURL, aiohttp.ConnectionTimeoutError):
         async with session.head(href) as response:
             status = HTTPStatus(response.status)
     return href, status
@@ -47,7 +47,8 @@ async def head(session: aiohttp.ClientSession, href: str) -> tuple[str, HTTPStat
 
 async def statuses(hrefs: set[str]) -> dict[str, HTTPStatus]:
     result = {}
-    async with aiohttp.ClientSession() as session:
+    connector = aiohttp.TCPConnector(ssl=False)
+    async with aiohttp.ClientSession(connector=connector) as session:
         result = {
             href: cast("HTTPStatus", status)
             for href, status in await asyncio.gather(

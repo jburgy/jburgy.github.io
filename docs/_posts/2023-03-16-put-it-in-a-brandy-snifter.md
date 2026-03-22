@@ -92,25 +92,25 @@ jumps (`JS` and `J`), loads (`LB` and `LN`), and `SX`.  Most of them combine the
 their argument. In the case of loaders, the argument follows.  The inner loop could look something like this:
 
 ```python
-        if op is OpCode.SX:
-            out.append(int(op) + int(arg))
-        elif op is OpCode.LB:
-            out.append(int(op))
-            out.append(int(arg))
-        elif op is OpCode.LN:
-            out.append(int(op))
-            out.extend(struct.pack(">H", eval(arg)))
-        elif op >= OpCode.BR:
-            offset = offsets.get(arg, here + 1) - (here + 1)
-            if op is OpCode.BR:
-                offset += 0x20
-            out.append(int(op) + offset)
-        elif op >= OpCode.JS:
-            target = struct.pack(">H", offsets.get(arg, 0))
-            out.append(int(op) + target[0])
-            out.extend(target[1:])
-        else:
-            out.append(int(op))
+    if op is OpCode.SX:
+        out.append(int(op) + int(arg))
+    elif op is OpCode.LB:
+        out.append(int(op))
+        out.append(int(arg))
+    elif op is OpCode.LN:
+        out.append(int(op))
+        out.extend(struct.pack(">H", eval(arg)))
+    elif op >= OpCode.BR:
+        offset = offsets.get(arg, here + 1) - (here + 1)
+        if op is OpCode.BR:
+            offset += 0x20
+        out.append(int(op) + offset)
+    elif op >= OpCode.JS:
+        target = struct.pack(">H", offsets.get(arg, 0))
+        out.append(int(op) + target[0])
+        out.extend(target[1:])
+    else:
+        out.append(int(op))
 ```
 
 Those two calls to `struct.pack(">H", ...)` determine the Tiny BASIC's 

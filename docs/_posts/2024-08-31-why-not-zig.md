@@ -168,7 +168,7 @@ const Instr = packed union {
 
 const offset = @divTrunc(@sizeOf(Word), @sizeOf(Instr));
 
-fn defword_(
+fn defword(
     comptime last: ?[]const Instr,
     comptime flag: Flag,
     comptime name: []const u8,
@@ -176,7 +176,7 @@ fn defword_(
 ) [offset + code.len]Instr {
     var instrs: [offset + code.len]Instr = undefined;
     const p: *Word = @ptrCast(&instrs[0]);
-    p.link = if (last == null) null else @ptrCast(last.?.ptr);
+    p.link = if (last) |link| @ptrCast(link.ptr) else null;
     p.flag = name.len | @intFromEnum(flag);
     @memcpy(p.name[0..name.len], name);
     @memset(p.name[name.len..F_LENMASK], 0);
@@ -195,7 +195,8 @@ as possible in order to make fiddly words like `CFA>` and `ID.` work.  Those
 meta words exploit the precise memory layout to go from a word's first instruction
 to the word itself as well as compute the number of instructions in a word.
 
-We used one more `comptime` trick to keep our code [DRY](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself): abusing `struct` to create
+We used one more `comptime` trick to keep our code
+[DRY](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself): abusing `struct` to create
 [closures](https://gencmurat.com/en/posts/zig-anonymus-functions-and-closures/).
 This let us implement `+` as
 ```zig
@@ -203,7 +204,7 @@ inline fn _add(sp: []isize) ![]isize {
     sp[1] += sp[0];
     return sp[1..];
 }
-const add = defcode(&decrp, "+", _add);
+const add = defword(&decrp, Flag.ZERO, "+", wrap(_add));
 ```
 which is somewhat reminiscent of the C implementation above.  Note that `sp`
 is a [slice](https://ziglang.org/documentation/master/#Slices) which gives the
