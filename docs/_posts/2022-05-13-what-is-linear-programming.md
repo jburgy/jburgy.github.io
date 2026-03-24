@@ -207,8 +207,24 @@ solution vector, in this case dollars spent on each of the 77 foods plus 9
 [slack variables](https://en.wikipedia.org/wiki/Slack_variable) to accommodate the inequality
 constraints, `z` is the objective value, and `iter` the number of iterations that were performed.
 
-|Food | Calories (kcal) | Protein (g) | Calcium (g) | Iron (mg) | Vitamin A (KIU) | Vitamin B1 (mg) | Vitamin B2 (mg) | Niacin (mg) | Vitamin C (mg) | Solution ($) |
-| :-- | --------------: | ----------: | ----------: | --------: | --------------: | --------------: | --------------: | ----------: | -------------: | -----------: |
+The incongruity of building that almost 50 year FORTRAN library for the web would have
+been fun. Unfortunately, that proved discouragingly
+hard. [pyodide build](https://pyodide.org/en/latest/development/building-packages.html) uses
+[f2c](https://www.netlib.org/f2c/f2c.pdf) whereas my native build uses
+[gfortran](https://gcc.gnu.org/fortran/) and the transition is not immediately trivial.
+I banged my head against a "LONG_BIT definition appears wrong for platform" issue for some time
+before giving up. [lfortran](https://lfortran.org/blog/2024/05/fortran-on-web-using-lfortran/)
+apparently emits WASM and is probably worth a try.
+I even asking Claude to translate `SMPLX` to python but that went nowhere.  Then I
+remembered [pyscript](https://pyscript.net/) and experienced instant bliss!  Take a look at the
+table below.  While you were reading [above the fold](https://en.wikipedia.org/wiki/Above_the_fold),
+the page sneakily fetched `pyscript`, installed a version of
+[SciPy](https://scipy.org) built for the web, grabbed inputs from the
+[DOM](https://docs.pyscript.net/2026.3.1/user-guide/dom/), found the cheapest diet,
+and finally injected the solution _back_ in the table!  How cute is that?
+
+|Food | Calories (kcal) | Protein (g) | Calcium (g) | Iron (mg) | Vitamin A (KIU) | Vitamin B1 (mg) | Vitamin B2 (mg) | Niacin (mg) | Vitamin C (mg) | Minimum ($) |
+| :-- | --------------: | ----------: | ----------: | --------: | --------------: | --------------: | --------------: | ----------: | -------------: | ----------: |
 |Daily Minimum          |   3|  70| 0.8| 12|    5| 1.8| 2.7| 18|  75||
 |Wheat Flour (Enriched) |44.7|1411|   2|365|    0|55.4|33.3|441|   0||
 |Macaroni               |11.6| 418| 0.7| 54|    0| 3.2| 1.9| 68|   0||
