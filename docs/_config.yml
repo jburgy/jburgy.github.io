@@ -41,7 +41,7 @@ minima:
 
 comments:
   giscus:
-    enabled: true
+    enabled: false
     repo: "jburgy/jburgy.github.io"
     repo_id: "MDEwOlJlcG9zaXRvcnkzMTY5NzMyNTA="
     category: "General"

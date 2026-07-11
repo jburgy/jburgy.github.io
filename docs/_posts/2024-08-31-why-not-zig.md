@@ -321,3 +321,13 @@ After much dragon fighting, I managed to [build zorth for the web](https://disco
     await initEmscripten({ pty: slave });
     slave.ldisc.flushToUpper();
 </script>
+
+## Update 3: 7/11/2026
+
+Speaking of dragon fighting, I just spent several weeks upgrading [6th.zig](https://github.com/jburgy/blog/blob/main/forth/6th.zig)
+to [Zig 0.16.0](https://ziglang.org/download/0.16.0/release-notes.html).  The core team's decision
+to [forbid pointers in packed struct and unions](https://ziglang.org/download/0.16.0/release-notes.html#Forbid-Pointers-in-Packed-Structs-and-Unions)
+made the rewrite more substantial than initially hoped.  Almost all of the sample code above had to go,
+including local word initializations.  I did borrow a [pattern](https://matklad.github.io/2025/12/23/zig-newtype-index-pattern.html)
+from Alex Kladov to distinguish builtin function indices from code field offsets.  The real kicker is that a
+[regression](https://codeberg.org/ziglang/zig/issues/31849) forces me to wait for [Zig 0.17.0](https://codeberg.org/ziglang/zig/milestone/69474)!

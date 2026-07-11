@@ -1,4 +1,4 @@
-{{ if site.comments.giscus.enabled }}
+{% if site.comments.giscus.enabled %}
 {% assign giscus = page.giscus | default: "https://giscus.app/client.js" %}
 <script src="{{ giscus }}"
         data-repo="{{site.comments.giscus.repo}}"
@@ -17,4 +17,4 @@
         async>
 </script>
 <noscript>Please enable JavaScript to view the comments.</noscript>
-{{ end }}
+{% endif %}
