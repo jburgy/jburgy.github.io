@@ -25,7 +25,7 @@ By contrast, Lisp code is a direct representation of the n-ary syntax tree of th
 The representation is known as [s-expressions](https://en.wikipedia.org/wiki/S-expression):
 
 <figure>
-    <img src="http://upload.wikimedia.org/wikipedia/commons/thumb/1/11/S-expression_tree.svg/220px-S-expression_tree.svg.png" crossorigin="anonymous">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/Corrected_S-expression_tree_2.svg/500px-Corrected_S-expression_tree_2.svg.png" crossorigin="anonymous">
     <figcaption>S-expression for <code class="language-lisp highlighter-rouge">(* 2 (+ 3 4))</code></figcaption>
 </figure>
 
