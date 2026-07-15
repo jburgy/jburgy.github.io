@@ -1,4 +1,4 @@
-import { TtyClient } from "/blog/dist/ttyClient.js";
+import { TtyClient } from "/blog/dist/ttyClient.mjs";
 
 // https://developer.mozilla.org/en-US/docs/Web/API/WorkerGlobalScope/self
 // self.addEventListener("message", ...) looks less magic than onmessage = ... to me
