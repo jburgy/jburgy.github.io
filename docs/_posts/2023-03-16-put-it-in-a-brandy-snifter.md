@@ -142,7 +142,7 @@ Can you imagine feverishly unboxing your brand new laptop only to discover that 
 <script type="module">
     import "/blog/node_modules/@xterm/xterm/lib/xterm.js";
     import { openpty } from "/blog/node_modules/xterm-pty/index.mjs";
-    import { TtyServer } from "/blog/dist/ttyServer.js";
+    import { TtyServer } from "/blog/dist/ttyServer.mjs";
 
     const xterm = new Terminal();
     xterm.open(document.getElementById("terminal"));
