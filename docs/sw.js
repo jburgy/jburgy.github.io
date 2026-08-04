@@ -49,10 +49,14 @@ async function fetchWithHeaders(request) {
     });
 }
 
+/**
+ * @param {FetchEvent} event
+ */
 self.addEventListener("fetch", (event) => {
     const { request } = event;
 
     if ((request.cache === "only-if-cached" && request.mode !== "same-origin") || !pattern.test(request.url)) {
+        console.warn("sw.js skipped", request.url);
         return;
     }
     event.respondWith(fetchWithHeaders(request));
