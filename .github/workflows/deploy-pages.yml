@@ -60,6 +60,8 @@ jobs:
           cp README.md content/
           uv run jupyter lite build
           cp service-worker.js dist/
+          mkdir -p dist/kernelspecs
+          cp -R content/kernelspecs/. dist/kernelspecs/
           test -f dist/notebooks/index.html
 
       - name: Stage JupyterLite under /jupyter
