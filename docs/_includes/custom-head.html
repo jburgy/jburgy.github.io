@@ -21,15 +21,28 @@
 </script>
 <script>
     // https://stefnotch.github.io/web/COOP%20and%20COEP%20Service%20Worker/
+    const coiReloadKey = "coi-service-worker-reload";
     navigator.serviceWorker.register(new URL("./sw.js", location.origin)).then(
         (registration) => {
             console.log("COOP/COEP Service Worker registered", registration.scope);
-            // If the registration is active, but it's not controlling the page
-            if (registration.active && !navigator.serviceWorker.controller)
-                window.location.reload(true);
+            if (navigator.serviceWorker.controller) {
+                sessionStorage.removeItem(coiReloadKey);
+                return;
+            }
+
+            // If the registration is active, but it's not controlling the page,
+            // reload once so the document comes back under service worker control.
+            if (registration.active && !sessionStorage.getItem(coiReloadKey)) {
+                console.log("Reloading page once to make use of COOP/COEP Service Worker.");
+                sessionStorage.setItem(coiReloadKey, "1");
+                window.location.reload();
+            }
         },
         (err) => console.log("COOP/COEP Service Worker failed to register", err)
     );
+    navigator.serviceWorker.addEventListener("controllerchange", () => {
+        sessionStorage.removeItem(coiReloadKey);
+    }, { once: true });
     document.addEventListener("DOMContentLoaded", () => {
         document.querySelectorAll("iframe").forEach(node => node.focus({ preventScroll: true }));
     }, {once: true});

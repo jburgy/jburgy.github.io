@@ -1,0 +1,87 @@
+name: Deploy Pages
+
+on:
+  push:
+    branches:
+      - gh-pages
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+env:
+  JUPYTER_REPO: jburgy/jupyter
+  JUPYTER_REF: main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout site
+        uses: actions/checkout@v4
+
+      - name: Checkout JupyterLite site
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ env.JUPYTER_REPO }}
+          ref: ${{ env.JUPYTER_REF }}
+          path: external/jupyter
+
+      - name: Set up uv for JupyterLite build
+        uses: astral-sh/setup-uv@v6
+        with:
+          python-version: '3.13'
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+          working-directory: docs
+
+      - name: Build Jekyll site
+        run: bundle exec jekyll build --source docs --destination _site
+
+      - name: Build JupyterLite site
+        run: |
+          set -eu
+          cd external/jupyter
+          uv sync
+          cp README.md content/
+          uv run jupyter lite build
+          cp service-worker.js dist/
+          test -f dist/notebooks/index.html
+
+      - name: Stage JupyterLite under /jupyter
+        run: |
+          set -eu
+          mkdir -p _site/jupyter
+          rsync -a --delete \
+            --exclude '.git/' \
+            --exclude '.github/' \
+            external/jupyter/dist/ _site/jupyter/
+          test -f _site/jupyter/notebooks/index.html
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
