@@ -72,10 +72,8 @@ depth.  [gzuidhof/coi-serviceworker](https://github.com/gzuidhof/coi-servicework
 let me circumvent GitHub's persistent lack of
 [custom headers](https://github.com/orgs/community/discussions/54257) many times before,
 just [wouldn't work this time](https://stackoverflow.com/questions/79790645/active-service-worker-logging-but-not-intercepting-requests).
-I asked Claude and Copilot for help but they came up empty so I threw in the towel and
-used a [Cloudflare Worker](https://github.com/jburgy/ogoz).  Its name is a nod to my
-ancestors since my grandmother grew up on a farm that is now at the bottom of the lake
-which surrounds [l'Île d'Ogoz](https://en.wikipedia.org/wiki/%C3%8Ele_d%27Ogoz).
+The missing piece turned out to be scope: the worker has to control the iframe response
+and all of its imports, so the notebook now lives under the same origin as this post.
 
 Lastly, I needed to figure out how to mount the
 [Origin Private File System](https://developer.mozilla.org/en-US/docs/Web/API/File_System_API/Origin_private_file_system)
@@ -91,7 +89,7 @@ saving it to a SQLite file in OPFS.  The widget uses
 [`@sqlite.org/sqlite-wasm`](https://sqlite.org/wasm) to summarize that data.
 
 <iframe 
-    src="https://ogoz.jburgy.workers.dev/jupyter/notebooks/index.html?path=data_grid.ipynb"
+    src="/jupyter/notebooks/index.html?path=data_grid.ipynb"
     width="100%"
     height="900px"
     allow="cross-origin-isolated"
