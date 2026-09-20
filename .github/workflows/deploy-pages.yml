@@ -49,7 +49,8 @@ jobs:
           working-directory: docs
 
       - name: Build Jekyll site
-        run: bundle exec jekyll build --source docs --destination _site
+        run: bundle exec jekyll build --source . --destination ../_site
+        working-directory: docs
 
       - name: Build JupyterLite site
         run: |
