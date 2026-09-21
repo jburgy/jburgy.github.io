@@ -1,0 +1,20 @@
+{%- comment -%}
+Terminal backed by a wasm module worker published from jburgy/blog at /blog/.
+Same origin as this site, but GitHub Pages sends no COOP/COEP, so SharedArrayBuffer
+is only available once sw.js has installed; xterm-pty needs it to block on reads.
+{%- endcomment -%}
+<div id="terminal"></div>
+<script type="module">
+    import "/blog/node_modules/@xterm/xterm/lib/xterm.js";
+    import { openpty } from "/blog/node_modules/xterm-pty/index.mjs";
+    import { TtyServer } from "/blog/dist/ttyServer.mjs";
+
+    const xterm = new Terminal();
+    xterm.open(document.getElementById("terminal"));
+
+    const { master, slave } = openpty();
+    xterm.loadAddon(master);
+
+    const worker = new Worker("{{ include.worker }}", { type: "module" });
+    new TtyServer(slave).start(worker);
+</script>

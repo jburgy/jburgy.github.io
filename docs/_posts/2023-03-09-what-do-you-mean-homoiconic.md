@@ -65,21 +65,7 @@ does not tolerate negative offsets the way C does
 You can read the finished product [here](https://github.com/jburgy/blog/blob/main/lisp/assembly/index.ts)
 but it's much more fun to interact with it directly:
 
-<div id="terminal"></div>
-<script type="module">
-    import  "/blog/node_modules/@xterm/xterm/lib/xterm.js";
-    import { openpty } from "/blog/node_modules/xterm-pty/index.mjs";
-    import { TtyServer } from "/blog/dist/ttyServer.mjs";
-
-    const xterm = new Terminal();
-    xterm.open(document.getElementById("terminal"));
-
-    const { master, slave } = openpty();
-    xterm.loadAddon(master);
-
-    const worker = new Worker("/assets/js/lisp.worker.js", { type: "module" });
-    new TtyServer(slave).start(worker);
-</script>
+{% include terminal.html worker="/blog/lisp.worker.js" %}
 
 An enthusiastic reader looking for a learning challenge might want to tweak the compiled WASM
 (use [wasm2wat](https://webassembly.github.io/wabt/demo/wasm2wat/) if necessary) and pickup some 
