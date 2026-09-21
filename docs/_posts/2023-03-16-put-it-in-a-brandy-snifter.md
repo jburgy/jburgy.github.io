@@ -138,18 +138,4 @@ distant past where assemblers were the first piece of software developers had to
 Can you imagine feverishly unboxing your brand new laptop only to discover that it only understand
 [hex](https://en.wikipedia.org/wiki/Hexadecimal)? 
 
-<div id="terminal"></div>
-<script type="module">
-    import "/blog/node_modules/@xterm/xterm/lib/xterm.js";
-    import { openpty } from "/blog/node_modules/xterm-pty/index.mjs";
-    import { TtyServer } from "/blog/dist/ttyServer.mjs";
-
-    const xterm = new Terminal();
-    xterm.open(document.getElementById("terminal"));
-
-    const { master, slave } = openpty();
-    xterm.loadAddon(master);
-
-    const worker = new Worker("/assets/js/TinyBasic.worker.js", { type: "module" });
-    new TtyServer(slave).start(worker);
-</script>
+{% include terminal.html worker="/blog/TinyBasic.worker.js" %}
