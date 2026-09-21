@@ -89,7 +89,7 @@ saving it to a SQLite file in OPFS.  The widget uses
 [`@sqlite.org/sqlite-wasm`](https://sqlite.org/wasm) to summarize that data.
 
 <iframe 
-    src="/jupyter/notebooks/index.html?path=data_grid.ipynb"
+    src="/lite/notebooks/index.html?path=data_grid.ipynb"
     width="100%"
     height="900px"
     allow="cross-origin-isolated"

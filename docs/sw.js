@@ -5,7 +5,7 @@ const pattern = new RegExp([
     "6th.mjs$",
     "how-many-roads.html$",
     "jonesforth.wasm$",
-    "jupyter",
+    "lite",
     "lisp.worker.js$",
     "main.js$",
     "put-it-in-a-brandy-snifter.html$",

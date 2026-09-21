@@ -64,15 +64,15 @@ jobs:
           cp -R content/kernelspecs/. dist/kernelspecs/
           test -f dist/notebooks/index.html
 
-      - name: Stage JupyterLite under /jupyter
+      - name: Stage JupyterLite under /lite
         run: |
           set -eu
-          mkdir -p _site/jupyter
+          mkdir -p _site/lite
           rsync -a --delete \
             --exclude '.git/' \
             --exclude '.github/' \
-            external/jupyter/dist/ _site/jupyter/
-          test -f _site/jupyter/notebooks/index.html
+            external/jupyter/dist/ _site/lite/
+          test -f _site/lite/notebooks/index.html
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
