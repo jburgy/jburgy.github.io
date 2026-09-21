@@ -71,7 +71,7 @@ comes to [`import`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Refe
 depth.  [gzuidhof/coi-serviceworker](https://github.com/gzuidhof/coi-serviceworker), which
 let me circumvent GitHub's persistent lack of
 [custom headers](https://github.com/orgs/community/discussions/54257) many times before,
-just [wouldn't work this time](https://stackoverflow.com/questions/79790645/active-service-worker-logging-but-not-intercepting-requests).
+just [wouldn't work this time](https://stackoverflow.com/questions/79790645/active-service-worker-logging-but-not-intercepting-requests).[^1]
 The missing piece turned out to be scope: the worker has to control the iframe response
 and all of its imports, so the notebook now lives under the same origin as this post.
 
@@ -94,6 +94,8 @@ saving it to a SQLite file in OPFS.  The widget uses
     height="900px"
     allow="cross-origin-isolated"
 ></iframe>
+
+[^1]: Strictly speaking, it also isn't necessary anymore.  Now that the notebook is served from `/lite` under the same origin, JupyterLite's own service worker can take care of the isolation headers for the notebook app and its imports.  The old page-level `coi-serviceworker` shim was only needed when I was still trying to fake that setup from outside the iframe.
 
 And if you read that far, first of all congratulations!  I realize you might still like an answer
 to the question posed in this article's title.  Besides sounding like a
