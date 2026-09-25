@@ -146,7 +146,13 @@ Row by row the correspondence is nearly one to one:
   carries on at `x+2`. `XCALL` runs its operand first and leaves its continuation on the
   return stack, which is the current list. The closure takes four cells instead of two
   because of the empty-string revision Thompson describes in the paper's notes, which is
-  also what keeps `a**` from looping forever.
+  also what keeps `a**` from looping forever. `XCALL` is `R> DUP @ SWAP 4+ >R >R ;`,
+  which is precisely `call rel32`: take the target from the cell that follows, push the
+  cell after that as the return address, and let its own `EXIT` transfer control. Note
+  that `EXECUTE` cannot stand in for it. The reason `SEE` prints the operand as `RE-PAT`
+  is that the target _is_ a cell in the middle of `RE-PAT`, not a word of its own: there
+  is no code field for `EXECUTE` to jump through, and `EXECUTE` runs one word rather
+  than setting `IP` and carrying on through the block.
 - **Accepting.** `TRA FOUND` becomes `RE-ACCEPT`.
 
 What makes this possible is that a FORTH compiler is not a black box. It is a loop that
