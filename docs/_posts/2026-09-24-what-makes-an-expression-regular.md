@@ -354,7 +354,18 @@ foundation of every lexer generator from [Lex](https://en.wikipedia.org/wiki/Lex
 onward. The dragon book devotes a whole chapter to turning them into automata. So here is
 the language that never needed a lexer, compiling the very thing lexers are made of.
 
-Twenty-two years after my first attempt, the journey comes full circle: from Thompson's
-7094 to x86, from x86 to FORTH, and from FORTH back to something Ken would recognize, a
-regular expression compiled on the fly into code whose lists of states are just jumps into
-itself. Finally without the infinite loop.
+Twenty-two years after my first attempt, the journey comes full circle[^timeline]: from
+Thompson's 7094 to x86, from x86 to FORTH, and from FORTH back to something Ken would
+recognize, a regular expression compiled on the fly into code whose lists of states are
+just jumps into itself. Finally without the infinite loop.
+
+[^timeline]: The cast of characters, in order of appearance:
+
+    | Date        | Topic       | Event |
+    |-------------|-------------|-------|
+    | 15 Jan 1962 | IBM 7094    | IBM [announces](https://web.archive.org/web/2010/http://www-03.ibm.com/ibm/history/exhibits/mainframe/mainframe_PP7094.html) the 7094 |
+    | Jun 1968    | Thompson    | "Regular Expression Search Algorithm" appears in _CACM_ 11(6) ([doi:10.1145/363347.363387](https://doi.org/10.1145/363347.363387)) |
+    | 1968        | FORTH       | Chuck Moore first calls his language FORTH, at Mohasco ([Rather, Colburn & Moore, HOPL-II](https://www.forth.com/resources/forth-programming-language/)) |
+    | May 1995    | JavaScript  | Brendan Eich writes it at Netscape in ten days ([Wirfs-Brock & Eich, HOPL IV](https://doi.org/10.1145/3386327)) |
+    | 13 Sep 2007 | JONESFORTH  | Richard W.M. Jones announces it on [Lambda the Ultimate](http://lambda-the-ultimate.org/node/2452) |
+    | 17 Jun 2015 | WebAssembly | Google, Microsoft, Mozilla and WebKit [announce](https://brendaneich.com/2015/06/from-asm-js-to-webassembly/) it |
