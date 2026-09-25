@@ -120,4 +120,4 @@ closure, `(`&hellip;`)` for grouping and `\` to escape. Thompson's machine repor
 the _shortest_ match at the leftmost position, so `(a|b)*a` stops at the first `a`
 rather than running to the last one.
 
-![Every layer of the regexp.f demo, frozen halfway through matching a(b|c)*d against abccbcccd](/blog/regexp-snapshot.svg)
+![Every layer of the regexp.f demo, frozen halfway through matching Thompson's example regex against abccbcccd](/blog/regexp-snapshot.svg)
