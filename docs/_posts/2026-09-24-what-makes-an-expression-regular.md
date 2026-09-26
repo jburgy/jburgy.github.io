@@ -20,8 +20,8 @@ to study all this is to work through the
 from cover to cover. I barely scratched its scales. Somewhere around chapter 3 I fell into
 the rabbit hole that is regular expressions, a hole with only finitely many states that I
 still haven't managed to climb out of. It's the hole charted by the dragon's more finite
-cousin,
-[Introduction to Automata Theory, Languages, and Computation](https://en.wikipedia.org/wiki/Introduction_to_Automata_Theory,_Languages,_and_Computation).
+cousin, the
+[Cinderella book](https://en.wikipedia.org/wiki/Introduction_to_Automata_Theory,_Languages,_and_Computation).
 
 ## 2004
 
