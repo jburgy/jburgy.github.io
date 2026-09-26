@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "What, python, slow? No"
+title:  "What, Python, slow? No"
 date:   2022-03-10 13:12:46 -0500
 giscus: https://giscus.jburgy.workers.dev/client.js
 ---
@@ -8,7 +8,7 @@ giscus: https://giscus.jburgy.workers.dev/client.js
 ## Or Programming High and Low
 
 Python is famously dynamic and flexible.  This flexibility comes at a cost, often on runtime performance.  That cost
-is often more than offset by the boost in developer productivity.  But what if python developers can have their cake
+is often more than offset by the boost in developer productivity.  But what if Python developers can have their cake
 and eat it too?  Flexibility is not mandatory.  You can _opt out_ of those features that have a large performance
 impact if your problem warrants it.  
 
@@ -17,11 +17,11 @@ or rust thereby avoiding the two language problem. Some of these techniques form
 (disclaimer: I'm more crustacean than rustacean, by which I mean curious bystander with some, mostly flawed,
 understanding of how CPUs work)
 
-One of the best features of python is that it has no `new` keyword like C++. Python manages your program's memory so
+One of the best features of Python is that it has no `new` keyword like C++. Python manages your program's memory so
 you don't have to. [Alan Perlis](https://en.wikipedia.org/wiki/Alan_Perlis) captured the difference between automatic
 and manual memory management in his famous "A LISP programmer knows the value of everything, but the cost of nothing"
 [epigram](https://en.wikipedia.org/wiki/Epigrams_on_Programming).  Now don't get me wrong, I absolutely _love_ not 
-having to manage memory myself.  That said, surely must be an explanation why C and C++ insist on forcing it on the
+having to manage memory myself.  That said, there must surely be an explanation why C and C++ insist on forcing it on the
 unsuspecting developer.  The best explanation is that inefficient memory access can annihilate your code performance.
 An enormous effort has gone in the design of [memory management in cpython](https://docs.python.org/3/c-api/memory.html).
 Similarly, memory allocations are prominent in the
@@ -46,7 +46,7 @@ linear algebra subroutines which expect `WORK` parameters (see
 
 ### Best of both worlds?
 
-Does it have to be an either/or situation or can python programmers have their cake and eat it too?  How can python's
+Does it have to be an either/or situation or can Python programmers have their cake and eat it too?  How can Python's
 awesome versatility let us leverage these carefully coded numerical routines?  The answer lies in 
 [PEP 3118](https://peps.python.org/pep-3118/)'s buffer protocol.  Quoting from 
 [Jake VanderPlas' excellent introduction](https://jakevdp.github.io/blog/2014/05/05/introduction-to-the-python-buffer-protocol/),
@@ -54,9 +54,9 @@ the "Python buffer protocol [...] is a framework in which Python objects can exp
 objects."  And when those "other Python objects" are thin wrappers around excellent low-level numerical libraries
 like [BLAS](https://docs.scipy.org/doc/scipy/reference/linalg.blas.html) or
 [LAPACK](https://docs.scipy.org/doc/scipy/reference/linalg.blas.html), we can _embrace_ the
-[Two-Language Problem](https://en.wikipedia.org/wiki/Ousterhout%27s_dichotomy) instead of avoid it.
+[Two-Language Problem](https://en.wikipedia.org/wiki/Ousterhout%27s_dichotomy) instead of avoiding it.
 And all of that without writing a single line in a language other than python.  To be fair, the resulting code will
-**not** be particularly [idiomatic](https://peps.python.org/pep-0020/).  But it will still be python and offer the
+**not** be particularly [idiomatic](https://peps.python.org/pep-0020/).  But it will still be Python and offer the
 readability and portability we have come to expect.
 
 ### What does it look like?
@@ -64,11 +64,11 @@ readability and portability we have come to expect.
 Let's explore this idea through an example. A word of warning: this example is not for the faint of heart as it
 uses some rather esoteric tricks.  And of course, no optimization story would be complete without the usual
 [reminder](https://wiki.c2.com/?PrematureOptimization) that "premature optimization is the root of all evil."
-We are going to consider the [n-body benchmark](https://pybenchmarks.org/u64q/performance.php?test=nbody).  The python
-benchmark links to a [Wikipedia artile](https://en.wikipedia.org/wiki/N-body_problem) which frames the problem
+We are going to consider the [n-body benchmark](https://pybenchmarks.org/u64q/performance.php?test=nbody).  The Python
+benchmark links to a [Wikipedia article](https://en.wikipedia.org/wiki/N-body_problem) which frames the problem
 mathematically.  I highly recommend you pick up Volume 1 of the
 [Course of Theoretical Physics](https://en.wikipedia.org/wiki/Course_of_Theoretical_Physics) if you want to really
-understand the math.  And if you enjoy reading how giant of physics writing about celestial mostion, you might also
+understand the math.  And if you enjoy reading how giants of physics write about celestial motion, you might also
 like [Feynman's Lost Lecture](https://en.wikipedia.org/wiki/Feynman%27s_Lost_Lecture).  The premise of that lecture is
 wonderfully contrived: Isaac Newton could not use calculus to convince the Royal Society that inverse square force
 leads to elliptical orbits because they would not have followed.  So Newton used geometric arguments instead in his
@@ -141,12 +141,12 @@ The full program can be found [here](https://github.com/jburgy/blog/blob/main/fu
 
 ### Postscript
 
-I came across this [excellent FORTRAN vs python anecdote](https://cerfacs.fr/coop/fortran-vs-python) a couple of weeks
+I came across this [excellent FORTRAN vs Python anecdote](https://cerfacs.fr/coop/fortran-vs-python) a couple of weeks
 after originally publishing this post.  The authors make an important, albeit counterintuitive, point about the
-strength of high-level languages like python compared to low-level ones like FORTRAN.  "By definition, a higher level
+strength of high-level languages like Python compared to low-level ones like FORTRAN.  "By definition, a higher level
 language will allow more explorations."  Few programmers will completely redesign hundreds or thousands of lines of
 working FORTRAN or C++.  Addressing compiler errors and warnings took [long enough](https://3d.xkcd.com/303/) that
-they're forced to move on to the next deadline.  But a few dozen lines of python is a different story.  And the
+they're forced to move on to the next deadline.  But a few dozen lines of Python is a different story.  And the
 [REPL](https://en.wikipedia.org/wiki/Read%E2%80%93eval%E2%80%93print_loop) even lets you explore different algorithms
 _interactively_.
 

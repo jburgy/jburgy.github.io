@@ -14,7 +14,7 @@ article.  Around the same time, I came across old release notes for
 [musttail attribute](https://clang.llvm.org/docs/AttributeReference.html#musttail).  This immediately reminded me
 of my decision to use [GNU's labels as values](https://gcc.gnu.org/onlinedocs/gcc/Labels-as-Values.html) to implement
 [jonesforth in C]({% post_url 2023-02-24-what-forth-again %}).  Naturally, I started wondering what a FORTH
-implemented in C would look like with `goto` replaced by `musttail`.  A quick google search turned up
+implemented in C would look like with `goto` replaced by `musttail`.  A quick Google search turned up
 a public [gist](https://gist.github.com/snej/9ba59d90689843b22dc5be2730ef0d49/2d55f844b7622aa117b9275bbc9d189613f7ff7f)
 by [Jens Alfke](https://gist.github.com/snej).  As an aside, I didn't notice Jens's more elaborate
 [Tails](https://github.com/snej/tails/) project until later.
@@ -65,16 +65,16 @@ fails, it emits an error message and moves on to the next token.  This illustrat
 no tokenizer, lexer, or syntax tree.  FORTH is a [WYSIWYG](https://en.wikipedia.org/wiki/WYSIWYG) language.
 
 Performance specialists might worry that hot functions with so many parameters will challenge
-clang's [register allocation](https://en.wikipedia.org/wiki/Register_allocation).  Fortunately,
+Clang's [register allocation](https://en.wikipedia.org/wiki/Register_allocation).  Fortunately,
 those functions will never be called by a
 [CALL instruction](https://www.quora.com/What-does-the-call-instruction-do-in-an-assembly-language)!
-The parameters are as follow
+The parameters are as follows
 
 > `struct interp_t *env`
 
 A number of interpreter global variables like `BASE`, `STATE` (whether we're compiling or interpreting), `HERE`
 
-> `intprt_t *sp`
+> `intptr_t *sp`
 
 A pointer to the top of the value stack.  Both stacks grow downward
 
@@ -92,7 +92,7 @@ sense, only `ip->literal` and `ip->word` do.
 A pointer to the _current_ instruction.  Used by `DOCOL` to transfer control to the next word.
 Having it as rightmost argument is reminiscent of
 [continuation-passing style](https://en.wikipedia.org/wiki/Continuation-passing_style).  If anything,
-having so many parameters simplifies clang's register allocation as the 
+having so many parameters simplifies Clang's register allocation as the 
 [System V ABI](https://en.wikipedia.org/wiki/X86_calling_conventions#System_V_AMD64_ABI) mandates that
 the first six integer or pointer arguments are passed in registers `%rdi`, `%rsi`, `%rdx`, `%rcx`,
 `%r8`, and `%r9`.
@@ -114,7 +114,7 @@ DEFCODE(DROP, 0, "SWAP", SWAP)
 }
 ```
 
-Amazingly, the [x86](https://en.wikipedia.org/wiki/X86) version of `SWAP` is barely longer than the c version:
+Amazingly, the [x86](https://en.wikipedia.org/wiki/X86) version of `SWAP` is barely longer than the C version:
 
 ```nasm
 SWAP:                           # @SWAP
@@ -130,7 +130,7 @@ SWAP:                           # @SWAP
 The first three lines actually swap `sp[0]` and `sp[1]` (using `pshufd` to
 [shuffle packed doublewords](https://www.felixcloutier.com/x86/pshufd)).
 The last four lines dereference `ip` _twice_ (_indirect_ threading)
-the perform the tail call using an [indirect branch](https://en.wikipedia.org/wiki/Indirect_branch).
+then perform the tail call using an [indirect branch](https://en.wikipedia.org/wiki/Indirect_branch).
 Staring at that generated assembly highlights a clever bit of
 [code golf](https://en.wikipedia.org/wiki/Code_golf) in 
 [Richard WM Jones](https://rwmj.wordpress.com/)'s handcrafted 
@@ -143,7 +143,7 @@ is a (failed) attempt at using [extended asm](https://gcc.gnu.org/onlinedocs/gcc
 to achieve the same compression.  Unfortunately, I found no better way to enforce
 pre-conditions than explicit `mov` instructions (which more than offset the saving).
 
-The [webassembly](https://webassembly.org/) version, courtesy of
+The [WebAssembly](https://webassembly.org/) version, courtesy of
 [wasm2wat](https://webassembly.github.io/wabt/demo/wasm2wat/), is only slightly longer:
 ```scheme
 (module $5th.wasm
@@ -175,12 +175,12 @@ The [webassembly](https://webassembly.org/) version, courtesy of
 In summary, [`5th.c`](https://github.com/jburgy/blog/blob/main/forth/5th.c) looks
 different from [`4th.c`](https://github.com/jburgy/blog/blob/main/forth/4th.c), at least
 when considering their C sources. Turns out that compilers generate very similar code
-from those difference sources.  That code is also reminiscent of
+from those different sources.  That code is also reminiscent of
 [jonesforth.S](https://github.com/nornagon/jonesforth/blob/master/jonesforth.S)
 which was hand-crafted in 32-bit x86.  `5th.c` is probably the easiest to extend
 of the bunch.  New native instructions only require implementing a new C function with
 a well-defined signature.  It might be the
-[shiny object syndrome](https://en.wikipedia.org/wiki/Shiny_object_syndrome) but think that
+[shiny object syndrome](https://en.wikipedia.org/wiki/Shiny_object_syndrome) but I think that
 [`5th.c`](https://github.com/jburgy/blog/blob/main/forth/5th.c) is a reasonable
 [blueprint](https://en.wikipedia.org/wiki/Blueprint) for implementing your next interpreter. 
 

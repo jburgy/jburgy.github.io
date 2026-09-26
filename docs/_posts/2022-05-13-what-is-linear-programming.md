@@ -21,7 +21,7 @@ _independent_ equations for a unique solution?  There are only two cases to cons
 * more equations than unknowns ([overdetermined system](https://en.wikipedia.org/wiki/Overdetermined_system))
 * fewer equations than unknowns ([underdetermined system](https://en.wikipedia.org/wiki/Underdetermined_system))
 
-An overdetermined system does not have a solution. It's common practive in that case
+An overdetermined system does not have a solution. It's common practice in that case
 to pick the _least bad_ approximation.  This involves measuring how much our hypothetical solution
 "misses" each equation then searching for the solution that "misses" the least.  Specialists
 call this approach _minimizing the L₂ norm_ and the associated procedure 
@@ -86,7 +86,7 @@ $$\begin{eqnarray}
 Typography highlights the equivalence but how do we make computer "see" it?
 First, we need objects that let us represent symbolic expressions.  It's not hard to
 roll those by hand if we're only interested in this specific problem but that's hardly
-the python way.  Much easier to install the standard python package for symbolic manipulations:
+the Python way.  Much easier to install the standard Python package for symbolic manipulations:
 [sympy](https://docs.sympy.org).  Next, we are going to write a simple function that lets
 us write our sample problem as
 
@@ -115,7 +115,7 @@ lhs = map(attrgetter("lhs"), constraints)  # maximize "*args"
 coefficients = list(map(methodcaller("as_coefficients_dict"), lhs))
 ```
 
-This representation as list of dictionaries remind us of a sparse matrix in
+This representation as list of dictionaries reminds us of a sparse matrix in
 [Compressed Sparse Row](https://en.wikipedia.org/wiki/Sparse_matrix#Compressed_sparse_row_(CSR,_CRS_or_Yale_format))
 format.  CSR is flat thanks to an extra array (`indptr`) which tells us where rows begin and end.  That's easy:
 
@@ -178,10 +178,10 @@ convert a linear optimization problem to canonical form.
 
 I went looking online for an early FORTRAN implementation of the simplex method and came
 across the [NSWC Library of Mathematics Subroutines](https://apps.dtic.mil/sti/tr/pdf/ADA261511.pdf)
-(where NSWC stands for Naval Surface Warface Center).  It appeared several years _after_
-Dantzig's original discovery yet still has that musty old code smell.  I slapped some python
+(where NSWC stands for Naval Surface Warfare Center).  It appeared several years _after_
+Dantzig's original discovery yet still has that musty old code smell.  I slapped some Python
 bindings on it using [f2py](https://numpy.org/doc/stable/f2py/f2py.getting-started.html#the-smart-way)
-then looked for a classical problem to test it.  I came across an articled called
+then looked for a classical problem to test it.  I came across an article called
 [Sudoku, Linear Optimization, and the Ten Cent Diet](https://research.google/blog/sudoku-linear-optimization-and-the-ten-cent-diet/) with a great line:
 
 > The [Simplex algorithm](https://en.wikipedia.org/wiki/Simplex_algorithm) for linear optimization
@@ -192,7 +192,7 @@ then looked for a classical problem to test it.  I came across an articled calle
 
 Holy contributing to the delinquency of minors, Batman, 120 person-days!  The revised simplex
 implementation converges in just 8 iterations.  It's so fast that its runtime is largely
-irrelevant.  And the [python call site](https://github.com/jburgy/blog/blob/main/simplex/test_smplx.py) 
+irrelevant.  And the [Python call site](https://github.com/jburgy/blog/blob/main/simplex/test_smplx.py) 
 isn't even scary:
 ```python
 ind, x, z, iter = smplx(
@@ -207,7 +207,7 @@ solution vector, in this case dollars spent on each of the 77 foods plus 9
 [slack variables](https://en.wikipedia.org/wiki/Slack_variable) to accommodate the inequality
 constraints, `z` is the objective value, and `iter` the number of iterations that were performed.
 
-The incongruity of building that almost 50 year FORTRAN library for the web would have
+The incongruity of building that almost 50-year-old FORTRAN library for the web would have
 been fun. Unfortunately, that proved discouragingly
 hard. [pyodide build](https://pyodide.org/en/latest/development/building-packages.html) uses
 [f2c](https://www.netlib.org/f2c/f2c.pdf) whereas my native build uses
@@ -215,7 +215,7 @@ hard. [pyodide build](https://pyodide.org/en/latest/development/building-package
 I banged my head against a "LONG_BIT definition appears wrong for platform" issue for some time
 before giving up. [lfortran](https://lfortran.org/blog/2024/05/fortran-on-web-using-lfortran/)
 apparently emits WASM and is probably worth a try.
-I even asking Claude to translate `SMPLX` to python but that went nowhere.  Then I
+I even asked Claude to translate `SMPLX` to Python but that went nowhere.  Then I
 remembered [pyscript](https://pyscript.net/) and experienced instant bliss!  Take a look at the
 table below.  While you were reading [above the fold](https://en.wikipedia.org/wiki/Above_the_fold),
 the page sneakily fetched `pyscript`, installed a version of

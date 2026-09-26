@@ -7,7 +7,7 @@ giscus: https://giscus.jburgy.workers.dev/client.js
 
 We already discussed [Chuck Moore](https://en.wikipedia.org/wiki/Charles_H._Moore)'s 
 [discovery](https://news.ycombinator.com/item?id=18227631) of [FORTH](https://colorforth.github.io/HOPL.html)
-in a [previous post]({% post_url 2022-05-28-what-is-forth %}) but leveraging python bytecodes to implement it felt
+in a [previous post]({% post_url 2022-05-28-what-is-forth %}) but leveraging Python bytecodes to implement it felt
 like cheating.  Like many others, I started understanding FORTH through Richard WM Jones'
 [jonesforth](https://rwmj.wordpress.com/2010/08/07/jonesforth-git-repository/).  I trudged through
 the unfamiliar assembly syntax and settled down with many cups of coffee to understand the difference
@@ -25,7 +25,7 @@ The first bit of actual code in `jonesforth.S` is the `NEXT` macro:
 ```
 `NEXT` is fundamental to `FORTH` yet remarkably only requires two x86 instructions.  The second instruction
 reminds us of [What makes Julia delightful, cont'd?]({% post_url 2022-05-26-what-makes-julia-delightful %}).  The
-wikipedia [entry on threaded code](https://en.wikipedia.org/wiki/Threaded_code) outlines a rather vast array
+Wikipedia [entry on threaded code](https://en.wikipedia.org/wiki/Threaded_code) outlines a rather vast array
 of potential translations.  However, in the spirit of keeping our translation as faithful to the original as
 possible, I chose [GNU C's Labels as Values](https://gcc.gnu.org/onlinedocs/gcc/Labels-as-Values.html). This
 is what my `NEXT` macro looks like in C:
@@ -47,7 +47,7 @@ With this first challenge behind us, we move on to the precise memory layout of 
 can vary in length.  Words written in assembly (or in our case C) language only require a single address.  Words
 written in FORTH can refer to N previously defined words plus the special `DOCOL` label (since they were
 introduced by a `:`) that is at the center of _indirect_ threading.  Jones explains that extra indirection step
-in great details, complete with ASCII diagrams.  I will therefore not repeat it here.
+in great detail, complete with ASCII diagrams.  I will therefore not repeat it here.
 [Flexible array members](https://en.wikipedia.org/wiki/Flexible_array_member) were officially standardized
 in [C99](https://en.wikipedia.org/wiki/C99) so we will use them to store the collection of labels in the dictionary
 entry.  We could store the first label, aka `Code Field`, as a separate member but that only increases the
@@ -75,12 +75,12 @@ matters, particularly when testing some of the more advanced FORTH words like `C
 right now but I wouldn't trust it for [space exploration](https://groups.google.com/g/alt.folklore.science/c/gRF-EyF-1rM).
 
 Less generous readers are sure to ask: "are you happy now, what was the point of it all?"  One of the cool things
-having this code in C lets us do is use [emscripten](https://emscripten.org/) to build it for the web!  Emscripten is
+having this code in C lets us do is use [Emscripten](https://emscripten.org/) to build it for the web!  Emscripten is
 based on the [Clang](https://clang.llvm.org/)/[LLVM](https://llvm.org/) stack,
 not [GCC](https://gcc.gnu.org/)/[libgccjit](https://gcc.gnu.org/wiki/JIT).  Another GCC extension my code relies on,
-which I didn't bother to mention, are [Nested Functions](https://gcc.gnu.org/onlinedocs/gcc/Nested-Functions.html) to
-push on and pop from the data stack.  This led me to discover Clang's [Blocks](https://en.wikipedia.org/wiki/Blocks_(C_language_extension)).
-The wikipedia entry for them is more advanced than strictly necessary but still incredibly useful.  The basic syntax is reasonably intuitive:
+which I didn't bother to mention, is [Nested Functions](https://gcc.gnu.org/onlinedocs/gcc/Nested-Functions.html) to
+push onto and pop from the data stack.  This led me to discover Clang's [Blocks](https://en.wikipedia.org/wiki/Blocks_(C_language_extension)).
+The Wikipedia entry for them is more advanced than strictly necessary but still incredibly useful.  The basic syntax is reasonably intuitive:
 ```c
     intptr_t (^pop)(void) = ^(void)
     {
@@ -90,7 +90,7 @@ The wikipedia entry for them is more advanced than strictly necessary but still 
 ```
 This might also be a good time to point out that our stacks grow _downwards_ to match x86 `push`/`pop` conventions.
 
-Then I hit an [issue](https://github.com/emscripten-core/emscripten/issues/6708) where emscripten decided to not
+Then I hit an [issue](https://github.com/emscripten-core/emscripten/issues/6708) where Emscripten decided to not
 implement [syscall(2)](https://man7.org/linux/man-pages/man2/syscall.2.html).  I threw a simplistic
 [shim](https://en.wikipedia.org/wiki/Shim_(computing)) together and moved on.  Finally, I wrapped the whole thing
 in a thin [xterm-pty](https://xterm-pty.netlify.app/) layer and got a rather more heterogeneous clone of
@@ -99,7 +99,7 @@ in a thin [xterm-pty](https://xterm-pty.netlify.app/) layer and got a rather mor
 Many thanks to [stefnotch](https://github.com/stefnotch) for
 explaining how a [Service Worker](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API) lets us
 access the required [SharedArrayBuffer](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SharedArrayBuffer)
-on [github pages](https://dev.to/stefnotch/enabling-coop-coep-without-touching-the-server-2d3n)
+on [GitHub Pages](https://dev.to/stefnotch/enabling-coop-coep-without-touching-the-server-2d3n)
 
 Thanks also to [Richard Jones](https://rwmj.wordpress.com/) for pointing out I forgot to include a link to my
 GNU C translation of his code.  [Here](https://github.com/jburgy/blog/blob/main/forth/4th.c) it is.
@@ -132,7 +132,7 @@ plus an extra word that holds the base address of our `stack`.  Emscripten does 
 and, while I understood the immediate cause (second `WHILE` loop in `SEE` went one step past the end of their
 respective `.code[]`), I struggled to fix it.  As luck would have it, I inspected the `asm` output (using gcc's
 `-S` and `-fverbose-asm` command line flags) and noticed that each word ends with an `.align 16` directive.  This
-indicates that gcc pads flexible array members to _double word_ boundaries.  Appending an unreachable `EXIT` to
+indicates that GCC pads flexible array members to _double word_ boundaries.  Appending an unreachable `EXIT` to
 these two words fixes the decompilation.  This [kludge](https://en.wikipedia.org/wiki/Kludge) is significantly
 easier than influencing gcc's padding.
 
@@ -141,8 +141,8 @@ While I had the patient on the table, I finally understood the
 expansion of a macro argument" and replaced several `#if __SIZEOF_POINTER__` by `XSTR(__SIZEOF_POINTER__)`.
 I also realized that our `DEFCONST` macro handles more than constants and simplified a number of short words.
 Then, I improved the `DEFCODE` macro to reduce boilerplate further.  Finally, I leveraged
-python's [subprocess](https://docs.python.org/3/library/subprocess.html) to write a simple unit test.
-This revealed another segmentation fault in my github action which runs on
+Python's [subprocess](https://docs.python.org/3/library/subprocess.html) to write a simple unit test.
+This revealed another segmentation fault in my GitHub action which runs on
 [ubuntu-latest](https://github.com/actions/runner-images) and [GCC 11](https://gcc.gnu.org/gcc-11/)
 whereas I still run [GCC 10](https://gcc.gnu.org/gcc-10/) locally.
 [gdb](https://www.sourceware.org/gdb/) could attribute the segmentation fault to an unaligned

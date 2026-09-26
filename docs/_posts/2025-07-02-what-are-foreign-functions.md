@@ -9,7 +9,7 @@ In real-world software, layers accumulate like archeological
 I recently cooked up a little utility which ended up touching layers spanning several
 decades.  It all started when I found the 
 [official recommendation](https://github.com/awsdocs/aws-lambda-developer-guide/blob/main/sample-apps/layer-python/layer/2-package.sh)
-from AWS to create a [python layer](https://docs.aws.amazon.com/lambda/latest/dg/python-layers.html)
+from AWS to create a [Python layer](https://docs.aws.amazon.com/lambda/latest/dg/python-layers.html)
 underwhelming.
 
 Per the [AWS documentation](https://docs.aws.amazon.com/lambda/latest/dg/python-layers.html#python-layers-package),
@@ -26,12 +26,12 @@ addresses this in 3 steps:
 This is objectively silly.  You shouldn't need to copy an entire folder just so you can rename it.
 [7-Zip](https://www.7-zip.org/) lets you rename files (even folders) inside a zip archive in-place.
 But that still requires two separate commands (oh, the humanity)!  But hang on, the
-[python standard library](https://docs.python.org/3/library/zlib.html) supports the 
+[Python standard library](https://docs.python.org/3/library/zlib.html) supports the 
 [ZIP format](https://en.wikipedia.org/wiki/ZIP_(file_format))!  And if you're worried about
-performance, fear not, python's `zlib` is a [C wrapper](https://github.com/python/cpython/blob/main/Modules/zlibmodule.c)
+performance, fear not, Python's `zlib` is a [C wrapper](https://github.com/python/cpython/blob/main/Modules/zlibmodule.c)
 around this [zlib](https://www.zlib.net/).
 
-So we can write a simple python program that looks roughly like
+So we can write a simple Python program that looks roughly like
 ```python
 platlib = Path(sysconfig.get_path("platlib"))
 data = Path(sysconfig.get_path("data"))
@@ -61,7 +61,7 @@ print(f"\N{escape}[{n}F\N{escape}[J", end="")
 
 F (or Cursor Previous Line) "moves the cursor to beginning of the line _n_ (default 1) lines up" then
 J (or Erase in Display) "clears part of the screen. If _n_ is 0 (or missing), clear from cursor to end of screen."
-Printing this rather cryptic screen lets you print some a few lines (like, for example, the last _n_ files
+Printing this rather cryptic screen lets you print a few lines (like, for example, the last _n_ files
 added to the archive), erase them, and print them more.  The refresh rate on your terminal is likely high
 enough that your output looks animated.  Furthermore, you can use
 [`collections.deque`](https://docs.python.org/3/library/collections.html#collections.deque)'s _maxlen_
@@ -72,16 +72,16 @@ make those few lines look like the output of [`tree`](https://en.wikipedia.org/w
 That lets you shrink the width of the output since virtual environments nest, leading
 to long paths. (Funny side note, my initial implementation was not always clearing the screen
 properly because it didn't account for line wraps requiring clearing more lines than printed).  At
-that point, I remembered that building zig generated precisely that kind of "scrolling tree" output.
+that point, I remembered that building Zig generated precisely that kind of "scrolling tree" output.
 A quick web search took me to
 [Zig's New CLI Progress Bar Explained](https://ziggit.dev/t/zigs-new-cli-progress-bar-explained/4499).
 Yikes, Andrew really went nuts on that "infallible and non-heap-allocating" implementation!  For once,
 my [laziness](https://wiki.c2.com/?LazinessImpatienceHubris) beat out my hubris and I decided to not
-reimplement [`Progress.zig`](https://github.com/ziglang/zig/blob/master/lib/std/Progress.zig) in python.
+reimplement [`Progress.zig`](https://github.com/ziglang/zig/blob/master/lib/std/Progress.zig) in Python.
 Instead, I decided to _expose_ it to python.
 
 As luck would have it, I recently explored
-[How do you call Zig from python?]({% post_url 2025-05-01-zig-from-python %}) With that knowledge,
+[How do you call Zig from Python?]({% post_url 2025-05-01-zig-from-python %}) With that knowledge,
 I quickly whipped up
 ```c
 const std = @import("std");
@@ -153,7 +153,7 @@ order:
 
 If anything, this proves that, in the world of software, maybe you _can_ teach old dogs new tricks!
 Obviously, all of this goes back to the
-[Von Neuman architecture](https://en.wikipedia.org/wiki/Von_Neumann_architecture) from 1945
+[Von Neumann architecture](https://en.wikipedia.org/wiki/Von_Neumann_architecture) from 1945
 but that's true of every software project so I chose to leave it out.  The above selection
 is trying to enumerate choices that are particularly salient to the tool being discussed.
 

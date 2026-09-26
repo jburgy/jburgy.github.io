@@ -10,7 +10,7 @@ A former employer of mine rolled out a graphical tool years ago which
 let us interrogate tabular data sets with minimal coding.  Think 
 Excel PivotTable except better.  You could drag column headers and drop
 them into the left margin to summarize (group) data by the corresponding
-values (or dimension).  There was a filter dialog who let you compose
+values (or dimension).  There was a filter dialog that let you compose
 complex [Boolean expressions](https://en.wikipedia.org/wiki/Boolean_expression)
 with a few mouse clicks.  That was _so_ helpful and I miss it to this day.
 
@@ -39,8 +39,8 @@ And that crazy gizmo kinda worked back in 2019!
 issue to [Replace Web SQL](https://github.com/jburgy/data-grid/issues/1) on the
 Spring Equinox.  You see, Chrome finally did
 [deprecate and remove Web SQL](https://developer.chrome.com/blog/deprecating-web-sql)
-as ~~threatened~~ promised.  And just like that, lthe little spark that set `data-grid` apart
-was estinguished.  However, a great many things happened to the Web during that time.
+as ~~threatened~~ promised.  And just like that, the little spark that set `data-grid` apart
+was extinguished.  However, a great many things happened to the Web during that time.
 Most importantly, [WebAssembly](https://webassembly.org/) democratized embedding
 non-web software in web browsers.  Much to their credit, the SQLite maintainers decided
 to offer an official [WASM port](https://sqlite.org/wasm) of their awesome product.
@@ -51,9 +51,9 @@ brought `data-grid` back from the brink.  I should also say that its
 is much less quirky that the old Web SQL API.  That first step was the easy part.
 The heavy lift came from the fact that I insisted on embedding a demo in this blog
 post.  For better or worse, I really liked how the most recent iteration of the
-[What, python, slow?]({% post_url 2022-03-12-what-python-slow %}) post turned out:
+[What, Python, slow?]({% post_url 2022-03-12-what-python-slow %}) post turned out:
 using [`JupyterLite`](https://jupyterlite.readthedocs.io/).  Had I known how much
-additional worked it would have created, I might have chosen a simpler approach.
+additional work it would have created, I might have chosen a simpler approach.
 (Nah, who am I kidding, since when do I do these because they're easy)
 
 2019 `data-grid` also came as an incredibly clunky custom
@@ -79,7 +79,7 @@ Lastly, I needed to figure out how to mount the
 [Origin Private File System](https://developer.mozilla.org/en-US/docs/Web/API/File_System_API/Origin_private_file_system)
 in a [pyodide kernel](https://jupyterlite-pyodide-kernel.readthedocs.io/en/latest/).
 I had never heard of [pyodide_js](https://pyodide.org/en/stable/usage/api/js-api.html#module-pyodide)
-until today.  The amount of back-and-forth between python and JavaScript reminds me of
+until today.  The amount of back-and-forth between Python and JavaScript reminds me of
 Robert Downey Jr's character in "Tropic Thunder" ("I'm a dude playing a dude disguised as another dude").
 
 The notebook below runs entirely in your browser.  After installing

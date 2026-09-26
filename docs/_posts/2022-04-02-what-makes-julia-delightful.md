@@ -20,7 +20,7 @@ questions from a nobody.  Specifically, I couldn't find any explanation for the 
 instruction manual. Ken was so kind and patient and I'm truly sad that I have lost access to the email address
 I was using at the time.  [Russ Cox](https://swtch.com/~rsc/) has a great
 [IBM 7094 cheat sheet](https://swtch.com/~rsc/regexp/ibm7094.html) on his website which explains that "** is just
-0 to the assembler, but by convention denotes a values that is manipulated at run-time (i.e., in self-modifying
+0 to the assembler, but by convention denotes a value that is manipulated at run-time (i.e., in self-modifying
 code) by instruction such as PAC, PCA, and SCA."  This is part of a set of pages about
 [regular expressions](https://swtch.com/~rsc/regexp/).
 
@@ -32,14 +32,14 @@ offsets into the pattern being searched for instead.  Translating the original I
 assembly conventions like instruction encoding, immediate operands, etc.  The result is a buggy little hack
 which you can find on [Russ Cox's website](https://swtch.com/~rsc/regexp/regexp-x86.c.txt).  Russ did report that
 "it runs for a very long time, making me think it is stuck in an infinite loop somewhere.  I haven't looked at it
-closely."  To be honest, I haven't enough because I started my first Wall Street job around that time and hobby
+closely."  To be honest, I haven't either because I started my first Wall Street job around that time and hobby
 programming took a back seat.
 
 Fast forward almost twenty years.  I probably have the 10,000 hours Malcolm Gladwell conjectures are required to master
-programming.  I wish I could say computers looks to me like the Matrix to Neo in that final fight scene but I'd
+programming.  I wish I could say computers look to me like the Matrix to Neo in that final fight scene but I'd
 be lying.  I have, however, reached the point where I can read code and focus on intent rather than language specifics.
 Jumping around between languages instead of becoming an expert in any one of them will do that.  I have picked up Julia
-recently because of the (well deserved) hype around it and I'm a big fan.  Julia is known to be implemented as a
+recently because of the (well-deserved) hype around it and I'm a big fan.  Julia is known to be implemented as a
 [JIT compiler](https://docs.julialang.org/en/v1/devdocs/eval/#dev-codegen) which, in theory, makes it a very suitable
 environment to play around with Thomson's article once more.  Let us see how far we get!
 
@@ -94,7 +94,7 @@ name_entry_size = info(ptr, INFO_NAMEENTRYSIZE, UInt32)
 info(ptr, INFO_NAMETABLE, Ptr{UInt8}) => (name_count * name_entry_size + 1)
 ```
 
-At this point, we have the absolute address of the beggining of the PCRE bytecode stream.  We need a little more logic
+At this point, we have the absolute address of the beginning of the PCRE bytecode stream.  We need a little more logic
 to decode its contents.  Fortunately, [Philip Hazel](https://en.wikipedia.org/wiki/Philip_Hazel) included a handy text
 document named [HACKING](https://github.com/PCRE2Project/pcre2/blob/master/HACKING).  This document begins with some
 historical context then goes on to describe PCRE's internals.  We quickly learn that the "compiled form of a pattern is

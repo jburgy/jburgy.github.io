@@ -10,9 +10,9 @@ admit this is more an "Oops!... I Did It Again" situation! I promised myself
 I wouldn't and yet, here it is, I wrote yet another
 [JONESFORTH](https://rwmj.wordpress.com/2010/08/07/jonesforth-git-repository/)
 clone. I have no excuse. Well, I kinda do. I was
-[nerd sniped](https://xkcd.com/356/) on discord. See, what happened was this:
+[nerd sniped](https://xkcd.com/356/) on Discord. See, what happened was this:
 I built all previous clones to [WebAssembly](https://webassembly.org/) so
-[Paul Tarvydas](https://discord.com/users/762717526873341962) whether I
+[Paul Tarvydas](https://discord.com/users/762717526873341962) asked whether I
 considered "writing Forth-ish directly in WAT (WASM)". I said no because I
 was already aware of [WAForth](https://mko.re/blog/waforth/) which took
 the conversation into an exploration of WAForth with its author, Remko. WAForth
@@ -56,7 +56,7 @@ couldn't explain the difference between direct and indirect threading **simply**
 Ironically, I think 
 [I can now](https://discord.com/channels/1415980515806412813/1441786905980174458/1442326514065604710)!
 
-I made a second attempt from scrach with Claude, this time using the following
+I made a second attempt from scratch with Claude, this time using the following
 prompt:
 
 >`jonesforth.S` is an indirect threaded Forth interpreter written in 32-bit x86 assembly.
@@ -77,7 +77,7 @@ GNU assembler macros in `jonesforth.S`.  My C implementations use the
 C Preprocessor to similar effect.  Zig prides itself on having "no preprocessor,
 no macros" but offers comptime metaprogramming instead.  WebAssembly provides
 none of that.  So I wrote a poor man's assembler of sorts in
-[python](https://github.com/jburgy/blog/blob/main/forth/wasm/dictionary.py).
+[Python](https://github.com/jburgy/blog/blob/main/forth/wasm/dictionary.py).
 At its core, it's but a `dict` of word definitions and a loop to print them along with headers (using 
 [`data`](https://developer.mozilla.org/en-US/docs/WebAssembly/Guides/Understanding_the_text_format#webassembly_memory))
 and `funcref` registrations (using 

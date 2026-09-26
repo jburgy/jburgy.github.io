@@ -5,12 +5,12 @@ date:   2022-05-28 12:01:36 -0500
 ---
 ## Or How I Stopped Complaining about the CPython Bytecode Compiler?
 
-Python is an interpreted language but that interpretation happens in two largely indepedent stages.  Python code is
+Python is an interpreted language but that interpretation happens in two largely independent stages.  Python code is
 first "compiled" to an intermediate bytecode representation.  That intermediate representation is then executed by a
 [virtual machine](https://github.com/python/cpython/blob/main/Python/ceval.c).  The whole thing is quite fascinating
 and I recommend Anthony Shaw's [CPython Internals](https://realpython.com/products/cpython-internals-book/) book if
 you'd like to dig deeper.  This is not, however, the topic of this post.  This post is going to discuss what we can
-do about the fact that the python compiler performs [barely any optimizations](https://nullprogram.com/blog/2019/02/24/).
+do about the fact that the Python compiler performs [barely any optimizations](https://nullprogram.com/blog/2019/02/24/).
 
 There's no need to repeat Chris Wellons' arguments but an example will ground the conversation:
 
@@ -23,7 +23,7 @@ def fibonacci(n: int) -> int:
     return a
 ```
 
-The `dis` python standard library [module](https://docs.python.org/3/library/dis.html) lets you inspect how python
+The `dis` Python standard library [module](https://docs.python.org/3/library/dis.html) lets you inspect how Python
 compiles that function:
 
 ```nasm
@@ -55,10 +55,10 @@ compiles that function:
 ```
 
 The first thing that stands out is the sheer number of `LOAD_FAST` and `STORE_FAST`.  It is not at all uncommon
-to even notice pairs of them in python disassemblies.  Skip Montanaro suggested a
+to even notice pairs of them in Python disassemblies.  Skip Montanaro suggested a
 [peephole optimizer](https://legacy.python.org/workshops/1998-11/proceedings/papers/montanaro/montanaro.html) for
-python that would identify and optimize common patterns but there is little evidence of it in the current codebase.
-Recent efforts to improve python's performance (aka the [Shannon plan](https://github.com/markshannon/faster-cpython/blob/master/plan.md))
+Python that would identify and optimize common patterns but there is little evidence of it in the current codebase.
+Recent efforts to improve Python's performance (aka the [Shannon plan](https://github.com/markshannon/faster-cpython/blob/master/plan.md))
 are focusing on different techniques like [inline caching](https://bernsteinbear.com/blog/inline-caching/) and
 [adaptive instructions](https://peps.python.org/pep-0659/).  A substantial body of
 [literature](https://users.ece.cmu.edu/~koopman/stack_compiler/stack_co.pdf) illustrates the challenges with generating
@@ -78,7 +78,7 @@ instead of trying to outsmart them!
 
 Think you can do a better job hand-compiling a function than cpython's naïve bytecode compiler?  Great, express your approach
 in Forth and it will get converted into bytecodes!  [`types.CodeType`](https://docs.python.org/3/library/types.html#types.CodeType)
-can construct a new python [function](https://docs.python.org/3/glossary.html#term-function) from the bytecode stream.
+can construct a new Python [function](https://docs.python.org/3/glossary.html#term-function) from the bytecode stream.
 Why not invert [dis](https://docs.python.org/3/library/dis.html)
 instead?  For one, `dis` is rather verbose and its jump instructions also require exact offsets.  Look at the
 [Collatz expression](https://en.wikipedia.org/wiki/Collatz_conjecture#Statement_of_the_problem) for example:
@@ -109,14 +109,14 @@ accordingly.  In Forth, the same expression reads
 : collatz ( n -- n ) dup 1 and if 3 * 1+ else 2/ then ;
 ```
 
-Forth is not just more compact than python bytecode, it also requires no numerical offsets.  Of course, if you really
+Forth is not just more compact than Python bytecode, it also requires no numerical offsets.  Of course, if you really
 prefer typing all of that, feel free to use this [bytecode assembler](https://github.com/jburgy/blog/blob/main/fun/assemble.py).
 
 Now that our objective is defined, what should the interface look like?  Compiling one function at a time is reasonable
-for toy micro-optimizations.  That said, where should the Forth sit relative to the python function?  We could use
-multi-line strings and parse Forth [Stack Comments](https://www.forth.org/forth_intro/comments.htm) to guess the python
+for toy micro-optimizations.  That said, where should the Forth sit relative to the Python function?  We could use
+multi-line strings and parse Forth [Stack Comments](https://www.forth.org/forth_intro/comments.htm) to guess the Python
 signature.  That's rather hacky.  A nicer [kluge](http://catb.org/jargon/html/K/kluge.html) would be to save the Forth
-implementation in the python's [docstring](https://docs.python.org/3/glossary.html#term-docstring).
+implementation in the Python function's [docstring](https://docs.python.org/3/glossary.html#term-docstring).
 
 In other words, we want to write
 
@@ -138,7 +138,7 @@ drop nip ;
 ```
 
 and apply a [higher-order function](https://en.wikipedia.org/wiki/Higher-order_function) or
-[decorator](https://docs.python.org/3/glossary.html#term-decorator) to return a new python function whose
+[decorator](https://docs.python.org/3/glossary.html#term-decorator) to return a new Python function whose
 bytecode was derived from the Forth text.  This is precisely what [forth.py](https://github.com/jburgy/blog/blob/main/forth/forth.py)
 achieves with a little [metaprogramming](https://docs.python.org/3/reference/datamodel.html#metaclasses) and
 [self-modifying code](https://en.wikipedia.org/wiki/Self-modifying_code) thrown in.  The self-modifying code occurs
@@ -150,4 +150,4 @@ near as good on `fast_fib(12)`.  The fact that a "smarter" $$\mathrm{log}_2 n$$ 
 In conclusion, what did we learn?
 
 1. Micro-optimizations are silly (but fun)
-1. A [cost model](https://en.wikipedia.org/wiki/Analysis_of_algorithms#Cost_models) for python needs to be more subtle than simply counting instructions
+1. A [cost model](https://en.wikipedia.org/wiki/Analysis_of_algorithms#Cost_models) for Python needs to be more subtle than simply counting instructions

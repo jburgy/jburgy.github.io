@@ -32,7 +32,7 @@ Copilot outlined its plan then applied changes in-place.  The pixelated sunglass
 look anything like I had in mind (more on that later) and the "dropping" animation
 landed them arbitrarily ⅔ of the way down.  I tried describing the shape I wanted for the
 sunglasses several times in vain.  That's one of the cases where I jumped in
-and edited the code by hand.  Then came the _real_ suprise:
+and edited the code by hand.  Then came the _real_ surprise:
 
 > Do not estimate nose position. Use face detection so the sunglasses line up with the subject's nose. Track that position as it changes
 

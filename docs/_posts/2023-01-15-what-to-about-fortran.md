@@ -12,14 +12,14 @@ result, a large body of valuable software is slowly fading into oblivion.  How c
 make this software accessible to modern developers?
 
 Most dynamic programming languages support a [Foreign function interface](https://en.wikipedia.org/wiki/Foreign_function_interface)
-that allows to programs to call routines written in a different (hence foreign) language.
+that allows programs to call routines written in a different (hence foreign) language.
 [ctypes](https://docs.python.org/3/library/ctypes.html), which is part of
-[the python standard library](https://docs.python.org/3/library/index.html),
+[the Python standard library](https://docs.python.org/3/library/index.html),
 is only one of many similar solutions.  Other approaches, like [SWIG](https://www.swig.org/) and
-[pybind11](https://pybind11.readthedocs.io/en/stable/) rely on additional declarations to generate python
-bindings.  So far, these tools generate python wrappers for C and C++ functions.  Fortran
+[pybind11](https://pybind11.readthedocs.io/en/stable/) rely on additional declarations to generate Python
+bindings.  So far, these tools generate Python wrappers for C and C++ functions.  Fortran
 functions and subroutines can be called from C so any of these should be sufficient in theory. In practice,
-this requires a reasonably deep understanding of the python [ABI](https://en.wikipedia.org/wiki/Application_binary_interface)
+this requires a reasonably deep understanding of the Python [ABI](https://en.wikipedia.org/wiki/Application_binary_interface)
 to work correctly.
 
 This is precisely the niche that [F2PY](https://numpy.org/doc/stable/f2py/) fills.  Quoting
@@ -40,7 +40,7 @@ According to [this reference page](https://www.math-cs.gordon.edu/courses/cs323/
 FORTRAN IV arrays already "may have 1 to 7 subscripts".  However, because indices are explicit in the
 syntax, *arbitrary numbers of dimensions* require additional effort.  The technical note explains that,
 "As usual, the first subscript varies the fastest in storage order".  In other words, if `A` is a 
-three-dimension array with dimensions `L × M × N`, element `A(I, J, K)` is stored at offset
+three-dimensional array with dimensions `L × M × N`, element `A(I, J, K)` is stored at offset
 `I - 1 + L * ((J - 1) + M * (K - 1))`, see [here](https://en.wikipedia.org/wiki/Row-_and_column-major_order#Address_calculation_in_general).
 
 Another wonderful quirk of older (i.e. unstructured) Fortran dialects is the *arithmetic*
@@ -53,17 +53,17 @@ a really [compact binary search](https://rosettacode.org/wiki/Binary_search#Iter
 As a final note, I got everything working and felt pretty good about myself until I read about
 the [status of `numpy.distutils`](https://numpy.org/doc/stable/reference/distutils_status_migration.html).
 I consider simply ignoring it.  After all, this is not a project I maintain or anything.  But I realize
-how painful it would be to get back to it in several months once my github actions start failing
+how painful it would be to get back to it in several months once my GitHub actions start failing
 miserably.  So I bit the bullet, crossed the [pons asinorum](https://en.wikipedia.org/wiki/Pons_asinorum),
 and learned [meson](https://mesonbuild.com/) because that's what [SciPy](https://scipy.org/) uses.
-To be frank, I take exception about the nasty line about `make` in the
+To be frank, I take exception to the nasty line about `make` in the
 [f2py documentation](https://numpy.org/doc/stable/f2py/buildtools/index.html).  Call me old-fashioned
 but I find it hard to place a high value on the investment it took me to pick up `meson`. 
 
-## Update: 6/20/205
+## Update: 6/20/2025
 
 I finally crossed the [pons asinorum](https://en.wikipedia.org/wiki/Pons_asinorum) and embraced
-modern python packaging practices!  In typical [DevOps](https://en.wikipedia.org/wiki/DevOps) fashion,
+modern Python packaging practices!  In typical [DevOps](https://en.wikipedia.org/wiki/DevOps) fashion,
 this took a **lot** of trial and error!  In the end, I made the following changes:
 
 ```toml

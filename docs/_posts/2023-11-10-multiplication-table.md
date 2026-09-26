@@ -33,7 +33,7 @@ table input[type="tel"]:invalid { color: #c00; }
 When a middle schooler from Arkansas, talking about "educating more people to
 operate these instruments", asked Hungarian-born polymath
 [John von Neumann](https://en.wikipedia.org/wiki/John_von_Neumann) whether
-"there [is] enough people to do it",  [Von Neumann replied](https://www.youtube.com/watch?v=vLbllFHBQM4)
+"there [are] enough people to do it",  [Von Neumann replied](https://www.youtube.com/watch?v=vLbllFHBQM4)
 "[n]o, we don't have enough people and we better do something about it, and I
 hesitate to say that we better do something about it quickly but we'd rather
 do something about it both quickly and then continuously".
@@ -48,13 +48,13 @@ take a hard look at the curriculum and edit it with a machete.  Math is
 vibrant and, with the renewed excitement around Artificial Intelligence,
 more relevant than ever.  School kids need to be spending less time on tedious
 mechanical aspects like long addition, multiplication, and division and more
-times on advanced topics like linear algebra or statistics.
+time on advanced topics like linear algebra or statistics.
 
 That said, there's no substitute for rote memorization of the basics.
 The pandemic left my child with gaps in knowledge so I needed to help her
 memorize her multiplication table.  We tried a number of approaches until
-I had a rather basic idea during my commute home.  I wrote less that
-[three dozen lines of python](https://gist.github.com/jburgy/3a67e04df3af71e9fd48a0af92cdc14f)
+I had a rather basic idea during my commute home.  I wrote less than
+[three dozen lines of Python](https://gist.github.com/jburgy/3a67e04df3af71e9fd48a0af92cdc14f)
 to generate the HTML below.  All it does is let you enter the product of the row
 by the column.  It will highlight it in red when you get it wrong. 
 

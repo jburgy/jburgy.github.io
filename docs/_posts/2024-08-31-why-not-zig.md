@@ -12,7 +12,7 @@ makes [FORTH](https://en.wikipedia.org/wiki/Forth_(programming_language))'s
 complete lack of syntax particularly appealing (look ma, no parser)!
 
 I first experimented with FORTH as mere shorthand to 
-[generate python bytecode]({% post_url 2022-05-28-what-is-forth %}),
+[generate Python bytecode]({% post_url 2022-05-28-what-is-forth %}),
 then translated [jonesforth]({% post_url 2023-02-24-what-forth-again %}) 
 from x86 to GNU C with [labels as values](https://gcc.gnu.org/onlinedocs/gcc/Labels-as-Values.html),
 and finally to C with [tail recursion]({% post_url 2024-04-29-tail-recursion %}).
@@ -294,7 +294,7 @@ does a really good job of converting them to
 
 ## Update 1: 10/24/2024
 
-I presented Zorth to the first NYC zig meetup!
+I presented Zorth to the first NYC Zig meetup!
 
 [![ZORTH](http://img.youtube.com/vi/Bar4IFc1NpM/0.jpg)](https://www.youtube.com/watch?v=Bar4IFc1NpM "FORTH in Zig")
 

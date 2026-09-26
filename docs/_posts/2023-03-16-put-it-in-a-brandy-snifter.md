@@ -70,7 +70,7 @@ on page 35.  Bytes 13-16 read
     000D ;      19 :STMT BC GOTO "LET"
     000D 8B4C45D4;
 
-The first byte, `0x8B`, gets interpretered as `0x80` (the [opcode](https://en.wikipedia.org/wiki/Opcode) for `BC`)
+The first byte, `0x8B`, gets interpreted as `0x80` (the [opcode](https://en.wikipedia.org/wiki/Opcode) for `BC`)
 plus `0x0B` to jump 11 bytes ahead if the user program does not match the string encoded in the following
 bytes.  The next byte, `0x4C` is simply the [ASCII](https://en.wikipedia.org/wiki/ASCII) encoding for `'L'`.
 `0x45` similarly means `'E'` but `0xD4` is not `'T'`.  The ASCII encoding for `'T'` is `0x54`.  `0xD4` encodes an
@@ -135,7 +135,7 @@ for _ in range(2):  # first pass to compute offsets
 Converting TBIL text to bytes might strike some readers as one low-level step too far. However, this
 [two-bit history post](https://twobithistory.org/2018/11/12/cat.html) reminds us of a (fortunately)
 distant past where assemblers were the first piece of software developers had to create before using a new machine.
-Can you imagine feverishly unboxing your brand new laptop only to discover that it only understand
+Can you imagine feverishly unboxing your brand new laptop only to discover that it only understands
 [hex](https://en.wikipedia.org/wiki/Hexadecimal)? 
 
 {% include terminal.html worker="/blog/TinyBasic.worker.js" %}

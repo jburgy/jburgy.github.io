@@ -41,9 +41,9 @@ to fit on a 512kb boot sector!
 
 [Justine](https://justine.lol/) and her hacker friends already provide a 
 [reference implementation in C](https://github.com/jart/sectorlisp/blob/main/lisp.c). We
-could have compiled it to WASM with emscripten but that would be cheating. It would also have produced
-unnecessarily large assets since emscripten shims the required bits of libc.  An x86 emulator in WASM like 
-[WebVM](https://webvm.io) would have be an alternative but [v86](https://copy.sh/) already did this
+could have compiled it to WASM with Emscripten but that would be cheating. It would also have produced
+unnecessarily large assets since Emscripten shims the required bits of libc.  An x86 emulator in WASM like 
+[WebVM](https://webvm.io) would have been an alternative but [v86](https://copy.sh/) already did this
 for [sectorlisp](https://copy.sh/v86/?profile=sectorlisp)!  In the spirit of minimalism, we chose to 
 do more to end up with less.  So we translated lisp.c to [assemblyscript](https://www.assemblyscript.org/).
 Assemblyscript is to WASM what early C was to ASM: a high-level assembler.  Search and replace got us
@@ -68,7 +68,7 @@ but it's much more fun to interact with it directly:
 {% include terminal.html worker="/blog/lisp.worker.js" %}
 
 An enthusiastic reader looking for a learning challenge might want to tweak the compiled WASM
-(use [wasm2wat](https://webassembly.github.io/wabt/demo/wasm2wat/) if necessary) and pickup some 
+(use [wasm2wat](https://webassembly.github.io/wabt/demo/wasm2wat/) if necessary) and pick up some 
 [stack optimizations](http://users.ece.cmu.edu/~koopman/stack_compiler/stack_co.html)
 (particularly [intra-block stack scheduling](http://users.ece.cmu.edu/~koopman/stack_compiler/stack_co.html#intrablock) ones)
 which [binaryen](https://github.com/WebAssembly/binaryen) missed.

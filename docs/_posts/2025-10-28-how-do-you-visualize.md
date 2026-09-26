@@ -16,7 +16,7 @@ on the web?  As with most things web, we are faced with an overwhelming
 search engine if you don't believe me.
 
 I have tried many of these "build dashboards in 10 easy steps" tutorials.  Some are
-really great.  The opiniated ones frustrate you as soon as you try swimming outside
+really great.  The opinionated ones frustrate you as soon as you try swimming outside
 the lane they picked for you.  In my experience, the more mature ones are still
 implemented in JavaScript or [TypeScript](https://www.typescriptlang.org/) which
 makes data scientists recoil in horror.

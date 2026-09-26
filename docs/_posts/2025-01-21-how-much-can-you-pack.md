@@ -18,7 +18,7 @@ This opens a memory saving opportunity by converting pointers to indices.
 
 ## Flattening ASTs
 
-The first use case happened by of a confluence of 3 events:
+The first use case happened by a confluence of 3 events:
 
 * I [struggled with a memory leak](https://discord.com/channels/605571803288698900/1325848433965400105)
 in a hand-written [recursive descent parser](https://en.wikipedia.org/wiki/Recursive_descent_parser)
@@ -61,7 +61,7 @@ pub const Node = packed union {
 ```
 
 This definition replaces a _copy_ of each token by an index _into_ `[]const Token`
-(weighing in at a mere `3` bytes intead of `24`).  It also broke up `[]const *const Node` into
+(weighing in at a mere `3` bytes instead of `24`).  It also broke up `[]const *const Node` into
 a 1-byte `count` squeezed with the token followed by _indices_ into `[]const Node`.  The memory
 footprint of the old `Node` was `40 + 8n` bytes where `n = node.args.len`:
 
@@ -86,7 +86,7 @@ I initially [failed to grok ArrayList](https://discord.com/channels/605571803288
 This first project was translating a [C](https://en.wikipedia.org/wiki/C_(programming_language))
 implementation of [FORTH](https://en.wikipedia.org/wiki/C_(programming_language)) (which in turn
 was translating an [x86](https://en.wikipedia.org/wiki/X86) implementation).  As a consequence,
-focus was more on how than why.  Re-reading my discord question, I realize now that I lacked
+focus was more on how than why.  Re-reading my Discord question, I realize now that I lacked
 the vocabulary to precisely articulate what I was trying to achieve.  The original x86 was using
 [brk(2)](https://man7.org/linux/man-pages/man2/brk.2.html) and raw pointers to implement a
 [bump allocator](https://en.wikipedia.org/wiki/Region-based_memory_management) which supports

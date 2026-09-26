@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "How do you call Zig from python?"
+title:  "How do you call Zig from Python?"
 date:   2025-05-01 09:27:41 -0500
 ---
 
@@ -9,10 +9,10 @@ date:   2025-05-01 09:27:41 -0500
 
 As this [previous post]({% post_url 2024-08-31-why-not-zig %}) demonstrates,
 I rather enjoy [Zig](https://ziglang.org/).  However, software I write
-professionally is almost exclusively in [python](https://www.python.org/).
+professionally is almost exclusively in [Python](https://www.python.org/).
 Now, because [CPython](https://github.com/python/cpython) is the most common
 implementation, people commonly write performance critical parts of their
-python applications in [C](https://en.wikipedia.org/wiki/C_(programming_language)).
+Python applications in [C](https://en.wikipedia.org/wiki/C_(programming_language)).
 There is an [official tutorial](https://docs.python.org/3/extending/extending.html)
 documenting that process.  The amount of boilerplate required stands out rather
 quickly in that tutorial.  People have come up with a number of utilities to
@@ -66,10 +66,10 @@ state of affairs when I came across Ziggy Pydust.  And that's when I remembered
 [Larry Wall](https://en.wikipedia.org/wiki/Larry_Wall)'s [three virtues](https://threevirtues.dev/).
 
 Laziness
-: There are so many thing I should be doing instead of this, sounds like a great excuse to procrastinate!
+: There are so many things I should be doing instead of this, sounds like a great excuse to procrastinate!
 
 Impatience
-: What do you mean "We can try to reach consensus"?  I want to be able to write python extensions in Zig now!
+: What do you mean "We can try to reach consensus"?  I want to be able to write Python extensions in Zig now!
 
 Hubris
 : What do you mean "This isn't an easy thing to do"?  Surely I am clever or at the very least stubborn enough!
@@ -94,10 +94,10 @@ to review [#429](https://github.com/spiraldb/ziggy-pydust/pull/429).  In the end
 that passing an extra argument around felt like a fitting substitute for
 [global state](https://news.ycombinator.com/item?id=9874824).
 
-Now the good news, bad news of it all.  Ziggy Pydust is no longer stuck on zig 0.11.
+Now the good news, bad news of it all.  Ziggy Pydust is no longer stuck on Zig 0.11.
 I think we can all agree that's reasonably good news.  This work paved the way
 for [@bridgeQiao](https://github.com/bridgeQiao) to update Ziggy Pydust to
-[zig 0.14](https://github.com/spiraldb/ziggy-pydust/pull/441)!  On the flip side, I saw
+[Zig 0.14](https://github.com/spiraldb/ziggy-pydust/pull/441)!  On the flip side, I saw
 no way but to break the Ziggy Pydust API.
 
 Before [#429](https://github.com/spiraldb/ziggy-pydust/pull/429):

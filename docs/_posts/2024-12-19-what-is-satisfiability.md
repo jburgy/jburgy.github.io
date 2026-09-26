@@ -9,7 +9,7 @@ This year, I am having fun taking part in my first ever [Advent of Code](https:/
 Day 17 threw me for a loop and forced me to learn a new technique so that deserves a quick write-up.
 As with other days, it's a two part challenge which starts easy.  The first challenge involves a
 bytecode interpreter and you know how much I like those!  My input is equivalent to the following
-python code:
+Python code:
 
 ```python
 from collections.abc import Iterable
@@ -29,7 +29,7 @@ print(*device(66171486), sep=",")
 ```
 
 So far so good.  Part 2 gets hairy and involves searching for the smallest argument `a` that
-turns the device into a [quine](https://en.wikipedia.org/wiki/Quine_(computing)).  Simplifiying
+turns the device into a [quine](https://en.wikipedia.org/wiki/Quine_(computing)).  Simplifying
 the program as shown below highlights the fact that `device` yields one value per octal digit
 of `a`.  So we're looking for an `a` with 16 octal digits.  There are $$2^{48}$$ of those!
 This reminds us of the [wheat and chessboard problem](https://en.wikipedia.org/wiki/Wheat_and_chessboard_problem)
