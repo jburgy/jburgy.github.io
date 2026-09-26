@@ -186,8 +186,7 @@ here. `sieve` is the first stage. It turns each operator into its index in `SYMB
 comparing two operators compares their precedence, and it inserts `·` wherever one operand
 follows another:
 
-<link rel="stylesheet" href="https://pyscript.net/releases/2026.7.3/core.css">
-<script type="module" src="https://pyscript.net/releases/2026.7.3/core.js"></script>
+{% include pyscript.html %}
 
 <script type="py-editor" env="stages">
 from collections.abc import Iterable
@@ -338,54 +337,6 @@ browser. Typing a pattern really does compile it to threaded code and run it ove
 		border: 0;
 		background: transparent;
 		font-size: .85rem;
-	}
-
-	/* core.css labels each editor with its env name and hides Run until hover. */
-	.py-editor-box::before {
-		content: none;
-	}
-
-	.py-editor-box .py-editor-run-button {
-		opacity: 1;
-		color: var(--minima-text-color);
-	}
-
-	/* PyScript hardcodes fill="#464646" on the Run glyph. */
-	.py-editor-box .py-editor-run-button svg path {
-		fill: currentColor;
-	}
-
-	/* Opts out of Chrome's auto-dark, which would otherwise darken the editor a second time. */
-	html {
-		color-scheme: light dark;
-	}
-
-	/* CodeMirror is light-only and inside a shadow root, so pin the host light and invert it. */
-	.py-editor-input > div:not([class]) {
-		color-scheme: only light;
-		background: #fff;
-	}
-
-	@media (prefers-color-scheme: dark) {
-		.py-editor-input > div:not([class]) {
-			filter: invert(1) hue-rotate(180deg);
-		}
-	}
-
-	.py-editor-box {
-		border: 1px solid var(--minima-border-color-01);
-	}
-
-	.py-editor-output {
-		padding: .4rem .75rem;
-		white-space: pre-wrap;
-		border-top: 1px solid var(--minima-border-color-01);
-		background: var(--minima-code-background-color);
-		color: var(--minima-text-color);
-	}
-
-	.py-editor-output:empty {
-		display: none;
 	}
 </style>
 

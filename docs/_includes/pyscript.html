@@ -1,0 +1,7 @@
+{%- comment -%}
+PyScript runtime plus site overrides for py-editor. py-editor.css must follow core.css:
+its rules match PyScript's specificity and only win by coming later.
+{%- endcomment -%}
+<link rel="stylesheet" href="https://pyscript.net/releases/2026.7.3/core.css">
+<link rel="stylesheet" href="{{ '/assets/css/py-editor.css' | relative_url }}">
+<script type="module" src="https://pyscript.net/releases/2026.7.3/core.js"></script>
