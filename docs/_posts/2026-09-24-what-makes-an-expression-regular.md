@@ -182,9 +182,58 @@ Thompson dismisses the first two stages of his compiler as "straightforward and 
 discussed". The first inserts explicit concatenation operators, and the second is
 Dijkstra's [shunting yard](https://en.wikipedia.org/wiki/Shunting_yard_algorithm), which
 converts the result to reverse Polish notation. They're short enough to play with right
-here:
+here. `sieve` is the first stage. It turns each operator into its index in `SYMBOLS`, so
+comparing two operators compares their precedence, and it inserts `·` wherever one operand
+follows another:
 
-<!-- TODO: PyScript demos of RE-PREPARE and the shunting yard (RE-CONVERT) -->
+<link rel="stylesheet" href="https://pyscript.net/releases/2026.7.3/core.css">
+<script type="module" src="https://pyscript.net/releases/2026.7.3/core.js"></script>
+
+<script type="py-editor" env="stages">
+from collections.abc import Iterable
+
+SYMBOLS = "()|·*"  # an operator token is its index here, so precedence is numeric order
+
+
+def show(tokens: Iterable[str | int]):
+    print(*(SYMBOLS[t] if isinstance(t, int) else repr(t) if t in SYMBOLS else t for t in tokens))
+
+
+def sieve(src: str):
+    concat, chars = False, iter(src)
+    for c in chars:
+        if concat and c not in ")|·*":
+            yield SYMBOLS.index("·")
+        concat = c not in "(|·"
+        yield next(chars, "\\") if c == "\\" else SYMBOLS.index(c) if c in SYMBOLS else c
+    yield SYMBOLS.index(")")
+
+
+show(sieve("a(b|c)*d"))
+</script>
+
+`postfix` is the second stage, the shunting yard. Operands go straight to the output.
+Operators wait on a stack until one that binds no tighter arrives. The closing `)`
+that `sieve` appends flushes whatever is left. The two editors share an interpreter, so
+run the one above first:
+
+<script type="py-editor" env="stages">
+def postfix(tokens: Iterable[str | int]):
+    stack = [SYMBOLS.index("(")]
+    for t in tokens:
+        if isinstance(t, str):
+            yield t
+            continue
+        while stack[0] < t <= stack[-1]:
+            yield stack.pop()
+        if SYMBOLS[t] == ")":
+            stack.pop()
+        else:
+            stack.append(t)
+
+
+show(postfix(sieve("a(b|c)*d")))
+</script>
 
 The third stage is the fun one. Below, `regexp.f` runs on top of `jonesforth.f`, inside a
 hand-crafted WebAssembly FORTH interpreter,
@@ -289,6 +338,54 @@ browser. Typing a pattern really does compile it to threaded code and run it ove
 		border: 0;
 		background: transparent;
 		font-size: .85rem;
+	}
+
+	/* core.css labels each editor with its env name and hides Run until hover. */
+	.py-editor-box::before {
+		content: none;
+	}
+
+	.py-editor-box .py-editor-run-button {
+		opacity: 1;
+		color: var(--minima-text-color);
+	}
+
+	/* PyScript hardcodes fill="#464646" on the Run glyph. */
+	.py-editor-box .py-editor-run-button svg path {
+		fill: currentColor;
+	}
+
+	/* Opts out of Chrome's auto-dark, which would otherwise darken the editor a second time. */
+	html {
+		color-scheme: light dark;
+	}
+
+	/* CodeMirror is light-only and inside a shadow root, so pin the host light and invert it. */
+	.py-editor-input > div:not([class]) {
+		color-scheme: only light;
+		background: #fff;
+	}
+
+	@media (prefers-color-scheme: dark) {
+		.py-editor-input > div:not([class]) {
+			filter: invert(1) hue-rotate(180deg);
+		}
+	}
+
+	.py-editor-box {
+		border: 1px solid var(--minima-border-color-01);
+	}
+
+	.py-editor-output {
+		padding: .4rem .75rem;
+		white-space: pre-wrap;
+		border-top: 1px solid var(--minima-border-color-01);
+		background: var(--minima-code-background-color);
+		color: var(--minima-text-color);
+	}
+
+	.py-editor-output:empty {
+		display: none;
 	}
 </style>
 
