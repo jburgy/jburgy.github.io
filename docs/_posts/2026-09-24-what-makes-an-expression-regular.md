@@ -145,7 +145,7 @@ Row by row the correspondence is nearly one to one:
 - **Branching.** `CNODE` and `XCALL` are mirror images. `CNODE` at `x` queues `x+1` and
   carries on at `x+2`. `XCALL` runs its operand first and leaves its continuation on the
   return stack, which is the current list. The closure takes four cells instead of two
-  because of the empty-string revision Thompson describes in the paper's notes, which is
+  because of the empty-string revision Thompson describes in the paper's notes[^lambda], which is
   also what keeps `a**` from looping forever. `XCALL` is `R> DUP @ SWAP 4+ >R >R ;`,
   which is precisely `call rel32`: take the target from the cell that follows, push the
   cell after that as the return address, and let its own `EXIT` transfer control. Note
@@ -201,10 +201,10 @@ def show(tokens: Iterable[str | int]):
 def sieve(src: str):
     concat, chars = False, iter(src)
     for c in chars:
-        if concat and c not in ")|·*":
+        if concat and c not in ")|*":
             yield SYMBOLS.index("·")
-        concat = c not in "(|·"
-        yield next(chars, "\\") if c == "\\" else SYMBOLS.index(c) if c in SYMBOLS else c
+        concat = c not in "(|"
+        yield next(chars, "\\") if c == "\\" else SYMBOLS.index(c) if c in "()|*" else c
     yield SYMBOLS.index(")")
 
 
@@ -412,6 +412,13 @@ Twenty-two years after my first attempt, the journey comes full circle[^timeline
 Thompson's 7094 to x86, from x86 to FORTH, and from FORTH back to something Ken would
 recognize, a regular expression compiled on the fly into code whose lists of states are
 just jumps into itself. Finally without the infinite loop.
+
+[^lambda]: [jit.py](https://github.com/jburgy/blog/blob/main/regexp/jit.py), a Python port
+    of `x86.c` that emits x86-64 or arm64 and calls it through `ctypes`, uses an alternative
+    we came up with. Instead of patching jumps while generating code, it first rewrites the
+    pattern so that no `*` applies to anything that matches the empty string: `e*` becomes
+    `e'*`, where `e'` is `e` without the empty string, so `(a*b*)*` becomes `(a|b)*`. With
+    no empty loops left to break, the revision isn't needed at all.
 
 [^timeline]: The cast of characters, in order of appearance:
 
