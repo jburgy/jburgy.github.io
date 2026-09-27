@@ -122,6 +122,7 @@ venv.bak/
 
 # jekyll generated
 docs/_site/
+_site/
 
 # mypy
 .mypy_cache/
@@ -130,3 +131,8 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# node / playwright
+node_modules/
+playwright-report/
+test-results/

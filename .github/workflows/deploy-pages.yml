@@ -15,28 +15,12 @@ concurrency:
   group: pages
   cancel-in-progress: true
 
-env:
-  JUPYTER_REPO: jburgy/jupyter
-  JUPYTER_REF: main
-
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout site
         uses: actions/checkout@v4
-
-      - name: Checkout JupyterLite site
-        uses: actions/checkout@v4
-        with:
-          repository: ${{ env.JUPYTER_REPO }}
-          ref: ${{ env.JUPYTER_REF }}
-          path: external/jupyter
-
-      - name: Set up uv for JupyterLite build
-        uses: astral-sh/setup-uv@v6
-        with:
-          python-version: '3.13'
 
       - name: Configure Pages
         uses: actions/configure-pages@v5
@@ -51,28 +35,6 @@ jobs:
       - name: Build Jekyll site
         run: bundle exec jekyll build --source . --destination ../_site
         working-directory: docs
-
-      - name: Build JupyterLite site
-        run: |
-          set -eu
-          cd external/jupyter
-          uv sync
-          cp README.md content/
-          uv run jupyter lite build
-          cp service-worker.js dist/
-          mkdir -p dist/kernelspecs
-          cp -R content/kernelspecs/. dist/kernelspecs/
-          test -f dist/notebooks/index.html
-
-      - name: Stage JupyterLite under /lite
-        run: |
-          set -eu
-          mkdir -p _site/lite
-          rsync -a --delete \
-            --exclude '.git/' \
-            --exclude '.github/' \
-            external/jupyter/dist/ _site/lite/
-          test -f _site/lite/notebooks/index.html
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3

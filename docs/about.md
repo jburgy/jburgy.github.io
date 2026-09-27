@@ -58,7 +58,9 @@ read between the lines, some themes emerge that keep me excited to this day:
 * numerical maths: basic linear algebra led to linear programming and more
 * foreign function interfaces: calling Zig from python replaced calling FORTRAN from C
 
-If some of these interest you too, you might like [my JupyterLite instance](https://bur.gy/lite)
+If some of these interest you too, you might like the
+[`<data-grid>` demo](https://bur.gy/data-grid/), which pivots a public dataset
+entirely in your browser.
 
 <!--
 **jburgy/jburgy** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.

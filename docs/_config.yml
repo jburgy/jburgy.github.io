@@ -36,7 +36,6 @@ minima:
   skin: auto
   nav_pages:
     - about.md
-    - jupyt.md
     - index.md
 
 comments:
