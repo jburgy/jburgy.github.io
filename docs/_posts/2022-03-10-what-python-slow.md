@@ -152,7 +152,14 @@ they're forced to move on to the next deadline.  But a few dozen lines of Python
 _interactively_.
 
 In conclusion, we should be more explicit when we say that a particular programming language is slow.  Slow to do
-what?  Let us not conflate iterating in tight inner loops with iterating in the problem domain.
+what?  Let us not conflate iterating in tight inner loops with iterating in the problem domain.[^simplex]
+
+[^simplex]: A [2026 rewrite](https://github.com/jburgy/blog/pull/101) of a 1970s simplex solver
+    ([`SMPLX.F`](https://github.com/jburgy/blog/blob/main/simplex/SMPLX.F)) makes the same point again:
+    on a dense 400&times;800 LP, [`smplx_py`](https://github.com/jburgy/blog/blob/main/simplex/simplex.py)
+    runs about twice as fast as the compiled Fortran build, because its `numpy` calls dispatch to
+    vectorized BLAS while `SMPLX.F`'s hand-written `DO` loops stay scalar and branchy &mdash; see
+    [`bench_smplx.py`](https://github.com/jburgy/blog/blob/main/simplex/bench_smplx.py).
 
 ### See it for yourself
 
