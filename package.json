@@ -1,0 +1,12 @@
+{
+    "name": "jburgy.github.io",
+    "private": true,
+    "description": "Tests for the PyScript blocks embedded in the blog",
+    "scripts": {
+        "build": "cd docs && bundle exec jekyll build --source . --destination ../_site",
+        "test": "npm run build && npx playwright test"
+    },
+    "devDependencies": {
+        "@playwright/test": "^1.63.0"
+    }
+}
