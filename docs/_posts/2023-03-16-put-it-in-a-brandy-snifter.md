@@ -1,6 +1,7 @@
 ---
 layout: post
 title:  "When did Basic become insulting?"
+tags: [py, wasm, comp]
 date:   2023-03-16 23:24:18 -0500
 giscus: https://giscus.jburgy.workers.dev/client.js
 ---

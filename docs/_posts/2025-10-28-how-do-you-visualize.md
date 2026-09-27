@@ -1,6 +1,7 @@
 ---
 layout: post
 title:  "How do you visualize data?"
+tags: [py, js]
 date:   2025-10-28 13:52:24 -0500
 ---
 

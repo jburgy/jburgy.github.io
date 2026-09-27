@@ -1,6 +1,7 @@
 ---
 layout: post
 title:  "What is Linear Programming?"
+tags: [py, f77, math]
 date:   2023-05-12 07:31:23 -0500
 ---
 ## Or what do they mean by "solve for x"?

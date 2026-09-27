@@ -1,6 +1,7 @@
 ---
 layout: post
 title:  "What makes Julia delightful, cont'd?"
+tags: [jl, re, comp, asm]
 date:   2022-05-26 20:37:34 -0500
 ---
 ## Or how I Finally Dipped my Toes into Macros

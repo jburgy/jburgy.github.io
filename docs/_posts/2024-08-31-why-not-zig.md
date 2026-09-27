@@ -1,6 +1,7 @@
 ---
 layout: post
 title:  "Why not try Zig next?"
+tags: [forth, zig, c, asm, wasm]
 date:   2024-08-31 07:41:26 -0500
 giscus: https://giscus.jburgy.workers.dev/client.js
 ---
@@ -15,7 +16,7 @@ I first experimented with FORTH as mere shorthand to
 [generate Python bytecode]({% post_url 2022-05-28-what-is-forth %}),
 then translated [jonesforth]({% post_url 2023-02-24-what-forth-again %}) 
 from x86 to GNU C with [labels as values](https://gcc.gnu.org/onlinedocs/gcc/Labels-as-Values.html),
-and finally to C with [tail recursion]({% post_url 2024-04-29-tail-recursion %}).
+and finally to C with [tail recursion]({% post_url 2024-03-29-tail-recursion %}).
 You would think that would be enough, wouldn't you.
 
 Yet somehow that itch still needed scratching.  I also thought it was time to

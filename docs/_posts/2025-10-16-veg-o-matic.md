@@ -1,6 +1,7 @@
 ---
 layout: post
 title:  "What's a Veg-O-Matic?"
+tags: [js, wasm, py]
 date:   2025-10-16 14:01:51 -0500
 giscus: https://giscus.jburgy.workers.dev/client.js
 ---
@@ -51,7 +52,7 @@ brought `data-grid` back from the brink.  I should also say that its
 is much less quirky that the old Web SQL API.  That first step was the easy part.
 The heavy lift came from the fact that I insisted on embedding a demo in this blog
 post.  For better or worse, I really liked how the most recent iteration of the
-[What, Python, slow?]({% post_url 2022-03-12-what-python-slow %}) post turned out:
+[What, Python, slow?]({% post_url 2022-03-10-what-python-slow %}) post turned out:
 using [`JupyterLite`](https://jupyterlite.readthedocs.io/).  Had I known how much
 additional work it would have created, I might have chosen a simpler approach.
 (Nah, who am I kidding, since when do I do these because they're easy)

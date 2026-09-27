@@ -1,6 +1,7 @@
 ---
 layout: post
 title:  "How did you learn your times table?"
+tags: [py, math]
 date:   2023-11-10 22:16:20 -0500
 ---
 

@@ -1,6 +1,7 @@
 ---
 layout: post
 title:  "How Many Roads Must a Man Walk Down?"
+tags: [forth, wasm, c, asm]
 date:   2025-11-29 07:04:54 -0500
 giscus: https://giscus.jburgy.workers.dev/client.js
 ---

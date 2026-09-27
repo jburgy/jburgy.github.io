@@ -1,6 +1,7 @@
 ---
 layout: post
 title:  "What, Python, slow? No"
+tags: [py, f77, math, perf]
 date:   2022-03-10 13:12:46 -0500
 giscus: https://giscus.jburgy.workers.dev/client.js
 ---

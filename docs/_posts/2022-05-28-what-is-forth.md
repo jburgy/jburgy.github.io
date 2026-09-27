@@ -1,6 +1,7 @@
 ---
 layout: post
 title:  "What is Forth?"
+tags: [py, forth, comp, perf]
 date:   2022-05-28 12:01:36 -0500
 ---
 ## Or How I Stopped Complaining about the CPython Bytecode Compiler?

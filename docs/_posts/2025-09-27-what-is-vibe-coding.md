@@ -1,6 +1,7 @@
 ---
 layout: post
 title:  "What is vibe coding?"
+tags: [js]
 date:   2025-09-27 10:09:18 -0500
 ---
 

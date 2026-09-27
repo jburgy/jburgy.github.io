@@ -1,6 +1,7 @@
 ---
 layout: post
 title:  "What is satisfiability?"
+tags: [py, algos]
 date:   2024-12-19 12:32:12 -0500
 ---
 ## Or How Much is ever Enough?
