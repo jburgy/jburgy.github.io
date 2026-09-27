@@ -36,6 +36,10 @@ test('n-body post ships a main-thread PyScript block, not a JupyterLite iframe',
     expect(src).toContain('from scipy.linalg import blas');
     // `xxT += 6` inside integrate() would rebind the name and break the loop.
     expect(src).toContain('np.add(xxT, 6.0, out=xxT)');
+    // innerHTML does not execute <script>, and jshtml's player is all script:
+    // the controls would render with no canvas and Play would do nothing.
+    expect(src).toContain('createContextualFragment');
+    expect(src).not.toMatch(/#nbody-anim"\)\.innerHTML\s*=/);
 });
 
 test('veg-o-matic post embeds the data-grid demo, not a notebook', async ({ page }) => {
@@ -55,16 +59,39 @@ test('nothing still points at the retired JupyterLite instance', async ({ page }
     }
 });
 
-test.skip('n-body simulation runs and renders an animation', async ({ page }) => {
-    test.setTimeout(5 * 60 * 1000);
+test.skip('n-body simulation runs and actually animates', async ({ page }) => {
+    test.setTimeout(6 * 60 * 1000);
     await page.goto(NBODY);
 
     const run = page.locator('#nbody-run');
     await expect(run).toBeEnabled({ timeout: 4 * 60 * 1000 }); // Pyodide + numpy + scipy
     await run.click();
-
     await expect(page.locator('#nbody-status')).toHaveText(/20,000 steps/, { timeout: 4 * 60 * 1000 });
-    // jshtml renders each frame as a data: URI plus a set of playback controls.
-    await expect(page.locator('#nbody-anim')).toContainText('Loop');
+
+    // Asserting on the controls is not enough -- they render even when the
+    // player's script never ran.  The frame has to actually be there, and it
+    // has to change once Play is pressed.
+    const frame = () => page.evaluate(() => {
+        const src = document.querySelector('#nbody-anim img')?.getAttribute('src') ?? '';
+        let h = 0;
+        for (let i = 0; i < src.length; i += 1) { h = (h * 31 + src.charCodeAt(i)) | 0; }
+        return { length: src.length, hash: h };
+    });
+
+    expect((await frame()).length).toBeGreaterThan(0);
+
+    await page.evaluate(() => {
+        const buttons = [...document.querySelectorAll('#nbody-anim button')];
+        const play = buttons.find(b => /(^|\s)play$/i.test((b.title ?? '').trim()));
+        (play ?? buttons[5]).click();
+    });
+
+    const seen = new Set();
+    for (let i = 0; i < 5; i += 1) {
+        await page.waitForTimeout(700);
+        seen.add((await frame()).hash);
+    }
+    expect(seen.size).toBeGreaterThan(1);
+
     expect(await page.evaluate(() => crossOriginIsolated)).toBe(false);
 });

@@ -280,7 +280,11 @@ def run(event):
     status.textContent = " integrating…"
     xs = integrate()
     status.textContent = " drawing…"
-    document.querySelector("#nbody-anim").innerHTML = animate(xs)
+    # jshtml drives the player from a <script>, and innerHTML never executes
+    # those, so insert a fragment instead -- it does.
+    anim = document.querySelector("#nbody-anim")
+    anim.replaceChildren()
+    anim.appendChild(document.createRange().createContextualFragment(animate(xs)))
     status.textContent = f" {len(xs):,} steps"
     event.target.disabled = False
 
