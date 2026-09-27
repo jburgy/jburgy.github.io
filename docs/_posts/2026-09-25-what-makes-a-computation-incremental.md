@@ -1,6 +1,7 @@
 ---
 layout: post
 title:  "What Makes a Computation Incremental?"
+tags: [py, fin, algos]
 date:   2026-09-25 00:00:00 -0400
 ---
 

@@ -1,6 +1,7 @@
 ---
 layout: post
 title:  "Why are some functions foreign?"
+tags: [py, zig]
 date:   2025-07-02 16:04:02 -0500
 ---
 

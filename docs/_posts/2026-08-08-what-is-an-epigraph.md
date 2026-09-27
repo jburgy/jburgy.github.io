@@ -1,12 +1,13 @@
 ---
 layout: post
 title:  "What Is an Epigraph?"
+tags: [math, perf]
 date:   2026-08-08 11:18:41 -0500
 ---
 ## Linear Programming Advanced Tricks and Techniques
 
 We introduced [Linear Programming](https://en.wikipedia.org/wiki/Linear_programming)
-in an [earlier post]({% post_url 2022-05-13-what-is-linear-programming %}) but its
+in an [earlier post]({% post_url 2023-05-12-what-is-linear-programming %}) but its
 popularity is still surprising.  How can such an apparently restrictive technique find
 applications in so many fields?  Clever users have developed many tricks to push the
 technique beyond its obvious scope.  Some of these tricks are worth understanding.

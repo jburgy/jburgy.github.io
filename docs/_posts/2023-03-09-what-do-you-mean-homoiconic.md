@@ -1,6 +1,7 @@
 ---
 layout: post
 title:  "What do you mean, homoiconic?"
+tags: [wasm, c, comp]
 date:   2023-03-09 22:25:13 -0500
 giscus: https://giscus.jburgy.workers.dev/client.js
 ---

@@ -1,11 +1,12 @@
 ---
 layout: post
 title:  "What makes Julia delightful?"
+tags: [jl, re, comp]
 date:   2022-04-02 15:04:31 -0500
 ---
 ## Or how I Learned to Stop Worrying and Love the JIT
 
-As [my previous post]({% post_url 2022-03-12-what-python-slow %}) shows, my early programming had to do with
+As [my previous post]({% post_url 2022-03-10-what-python-slow %}) shows, my early programming had to do with
 numerical problems. So when I left graduate school to enter the industry, I read books and articles to pick up new
 skills. [K&R](https://en.wikipedia.org/wiki/The_C_Programming_Language),
 [TAOCP](https://en.wikipedia.org/wiki/The_Art_of_Computer_Programming), and Bentley's

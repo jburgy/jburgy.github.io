@@ -1,6 +1,7 @@
 ---
 layout: post
 title:  "What, Forth, Again?"
+tags: [forth, c, asm, wasm]
 date:   2023-02-24 06:43:57 -0500
 giscus: https://giscus.jburgy.workers.dev/client.js
 ---

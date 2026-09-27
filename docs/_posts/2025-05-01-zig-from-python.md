@@ -1,6 +1,7 @@
 ---
 layout: post
 title:  "How do you call Zig from Python?"
+tags: [zig, py]
 date:   2025-05-01 09:27:41 -0500
 ---
 

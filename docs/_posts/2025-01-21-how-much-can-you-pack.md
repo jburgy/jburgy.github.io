@@ -1,6 +1,7 @@
 ---
 layout: post
 title:  "How much can you pack into bytes?"
+tags: [zig, forth, comp, algos, perf]
 date:   2025-01-21 13:26:26 -0500
 ---
 

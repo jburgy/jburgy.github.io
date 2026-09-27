@@ -1,6 +1,7 @@
 ---
 layout: post
 title:  "What Makes an Expression Regular?"
+tags: [re, forth, wasm, asm, comp, py]
 date:   2026-09-24 00:00:00 -0400
 ---
 
@@ -12,7 +13,7 @@ programming languages and the machinery that runs them: a
 [FORTRAN]({% post_url 2023-01-15-what-to-about-fortran %}),
 [Lisp]({% post_url 2023-03-09-what-do-you-mean-homoiconic %}),
 [Tiny BASIC]({% post_url 2023-03-16-put-it-in-a-brandy-snifter %}),
-[tail calls]({% post_url 2024-04-29-tail-recursion %}),
+[tail calls]({% post_url 2024-03-29-tail-recursion %}),
 [Zig]({% post_url 2024-08-31-why-not-zig %}), and yet another
 [JONESFORTH in WebAssembly]({% post_url 2025-11-29-how-many-roads %}). The grown-up way
 to study all this is to work through the
@@ -402,7 +403,7 @@ thread. The whole NFA simulation is carried by FORTH's calling convention.
 ## Full circle
 
 There's a certain irony in all this. FORTH is famous for having almost no syntax. As I put
-it [before]({% post_url 2024-04-29-tail-recursion %}), there is "no tokenizer, lexer, or
+it [before]({% post_url 2024-03-29-tail-recursion %}), there is "no tokenizer, lexer, or
 syntax tree", only words separated by spaces. Regular expressions, meanwhile, are the
 foundation of every lexer generator from [Lex](https://en.wikipedia.org/wiki/Lex_(software))
 onward. The dragon book devotes a whole chapter to turning them into automata. So here is
