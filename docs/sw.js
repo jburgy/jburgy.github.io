@@ -8,8 +8,6 @@ const pattern = new RegExp([
     "lisp.worker.js$",
     "main.js$",
     "put-it-in-a-brandy-snifter.html$",
-    "sqlite3-opfs-async-proxy-[^.]+.js$",
-    "sqlite3-worker1-bundler-friendly-[^.]+.js$",
     "tail-recursion.html$",
     "TinyBasic.worker.js$",
     "what-do-you-mean-homoiconic.html$",

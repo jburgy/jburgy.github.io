@@ -82,20 +82,29 @@ I had never heard of [pyodide_js](https://pyodide.org/en/stable/usage/api/js-api
 until today.  The amount of back-and-forth between Python and JavaScript reminds me of
 Robert Downey Jr's character in "Tropic Thunder" ("I'm a dude playing a dude disguised as another dude").
 
-The notebook below runs entirely in your browser.  After installing
-[anywidget](https://pypi.org/project/anywidget/), it fetches a public dataset on traffic
-violations, massages it with [`pandas`](https://pandas.pydata.org/docs/index.html) before
-saving it to a SQLite file in OPFS.  The widget uses
-[`@sqlite.org/sqlite-wasm`](https://sqlite.org/wasm) to summarize that data.
+The demo below runs entirely in your browser.  [PyScript](https://pyscript.net/)
+fetches a public dataset on traffic violations, massages it with
+[`pandas`](https://pandas.pydata.org/docs/index.html), and hands it straight to
+the web component, which uses [`@sqlite.org/sqlite-wasm`](https://sqlite.org/wasm)
+to summarize it.  Drag the attribute chips between the row and column axes.
 
-<iframe 
-    src="/lite/notebooks/index.html?path=data_grid.ipynb"
+<iframe
+    src="https://bur.gy/data-grid/"
     width="100%"
     height="900px"
-    allow="cross-origin-isolated"
+    title="data-grid pivot demo driven from Python"
 ></iframe>
 
-[^1]: Strictly speaking, it also isn't necessary anymore.  Now that the notebook is served from `/lite` under the same origin, JupyterLite's own service worker can take care of the isolation headers for the notebook app and its imports.  The old page-level `coi-serviceworker` shim was only needed when I was still trying to fake that setup from outside the iframe.
+**Update:** this used to be a JupyterLite notebook served from `/lite`, and most
+of the fight described above was about getting cross-origin isolation to reach
+inside that iframe.[^1]  It no longer is.  `<data-grid>` grew a `data-vfs`
+attribute, so the demo can ask sqlite for an in-memory database instead of OPFS
+&mdash; and without OPFS there is no `SharedArrayBuffer`, no COOP/COEP, and no
+service worker to coax into scope.  What replaced a whole JupyterLite build is
+one static page driven by PyScript.  The struggle was real; it was also, in the
+end, avoidable.
+
+[^1]: Strictly speaking the `coi-serviceworker` shim stopped being necessary even before that.  Once the notebook was served from `/lite` under the same origin, JupyterLite's own service worker took care of the isolation headers for the notebook app and its imports.  The page-level shim was only needed while I was still trying to fake that setup from outside the iframe.
 
 And if you read that far, first of all congratulations!  I realize you might still like an answer
 to the question posed in this article's title.  Besides sounding like a
