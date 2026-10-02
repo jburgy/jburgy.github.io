@@ -435,8 +435,9 @@ just jumps into itself. Finally without the infinite loop.
     and push it a little further as it is at writing new code from scratch.
 
 [^lambda]: [jit.py](https://github.com/jburgy/blog/blob/main/regexp/jit.py), a Python port
-    of `x86.c` that emits x86-64 or arm64 and calls it through `ctypes`, uses an alternative
-    we came up with. Instead of patching jumps while generating code, it first rewrites the
+    of `x86.c` that emits x86-64 or arm64 and calls it through `ctypes`, uses an alternative:
+    Anne Brüggemann-Klein's Star Normal Form (SNF) ([doi:10.5555/896333](https://dl.acm.org/doi/10.5555/896333)).
+    Instead of patching jumps while generating code, it first rewrites the
     pattern so that no `*` applies to anything that matches the empty string: `e*` becomes
     `e'*`, where `e'` is `e` without the empty string, so `(a*b*)*` becomes `(a|b)*`. With
     no empty loops left to break, the revision isn't needed at all.
