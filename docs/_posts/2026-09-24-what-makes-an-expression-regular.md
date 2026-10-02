@@ -58,7 +58,7 @@ bytes short. For `a(b|c)*d`, the only test I had enabled of course, the two erro
 cancelled perfectly. When `*` applies directly to a character, they don't, and `a*` spins
 in an epsilon loop until the stack runs out. The fix brought back memories of the endless
 trial and error of 2004: nudge an offset, reassemble, segfault, repeat. I wouldn't be
-surprised if one of those nudges is what introduced the second error.
+surprised if one of those nudges is what introduced the second error.[^cps]
 
 Emboldened, I suggested using x86 string instructions, which I had admired in JONESFORTH
 (its `NEXT` is just `lodsl; jmp *(%eax)`) and in
@@ -413,6 +413,26 @@ Twenty-two years after my first attempt, the journey comes full circle[^timeline
 Thompson's 7094 to x86, from x86 to FORTH, and from FORTH back to something Ken would
 recognize, a regular expression compiled on the fly into code whose lists of states are
 just jumps into itself. Finally without the infinite loop.
+
+[^cps]: Confirming that fix meant reading `compile()`'s emitted bytes off
+    [PR #73](https://github.com/jburgy/blog/pull/73)'s Appendix B hex dump by hand, which is
+    exactly as slow as it sounds, so
+    [cps.c](https://github.com/jburgy/blog/blob/main/regexp/cps.c)
+    ([PR #110](https://github.com/jburgy/blog/pull/110)) recasts the same one pattern,
+    `a(b|c)*d`, as ordinary, portable C instead, one function per operand, so a real
+    compiler (`clang -target i386-none-elf -O0 -fomit-frame-pointer -S`) can confirm the
+    shape instead of a human squinting at hex. It is continuation-passing style in the
+    most literal sense: a character node never returns true or false, it either calls
+    `nnode(k)` to schedule its continuation `k` against the next character or just
+    returns, leaving no continuation to run. `ALTERN` and `KLEENE` each splice two
+    continuations together by calling one for real and then
+    `__attribute__((musttail))`-tail-jumping into the other, so both run against the same
+    character without growing the stack — exactly the "every call already in tail
+    position" discipline CPS depends on, and exactly the `call`/`jmp` pair `x86.c`'s bytes
+    already encode. Asking an LLM to write and code-review that reconstruction is the same
+    trick as asking Claude Opus to find the `ALTERN`/`KLEENE` bug in the first place: a
+    nice demonstration that an LLM is as good at helping crack open a twenty-year-old hack
+    and push it a little further as it is at writing new code from scratch.
 
 [^lambda]: [jit.py](https://github.com/jburgy/blog/blob/main/regexp/jit.py), a Python port
     of `x86.c` that emits x86-64 or arm64 and calls it through `ctypes`, uses an alternative
