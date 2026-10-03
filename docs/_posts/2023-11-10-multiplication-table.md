@@ -17,6 +17,11 @@ table td, table th {
     padding: 0;
     padding-block: 0; 
 }
+table td {
+    /* match the white input background so its 1px margin doesn't expose
+       the page background as dark lines between rows/columns */
+    background-color: #fff;
+}
 table input[type="tel"] {
     display: flex;
     border-radius: 0;
