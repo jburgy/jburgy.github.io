@@ -18,8 +18,8 @@ table td, table th {
     padding-block: 0; 
 }
 table td {
-    /* match the white input background so its 1px margin doesn't expose
-       the page background as dark lines between rows/columns */
+    /* match the white input background so no page background shows
+       through between rows/columns */
     background-color: #fff;
 }
 table input[type="tel"] {
@@ -28,7 +28,7 @@ table input[type="tel"] {
     border-width: 0.5px;
     box-sizing: border-box;
     height: 100%;
-    margin: 1px;
+    margin: 0;
     padding: 0;
     text-align: center;
     width: 100%;
