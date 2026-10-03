@@ -189,13 +189,11 @@ follows another:
 
 {% include pyscript.html %}
 
-<script type="py-editor" env="stages">
-from collections.abc import Iterable
-
+<script type="mpy-editor" env="stages">
 SYMBOLS = "()|·*"  # an operator token is its index here, so precedence is numeric order
 
 
-def show(tokens: Iterable[str | int]):
+def show(tokens):
     print(*(SYMBOLS[t] if isinstance(t, int) else repr(t) if t in SYMBOLS else t for t in tokens))
 
 
@@ -217,8 +215,8 @@ Operators wait on a stack until one that binds no tighter arrives. The closing `
 that `sieve` appends flushes whatever is left. The two editors share an interpreter, so
 run the one above first:
 
-<script type="py-editor" env="stages">
-def postfix(tokens: Iterable[str | int]):
+<script type="mpy-editor" env="stages">
+def postfix(tokens):
     stack = [SYMBOLS.index("(")]
     for t in tokens:
         if isinstance(t, str):
