@@ -12,7 +12,9 @@ As with other days, it's a two part challenge which starts easy.  The first chal
 bytecode interpreter and you know how much I like those!  My input is equivalent to the following
 Python code:
 
-```python
+{% include pyscript.html %}
+
+<script type="py-editor" env="device">
 from collections.abc import Iterable
 
 def device(a: int) -> Iterable[int]:
@@ -27,7 +29,7 @@ def device(a: int) -> Iterable[int]:
         continue     # jnz 0
 
 print(*device(66171486), sep=",")
-```
+</script>
 
 So far so good.  Part 2 gets hairy and involves searching for the smallest argument `a` that
 turns the device into a [quine](https://en.wikipedia.org/wiki/Quine_(computing)).  Simplifying
@@ -37,21 +39,24 @@ This reminds us of the [wheat and chessboard problem](https://en.wikipedia.org/w
 and we quickly realize that a 
 [brute-force search](https://en.wikipedia.org/wiki/Brute-force_search) will run into
 [heat death of the universe](https://en.wikipedia.org/wiki/Heat_death_of_the_universe) issues
-(although not quite as quickly as I would like to admit).
+(although not quite as quickly as I would like to admit). The two editors share an
+interpreter, so run the one above first:
 
-```python
+<script type="py-editor" env="device">
 def device(b: int) -> Iterable[int]:
     while a := b:
         b, c = divmod(a, 8)
         yield (a >> (c ^ 6) ^ c ^ 2) & 7
-```
+
+print(*device(66171486), sep=",")
+</script>
 
 I could vaguely remember reading something about [SAT solvers](https://en.wikipedia.org/wiki/SAT_solver)
 and [Bit Twiddling Hacks](https://graphics.stanford.edu/~seander/bithacks.html).  The combined search
 took me to [this page](https://ericpony.github.io/z3py-tutorial/guide-examples.htm) and the following
 Z3-based solution:
 
-```python
+<script type="py-editor" config='{"packages": ["z3-solver"]}'>
 from z3 import BitVec, solve
 
 a = BitVec("A", 51)
@@ -66,7 +71,7 @@ for out in [2, 4, 1, 6, 7, 5, 4, 6, 1, 4, 5, 5, 0, 3, 3, 0]:
     a >>= 3
 constraints.append(a == 0)
 solve(*constraints)
-```
+</script>
 
 Z3 solves this problem so fast, its runtime is barely noticeable. That's impressive on
 several levels:
@@ -82,17 +87,18 @@ tech.
 Still, I couldn't help but feel that I [brought a gun to a knife fight](https://xkcd.com/1890/).
 (Don't get me wrong, I absolutely took the AoC credit but I didn't love the 
 [black box](https://en.wikipedia.org/wiki/Black_box) solution).  So I stared at the short
-implementation for a while longer and found an alternative solution:
+implementation for a while longer and found an alternative solution. It's plain
+enough that MicroPython runs it too, without Pyodide's heavier download:
 
-```python
+<script type="mpy-editor">
 a = {0}
 for out in reversed([2, 4, 1, 6, 7, 5, 4, 6, 1, 4, 5, 5, 0, 3, 3, 0]):
     a = {
         d for b in a for c in range(8)
         if ((d := (b << 3) | c) >> (c ^ 6) ^ c ^ 2) & 7 == out
     }
-min(a)
-```
+print(min(a))
+</script>
 
 Ultimately, this amounts to [backward induction](https://en.wikipedia.org/wiki/Backward_induction)
 which is likely one of the many strategies that `Z3` implements.  Unlike the brute-force approach,
