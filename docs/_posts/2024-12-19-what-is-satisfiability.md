@@ -97,7 +97,7 @@ for out in reversed([2, 4, 1, 6, 7, 5, 4, 6, 1, 4, 5, 5, 0, 3, 3, 0]):
         d for b in a for c in range(8)
         if ((d := (b << 3) | c) >> (c ^ 6) ^ c ^ 2) & 7 == out
     }
-print(min(a))
+print(min(a))  # wrapped in print so the editor shows the result
 </script>
 
 Ultimately, this amounts to [backward induction](https://en.wikipedia.org/wiki/Backward_induction)
