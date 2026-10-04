@@ -69,7 +69,7 @@ but it's much more fun to interact with it directly:
 <div id="terminal"></div>
 <script type="module">
     import { startRepl } from "/blog/wasi-repl.mjs";
-    startRepl("/blog/lisp-wasi.wasm");
+    startRepl("/blog/lisp-wasi.wasm", null);
 </script>
 
 An enthusiastic reader looking for a learning challenge might want to tweak the compiled WASM

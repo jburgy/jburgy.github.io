@@ -142,5 +142,5 @@ Can you imagine feverishly unboxing your brand new laptop only to discover that 
 <div id="terminal"></div>
 <script type="module">
     import { startRepl } from "/blog/wasi-repl.mjs";
-    startRepl("/blog/TinyBasic-wasi.wasm");
+    startRepl("/blog/TinyBasic-wasi.wasm", null);
 </script>
