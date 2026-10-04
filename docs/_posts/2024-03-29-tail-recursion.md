@@ -187,20 +187,6 @@ a well-defined signature.  It might be the
 
 <div id="terminal"></div>
 <script type="module">
-    import "/blog/node_modules/@xterm/xterm/lib/xterm.js";
-    import { openpty } from "/blog/node_modules/xterm-pty/index.mjs";
-    import initEmscripten from "/blog/5th.mjs";
-
-    const xterm = new Terminal();
-    xterm.open(document.getElementById("terminal"));
-
-    const { master, slave } = openpty();
-    xterm.loadAddon(master);
-
-    const response = await fetch("/blog/jonesforth.f");
-    const preamble = new Uint8Array(await response.arrayBuffer());
-    slave.ldisc.toUpperBuf.push(...preamble);
-
-    await initEmscripten({ pty: slave });
-    slave.ldisc.flushToUpper();
+    import { startRepl } from "/blog/wasi-repl.mjs";
+    startRepl("/blog/5th-wasi.wasm");
 </script>
