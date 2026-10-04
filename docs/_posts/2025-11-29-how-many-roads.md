@@ -152,10 +152,10 @@ at all) but which, built *without* that demo's feature flag, turns out to block 
 exact same way as everything else here:
 
 <div id="forth-tabs" role="tablist">
-    <button type="button" role="tab" data-wasm="/blog/jonesforth.wasm" data-preamble="/blog/jonesforth.f">jonesforth.wast</button>
     <button type="button" role="tab" data-wasm="/blog/4th-wasi.wasm">4th.c</button>
     <button type="button" role="tab" data-wasm="/blog/5th-wasi.wasm">5th.c</button>
     <button type="button" role="tab" data-wasm="/blog/6th-wasi.wasm">6th.zig</button>
+    <button type="button" role="tab" data-wasm="/blog/jonesforth.wasm" data-preamble="/blog/jonesforth.f">jonesforth.wast</button>
     <button type="button" role="tab" data-wasm="/blog/localize.wasm" data-preamble="/blog/jonesforth.f">localize.wast</button>
     <button type="button" role="tab" data-wasm="/blog/tabulate.wasm" data-preamble="/blog/jonesforth.f">tabulate.wast</button>
     <button type="button" role="tab" data-wasm="/blog/4th-rs-wasi.wasm">4th.rs</button>
@@ -199,7 +199,7 @@ exact same way as everything else here:
     }
 
     tabs.forEach((tab) => tab.addEventListener("click", () => select(tab)));
-    select(tabs[0]);
+    select([...tabs].find((tab) => tab.dataset.wasm === "/blog/jonesforth.wasm"));
 </script>
 
 ## Epilogue ##
