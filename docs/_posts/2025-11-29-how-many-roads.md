@@ -152,7 +152,7 @@ at all) but which, built *without* that demo's feature flag, turns out to block 
 exact same way as everything else here:
 
 <div id="forth-tabs" role="tablist">
-    <button type="button" role="tab" data-wasm="/blog/jonesforth.wasm" data-preamble="/blog/jonesforth.f">WAT</button>
+    <button type="button" role="tab" data-wasm="/blog/jonesforth.wasm" data-preamble="/blog/jonesforth.f">jonesforth.wast</button>
     <button type="button" role="tab" data-wasm="/blog/4th-wasi.wasm">4th.c</button>
     <button type="button" role="tab" data-wasm="/blog/5th-wasi.wasm">5th.c</button>
     <button type="button" role="tab" data-wasm="/blog/6th-wasi.wasm">6th.zig</button>
