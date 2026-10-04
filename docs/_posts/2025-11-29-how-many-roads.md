@@ -140,11 +140,67 @@ To recap, it's somehow fitting that this should be my fourth Forth!
 
 And it's entirely unacceptable that the "native" WebAssembly implementation is the only one to
 **not** have a browser demo!  That's because I developed it on [WASI](https://wasi.dev/) to
-iterate quickly in the command line.  I'll work on a [shim](https://en.wikipedia.org/wiki/Shim_(computing))
-~~real soon~~ now:
+iterate quickly in the command line.  I built a [shim](https://en.wikipedia.org/wiki/Shim_(computing))
+after all and, since it turns out all four Forths above block `read()` the exact same way (a
+`Worker` stalls `fd_read` on a shared ring buffer until the terminal feeds it more input,
+`xterm.js` and `xterm-readline` do the rest), there was no reason to stop at one demo. Pick a
+tab and the terminal below switches interpreters on the fly. `localize.wast` and `tabulate.wast`
+are the Epilogue's variants below — come back here once you've read that far. And since I
+couldn't resist one more: `4th.rs` is a Rust port of `4th.c` ([jburgy/blog](https://github.com/jburgy/blog/blob/main/forth/4th.rs))
+I wrote mostly for its own `musttail`-style web demo (a re-entrant `eval()`, no blocking `read()`
+at all) but which, built *without* that demo's feature flag, turns out to block `read()` the
+exact same way as everything else here:
 
+<div id="forth-tabs" role="tablist">
+    <button type="button" role="tab" data-wasm="/blog/4th-wasi.wasm">4th.c</button>
+    <button type="button" role="tab" data-wasm="/blog/5th-wasi.wasm">5th.c</button>
+    <button type="button" role="tab" data-wasm="/blog/6th-wasi.wasm">6th.zig</button>
+    <button type="button" role="tab" data-wasm="/blog/jonesforth.wasm" data-preamble="/blog/jonesforth.f">jonesforth.wast</button>
+    <button type="button" role="tab" data-wasm="/blog/localize.wasm" data-preamble="/blog/jonesforth.f">localize.wast</button>
+    <button type="button" role="tab" data-wasm="/blog/tabulate.wasm" data-preamble="/blog/jonesforth.f">tabulate.wast</button>
+    <button type="button" role="tab" data-wasm="/blog/4th-rs-wasi.wasm">4th.rs</button>
+</div>
 <div id="terminal"></div>
-<script src="/blog/main.js" type="module"></script>
+<style>
+    #forth-tabs {
+        display: flex;
+        gap: 0.5em;
+        margin-bottom: 0.5em;
+    }
+    #forth-tabs button {
+        font: inherit;
+        padding: 0.3em 0.8em;
+        border: 1px solid currentColor;
+        border-radius: 0.3em;
+        background: transparent;
+        color: inherit;
+        cursor: pointer;
+    }
+    #forth-tabs button[aria-selected="true"] {
+        font-weight: bold;
+        background: rgba(128, 128, 128, 0.25);
+    }
+</style>
+<script type="module">
+    import { startRepl } from "/blog/wasi-repl.mjs";
+
+    const tabs = document.querySelectorAll("#forth-tabs button");
+    let repl;
+
+    // Every tab drives the same startRepl(wasmUrl, preambleUrl) -- all seven
+    // interpreters share one Worker/SharedInputChannel protocol (see
+    // jburgy/blog's wasi-repl.mjs). dispose() tears down the previous
+    // Worker and Terminal before the next startRepl() takes over #terminal.
+    function select(tab) {
+        tabs.forEach((other) => other.setAttribute("aria-selected", String(other === tab)));
+        repl?.dispose();
+        const { wasm, preamble } = tab.dataset;
+        repl = preamble ? startRepl(wasm, preamble) : startRepl(wasm);
+    }
+
+    tabs.forEach((tab) => tab.addEventListener("click", () => select(tab)));
+    select([...tabs].find((tab) => tab.dataset.wasm === "/blog/jonesforth.wasm"));
+</script>
 
 ## Epilogue ##
 
@@ -162,12 +218,14 @@ With that, `$swap` becomes
 )
 (elem (i32.const 0x2) $swap)
 ```
-You can see the whole thing in [localize.wast](https://github.com/jburgy/blog/blob/main/forth/wasm/localize.wast).
+You can see the whole thing in [localize.wast](https://github.com/jburgy/blog/blob/main/forth/wasm/localize.wast)
+(or try it in the `localize.wast` tab above).
 
 After that, I remembered something Remko shared on Discord: [uxn.wasm](https://mko.re/blog/uxn-wasm/).
 He uses [`br_table`](https://developer.mozilla.org/en-US/docs/WebAssembly/Reference/Control_flow/br_table)
 to implement the [UXN](https://100r.co/site/uxn.html) virtual machine.  That's quite cool so I took a
-crack at it.  The result is in [tabulate.wast](https://github.com/jburgy/blog/blob/main/forth/wasm/tabulate.wast).
+crack at it.  The result is in [tabulate.wast](https://github.com/jburgy/blog/blob/main/forth/wasm/tabulate.wast)
+(also a `tabulate.wast` tab above, if you'd rather poke at it live than read the diff).
 The whole point is how parentheses are balanced.  More than a hundred are _opened_ between lines 223 and 234 to
 introduce the nested blocks that `br_table` requires.  They are _closed_ one at a time after each builtin word, e.g.
 ```scheme
