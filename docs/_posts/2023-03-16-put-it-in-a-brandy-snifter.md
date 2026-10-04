@@ -139,4 +139,8 @@ distant past where assemblers were the first piece of software developers had to
 Can you imagine feverishly unboxing your brand new laptop only to discover that it only understands
 [hex](https://en.wikipedia.org/wiki/Hexadecimal)? 
 
-{% include terminal.html worker="/blog/TinyBasic.worker.js" %}
+<div id="terminal"></div>
+<script type="module">
+    import { startRepl } from "/blog/wasi-repl.mjs";
+    startRepl("/blog/TinyBasic-wasi.wasm", null);
+</script>
