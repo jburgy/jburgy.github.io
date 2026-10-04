@@ -63,10 +63,14 @@ does not tolerate negative offsets the way C does
 (instead it throws `RuntimeError: memory access out of bounds`). This forced me to use `load<u8>(i, M)` when `i > 0` and
 `load<T>(M + (i << align))` otherwise.
 
-You can read the finished product [here](https://github.com/jburgy/blog/blob/main/lisp/assembly/index.ts)
+You can read the finished product [here](https://github.com/jburgy/blog/blob/main/lisp/assembly/core.ts)
 but it's much more fun to interact with it directly:
 
-{% include terminal.html worker="/blog/lisp.worker.js" %}
+<div id="terminal"></div>
+<script type="module">
+    import { startRepl } from "/blog/wasi-repl.mjs";
+    startRepl("/blog/lisp-wasi.wasm");
+</script>
 
 An enthusiastic reader looking for a learning challenge might want to tweak the compiled WASM
 (use [wasm2wat](https://webassembly.github.io/wabt/demo/wasm2wat/) if necessary) and pick up some 
