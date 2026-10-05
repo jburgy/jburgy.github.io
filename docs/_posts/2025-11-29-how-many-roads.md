@@ -155,9 +155,9 @@ exact same way as everything else here:
     <button type="button" role="tab" data-wasm="/blog/4th-wasi.wasm">4th.c</button>
     <button type="button" role="tab" data-wasm="/blog/5th-wasi.wasm">5th.c</button>
     <button type="button" role="tab" data-wasm="/blog/6th-wasi.wasm">6th.zig</button>
-    <button type="button" role="tab" data-wasm="/blog/jonesforth.wasm" data-preamble="/blog/jonesforth.f">jonesforth.wast</button>
-    <button type="button" role="tab" data-wasm="/blog/localize.wasm" data-preamble="/blog/jonesforth.f">localize.wast</button>
-    <button type="button" role="tab" data-wasm="/blog/tabulate.wasm" data-preamble="/blog/jonesforth.f">tabulate.wast</button>
+    <button type="button" role="tab" data-wasm="/blog/jonesforth.wasm" data-preamble="/blog/jonesforth/jonesforth.f">jonesforth.wast</button>
+    <button type="button" role="tab" data-wasm="/blog/localize.wasm" data-preamble="/blog/jonesforth/jonesforth.f">localize.wast</button>
+    <button type="button" role="tab" data-wasm="/blog/tabulate.wasm" data-preamble="/blog/jonesforth/jonesforth.f">tabulate.wast</button>
     <button type="button" role="tab" data-wasm="/blog/4th-rs-wasi.wasm">4th.rs</button>
 </div>
 <div id="terminal"></div>
