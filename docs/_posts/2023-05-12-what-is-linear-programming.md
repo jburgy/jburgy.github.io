@@ -180,7 +180,7 @@ convert a linear optimization problem to canonical form.
 I went looking online for an early FORTRAN implementation of the simplex method and came
 across the [NSWC Library of Mathematics Subroutines](https://apps.dtic.mil/sti/tr/pdf/ADA261511.pdf)
 (where NSWC stands for Naval Surface Warfare Center).  It appeared several years _after_
-Dantzig's original discovery yet still has that musty old code smell.  I slapped some Python
+Dantzig's original discovery yet still has that musty old code smell.[^harris]  I slapped some Python
 bindings on it using [f2py](https://numpy.org/doc/stable/f2py/f2py.getting-started.html#the-smart-way)
 then looked for a classical problem to test it.  I came across an article called
 [Sudoku, Linear Optimization, and the Ten Cent Diet](https://research.google/blog/sudoku-linear-optimization-and-the-ten-cent-diet/) with a great line:
@@ -327,3 +327,15 @@ next(rows)[-1].textContent = format(sol.fun * 365, ".2f")
 for row, y in zip(rows, sol.x * 365):
     row[-1].textContent = format(y, ".2f") if y else "0"
 </script>
+
+[^harris]: A condensed timeline of the ratio test's round-off problem, and why it took the
+    field two decades to fix properly:
+
+    | Date | Event |
+    |------|-------|
+    | 1969 | Bartels & Golub show maintaining LU factors of the basis beats updating its explicit inverse numerically ([doi:10.1145/362946.362974](https://doi.org/10.1145/362946.362974)) |
+    | 1972 | Forrest & Tomlin make LU-factor updates practical for sparse LPs, the update rule essentially every modern solver still uses ([doi:10.1007/BF01584548](https://doi.org/10.1007/BF01584548)) |
+    | Dec 1973 | Paula Harris publishes the two-pass "expanded tolerance" ratio test, designed exactly to stop round-off noise in a pivot column from silently flipping which row leaves the basis ([doi:10.1007/BF01580108](https://doi.org/10.1007/BF01580108)) |
+    | 1977 | Alfred Morris writes `SMPLX.F` at NSWC Dahlgren &mdash; four years after Harris's paper, but without her fix |
+    | 1989 | Gill, Murray, Saunders & Wright's EXPAND procedure unifies anti-cycling and anti-round-off into one mechanism; variants of it still run inside MINOS, SNOPT, and HiGHS today ([doi:10.1007/BF01589114](https://doi.org/10.1007/BF01589114)) |
+    | 6 Oct 2026 | A cross-platform CI run (Apple Accelerate vs. Linux OpenBLAS) catches `SMPLX.F`'s asymmetric chop in the act: the same LP resolved to different statuses depending purely on floating-point summation order &mdash; the textbook symptom Harris described, reproduced live in a 49-year-old subroutine ([jburgy/blog@a78d8f6](https://github.com/jburgy/blog/commit/a78d8f6)) |
