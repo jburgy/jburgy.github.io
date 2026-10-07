@@ -1,5 +1,6 @@
 const pattern = new RegExp([
     "/api/service-worker-heartbeat$",
+    "/blog/?$", // the demos landing page itself (assets/index.html), inlining six wasi-worker.js REPLs
     "4th.mjs$",
     "5th.mjs$",
     "6th.mjs$",
