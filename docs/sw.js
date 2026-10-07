@@ -1,6 +1,6 @@
 const pattern = new RegExp([
     "/api/service-worker-heartbeat$",
-    "/blog/?$", // the demos landing page itself (assets/index.html), inlining six wasi-worker.js REPLs
+    "/blog/$", // the demos landing page itself (assets/index.html), inlining six wasi-worker.js REPLs -- bare "/blog" is just a 301 to this, let the browser follow it uninterrupted
     "4th.mjs$",
     "5th.mjs$",
     "6th.mjs$",
@@ -32,6 +32,15 @@ async function fetchWithHeaders(request) {
     }
 
     const response = await fetch(request);
+
+    // Navigation requests force request.redirect to "manual", so a bare
+    // "/blog" 301-ing to "/blog/" comes back opaque (status 0, unreadable
+    // headers/body) instead of being auto-followed. Pass it through as-is --
+    // respondWith() lets the browser perform the redirect itself -- rather
+    // than crashing new Response() with an out-of-range status.
+    if (response.type === "opaqueredirect") {
+        return response;
+    }
 
     const headers = new Headers(response.headers);
     headers.set("Cross-Origin-Embedder-Policy", "require-corp");
