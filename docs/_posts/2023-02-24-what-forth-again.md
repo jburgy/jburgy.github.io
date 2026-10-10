@@ -48,7 +48,19 @@ With this first challenge behind us, we move on to the precise memory layout of 
 can vary in length.  Words written in assembly (or in our case C) language only require a single address.  Words
 written in FORTH can refer to N previously defined words plus the special `DOCOL` label (since they were
 introduced by a `:`) that is at the center of _indirect_ threading.  Jones explains that extra indirection step
-in great detail, complete with ASCII diagrams.  I will therefore not repeat it here.
+in great detail, complete with ASCII diagrams.  I will therefore not repeat it here.[^1]
+
+[^1]: This post predates `DOES>` support.  `jonesforth`'s `CREATE` only ever builds a bare header &mdash; a word
+    made with plain `CREATE` and nothing else segfaults when invoked, since no codeword is ever installed.  ANS
+    Forth folds the missing piece into `CREATE` itself, so `CREATE ... DOES> ...` works standalone; [`4th.c`](https://github.com/jburgy/blog/blob/main/forth/4th.c)
+    and [`5th.c`](https://github.com/jburgy/blog/blob/main/forth/5th.c) instead resurrect the older pre-ANS
+    `<BUILDS ... DOES>` pairing through a `DODOES` primitive, per [`fixes.f`](https://github.com/jburgy/blog/blob/main/forth/fixes.f).
+    `CONSTANT` shows the difference in one line:
+    ```diff
+    - : CONSTANT CREATE , DOES> @ ;    \ ANS: CREATE alone reserves the DOES> hook
+    + : CONSTANT <BUILDS , DOES> @ ;   \ this port: CREATE needs <BUILDS to add it
+    ```
+
 [Flexible array members](https://en.wikipedia.org/wiki/Flexible_array_member) were officially standardized
 in [C99](https://en.wikipedia.org/wiki/C99) so we will use them to store the collection of labels in the dictionary
 entry.  We could store the first label, aka `Code Field`, as a separate member but that only increases the
@@ -76,11 +88,11 @@ matters, particularly when testing some of the more advanced FORTH words like `C
 right now but I wouldn't trust it for [space exploration](https://groups.google.com/g/alt.folklore.science/c/gRF-EyF-1rM).
 
 Less generous readers are sure to ask: "are you happy now, what was the point of it all?"  One of the cool things
-having this code in C lets us do is use [Emscripten](https://emscripten.org/) to build it for the web!  Emscripten is
+having this code in C lets us do is use [Emscripten](https://emscripten.org/) to build it for the web![^2]  Emscripten is
 based on the [Clang](https://clang.llvm.org/)/[LLVM](https://llvm.org/) stack,
 not [GCC](https://gcc.gnu.org/)/[libgccjit](https://gcc.gnu.org/wiki/JIT).  Another GCC extension my code relies on,
 which I didn't bother to mention, is [Nested Functions](https://gcc.gnu.org/onlinedocs/gcc/Nested-Functions.html) to
-push onto and pop from the data stack.  This led me to discover Clang's [Blocks](https://en.wikipedia.org/wiki/Blocks_(C_language_extension)).
+push onto and pop from the data stack.  This led me to discover Clang's [Blocks](https://en.wikipedia.org/wiki/Blocks_(C_language_extension)).[^3]
 The Wikipedia entry for them is more advanced than strictly necessary but still incredibly useful.  The basic syntax is reasonably intuitive:
 ```c
     intptr_t (^pop)(void) = ^(void)
@@ -90,6 +102,14 @@ The Wikipedia entry for them is more advanced than strictly necessary but still 
     };
 ```
 This might also be a good time to point out that our stacks grow _downwards_ to match x86 `push`/`pop` conventions.
+
+[^2]: Emscripten references throughout this post are kept for the history; the build has since moved to
+    [WASI](https://wasi.dev/) (via `wasi-sdk`), which is what actually powers the terminal embedded at the
+    bottom of this page.
+
+[^3]: Neither of these GCC/Clang extensions survived either: `push`/`pop` are now plain `static inline` helpers.
+    Calling through a Block turned out to be the slower option, and inline functions compile identically under
+    both GCC and the `wasi-sdk` Clang used for the WASI build.
 
 Then I hit an [issue](https://github.com/emscripten-core/emscripten/issues/6708) where Emscripten decided to not
 implement [syscall(2)](https://man7.org/linux/man-pages/man2/syscall.2.html).  I threw a simplistic
