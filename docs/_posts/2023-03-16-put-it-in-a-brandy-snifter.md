@@ -139,8 +139,31 @@ distant past where assemblers were the first piece of software developers had to
 Can you imagine feverishly unboxing your brand new laptop only to discover that it only understands
 [hex](https://en.wikipedia.org/wiki/Hexadecimal)? 
 
+The REPL above no longer drops you at a bare `: ` prompt: its preamble is now Tic-Tac-Toe, written by
+[Tom Pittman](https://en.wikipedia.org/wiki/Tom_Pittman_(computer_scientist)) himself and originally printed in
+the _Homebrew Computer Club Newsletter_ (Vol. 2, Issue 13, January 19, 1977) under the title
+["How to Make a Program TINY"](http://www.ittybittycomputers.com/IttyBitty/TinyBasic/TicTac.htm). You play X; type
+the number of an empty square (1 through 9, left to right, top to bottom) whenever you see `YOUR PLAY?`. The
+computer's O scores every empty square by how many of its rows, columns, and diagonals are still open, weighted
+toward blocking your near-wins and completing its own, so it plays aggressively but, per Pittman's own account,
+not unbeatably[^1]. It stores the 3x3 board exactly the way the original did: nine bytes peeked and poked through
+`USR`, which [`core.ts`](https://github.com/jburgy/blog/blob/main/TinyBasic/assembly/core.ts) already exposes at
+fixed addresses, so the port needed no interpreter changes, only dropping the ritual where the original asks you
+to type in your system's cold-start address in decimal (ours is fixed, so `G` and `P` &mdash; the peek and poke
+routine addresses &mdash; are simply hardcoded).
+
+[^1]: The other obvious candidate here was [Lunar Lander](https://www.cs.brandeis.edu/~storer/LunarLander/LunarLander.html),
+    which [Jim Storer wrote in 1969](https://www.cs.brandeis.edu/~storer/LunarLander/LunarLander/LunarLanderListingText.txt)
+    for a PDP-8 running FOCAL, and which David Ahl's _BASIC Computer Games_ (1973/1978) carried to practically
+    every home computer, PET included. Both Storer's FOCAL (`FSQT`) and every BASIC after it got square root for
+    free from their own runtime. Dennis Allison and Tom Pittman's Tiny BASIC never did: it's strictly 16-bit
+    integer arithmetic by design, with no `SQR`, no floating point, nothing a lander's descent physics could lean
+    on. Landing on the moon here would have meant writing a Newton's-method square root from scratch in Tiny BASIC
+    itself, or adding a new `USR` hook into the interpreter &mdash; either way a bigger lift than porting a game
+    that was already honest about using nothing but integers and nine bytes of memory.
+
 <div id="terminal"></div>
 <script type="module">
     import { startRepl } from "/blog/wasi-repl.mjs";
-    startRepl("/blog/TinyBasic-wasi.wasm", null);
+    startRepl("/blog/TinyBasic-wasi.wasm", "TinyBasic/tictactoe.bas");
 </script>
