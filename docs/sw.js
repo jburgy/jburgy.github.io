@@ -1,16 +1,10 @@
 const pattern = new RegExp([
     "/api/service-worker-heartbeat$",
     "/blog/$", // the demos landing page itself (assets/index.html), inlining six wasi-worker.js REPLs -- bare "/blog" is just a 301 to this, let the browser follow it uninterrupted
-    "4th.mjs$",
-    "5th.mjs$",
-    "6th.mjs$",
     "how-many-roads.html$",
     "jonesforth.wasm$",
-    "lisp.worker.js$",
-    "main.js$",
     "put-it-in-a-brandy-snifter.html$",
     "tail-recursion.html$",
-    "TinyBasic.worker.js$",
     "what-do-you-mean-homoiconic.html$",
     "what-forth-again.html$",
     "why-not-zig.html$",
