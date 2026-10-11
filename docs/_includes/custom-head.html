@@ -25,24 +25,33 @@
     navigator.serviceWorker.register(new URL("./sw.js", location.origin)).then(
         (registration) => {
             console.log("COOP/COEP Service Worker registered", registration.scope);
-            if (navigator.serviceWorker.controller) {
-                sessionStorage.removeItem(coiReloadKey);
-                return;
-            }
-
-            // If the registration is active, but it's not controlling the page,
-            // reload once so the document comes back under service worker control.
-            if (registration.active && !sessionStorage.getItem(coiReloadKey)) {
-                console.log("Reloading page once to make use of COOP/COEP Service Worker.");
-                sessionStorage.setItem(coiReloadKey, "1");
-                window.location.reload();
-            }
+            // Clear the flag as soon as a load is confirmed controlled (the
+            // page right after the self-reload below, or any normal repeat
+            // visit), so it never lingers stale and swallows a later,
+            // genuinely-needed reload (e.g. a future sw.js update).
+            if (navigator.serviceWorker.controller) sessionStorage.removeItem(coiReloadKey);
         },
         (err) => console.log("COOP/COEP Service Worker failed to register", err)
     );
+    // "controllerchange" (not the registration promise above) is the only
+    // reliable signal that this page is now actually routed through the
+    // worker: on a brand-new install, clients.claim() in sw.js's "activate"
+    // handler claims this already-loaded page asynchronously, well after the
+    // registration promise resolved with no active worker yet; on a worker
+    // update (e.g. sw.js's allowlist regex changed), it fires once the new
+    // version takes over from the old one. Either way, a reload is needed
+    // because COOP/COEP can only land on a document's *own* navigation
+    // response, not retrofitted after the fact -- but only reload once, or
+    // the next "controllerchange" (e.g. a future sw.js update) would loop.
     navigator.serviceWorker.addEventListener("controllerchange", () => {
-        sessionStorage.removeItem(coiReloadKey);
-    }, { once: true });
+        if (sessionStorage.getItem(coiReloadKey)) {
+            sessionStorage.removeItem(coiReloadKey);
+            return;
+        }
+        console.log("Reloading page once to make use of COOP/COEP Service Worker.");
+        sessionStorage.setItem(coiReloadKey, "1");
+        window.location.reload();
+    });
     document.addEventListener("DOMContentLoaded", () => {
         document.querySelectorAll("iframe").forEach(node => node.focus({ preventScroll: true }));
     }, {once: true});
