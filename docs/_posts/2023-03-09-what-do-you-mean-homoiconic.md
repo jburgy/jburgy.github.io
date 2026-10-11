@@ -69,8 +69,19 @@ but it's much more fun to interact with it directly:
 <div id="terminal"></div>
 <script type="module">
     import { startRepl } from "/blog/wasi-repl.mjs";
-    startRepl("/blog/lisp-wasi.wasm", null);
+    startRepl("/blog/lisp-wasi.wasm", "lisp/eliza.lisp");
 </script>
+
+The REPL above no longer drops you at a bare `* ` prompt: its preamble is now
+[ELIZA](https://en.wikipedia.org/wiki/ELIZA), Joseph Weizenbaum's 1964 pattern-matching chatbot that plays
+psychotherapist by reflecting your own words back as questions. Once she greets you, just type a plain, active
+sentence of your own, like `(I AM WORRIED ABOUT MY MOTHER)` &mdash; parentheses included, since `(READ)` wants one
+complete s-expression, and in ALL CAPS, since sectorlisp's reader is case-sensitive and ELIZA's keyword matching only
+recognizes uppercase symbols. Type `(BYE)` when you've had enough. WIRED
+[put Claude on ELIZA's own couch](https://www.wired.com/story/ai-mother-eliza-claude-therapy/) and watched one of
+her "distant descendants" fall into the same hedging, people-pleasing patterns a human patient might, nearly sixty
+years on. There's something delightfully ironic about a 2026 LLM being the one writing you this introduction to a
+1964 chatbot.
 
 An enthusiastic reader looking for a learning challenge might want to tweak the compiled WASM
 (use [wasm2wat](https://webassembly.github.io/wabt/demo/wasm2wat/) if necessary) and pick up some 
