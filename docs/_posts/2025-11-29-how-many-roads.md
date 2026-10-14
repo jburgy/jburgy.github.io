@@ -143,7 +143,7 @@ And it's entirely unacceptable that the "native" WebAssembly implementation is t
 iterate quickly in the command line.  I built a [shim](https://en.wikipedia.org/wiki/Shim_(computing))
 after all and, since it turns out all four Forths above block `read()` the exact same way (a
 `Worker` stalls `fd_read` on a shared ring buffer until the terminal feeds it more input,
-`xterm.js` and `xterm-readline` do the rest), there was no reason to stop at one demo. Pick a
+`xterm.js` and `xterm-readline` do the rest[^jspi]), there was no reason to stop at one demo. Pick a
 tab and the terminal below switches interpreters on the fly. `localize.wast` and `tabulate.wast`
 are the Epilogue's variants below — come back here once you've read that far. And since I
 couldn't resist one more: `4th.rs` is a Rust port of `4th.c` ([jburgy/blog](https://github.com/jburgy/blog/blob/main/forth/4th.rs))
@@ -188,9 +188,8 @@ exact same way as everything else here:
     let repl;
 
     // Every tab drives the same startRepl(wasmUrl, preambleUrl) -- all seven
-    // interpreters share one Worker/SharedInputChannel protocol (see
-    // jburgy/blog's wasi-repl.mjs). dispose() tears down the previous
-    // Worker and Terminal before the next startRepl() takes over #terminal.
+    // interpreters share jburgy/blog's wasi-repl.mjs. dispose() tears down
+    // the previous Terminal before the next startRepl() takes over #terminal.
     function select(tab) {
         tabs.forEach((other) => other.setAttribute("aria-selected", String(other === tab)));
         repl?.dispose();
@@ -201,6 +200,8 @@ exact same way as everything else here:
     tabs.forEach((tab) => tab.addEventListener("click", () => select(tab)));
     select([...tabs].find((tab) => tab.dataset.wasm === "/blog/jonesforth.wasm"));
 </script>
+
+[^jspi]: Update: the `Worker`, its shared ring buffer, and the COOP/COEP headers that `SharedArrayBuffer` requires (faked on GitHub Pages by a service worker) are all gone.  [`WebAssembly.Suspending`](https://developer.mozilla.org/en-US/docs/WebAssembly/Reference/JavaScript_interface/Suspending) lets `fd_read` suspend the guest on the main thread until the terminal has more input, which obviates all of it. The catch is that `WebAssembly.Suspending` needs Chrome 137+ or Firefox 139+, so the demo fails in Safari.
 
 ## Epilogue ##
 

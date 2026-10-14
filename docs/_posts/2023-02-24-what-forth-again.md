@@ -120,7 +120,10 @@ in a thin [xterm-pty](https://xterm-pty.netlify.app/) layer and got a rather mor
 Many thanks to [stefnotch](https://github.com/stefnotch) for
 explaining how a [Service Worker](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API) lets us
 access the required [SharedArrayBuffer](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SharedArrayBuffer)
-on [GitHub Pages](https://dev.to/stefnotch/enabling-coop-coep-without-touching-the-server-2d3n)
+on [GitHub Pages](https://dev.to/stefnotch/enabling-coop-coep-without-touching-the-server-2d3n).[^4]
+
+[^4]: Update: none of this is needed any more.  [`WebAssembly.Suspending`](https://developer.mozilla.org/en-US/docs/WebAssembly/Reference/JavaScript_interface/Suspending) lets a blocking `read()` simply suspend the
+    guest on the main thread, so the demo below no longer uses a `Worker`, a `SharedArrayBuffer`, COOP/COEP headers, or a Service Worker. The catch is that `WebAssembly.Suspending` needs Chrome 137+ or Firefox 139+, so the demo fails in Safari.
 
 Thanks also to [Richard Jones](https://rwmj.wordpress.com/) for pointing out I forgot to include a link to my
 GNU C translation of his code.  [Here](https://github.com/jburgy/blog/blob/main/forth/4th.c) it is.
