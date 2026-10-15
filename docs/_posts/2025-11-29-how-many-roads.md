@@ -152,13 +152,13 @@ at all) but which, built *without* that demo's feature flag, turns out to block 
 exact same way as everything else here:
 
 <div id="forth-tabs" role="tablist">
-    <button type="button" role="tab" data-wasm="/blog/4th-wasi.wasm">4th.c</button>
-    <button type="button" role="tab" data-wasm="/blog/5th-wasi.wasm">5th.c</button>
-    <button type="button" role="tab" data-wasm="/blog/6th-wasi.wasm">6th.zig</button>
+    <button type="button" role="tab" data-wasm="/blog/4th-wasi.wasm" data-preamble="/blog/forth/4th.32.fs">4th.c</button>
+    <button type="button" role="tab" data-wasm="/blog/5th-wasi.wasm" data-preamble="/blog/forth/4th.32.fs">5th.c</button>
+    <button type="button" role="tab" data-wasm="/blog/6th-wasi.wasm" data-preamble="/blog/forth/4th.32.fs">6th.zig</button>
     <button type="button" role="tab" data-wasm="/blog/jonesforth.wasm" data-preamble="/blog/jonesforth/jonesforth.f">jonesforth.wast</button>
     <button type="button" role="tab" data-wasm="/blog/localize.wasm" data-preamble="/blog/jonesforth/jonesforth.f">localize.wast</button>
     <button type="button" role="tab" data-wasm="/blog/tabulate.wasm" data-preamble="/blog/jonesforth/jonesforth.f">tabulate.wast</button>
-    <button type="button" role="tab" data-wasm="/blog/4th-rs-wasi.wasm">4th.rs</button>
+    <button type="button" role="tab" data-wasm="/blog/4th-rs-wasi.wasm" data-preamble="/blog/forth/4th.32.fs">4th.rs</button>
 </div>
 <div id="terminal"></div>
 <style>
@@ -182,19 +182,23 @@ exact same way as everything else here:
     }
 </style>
 <script type="module">
-    import { startRepl } from "/blog/wasi-repl.mjs";
+    import { REPL } from "/blog/wasi-repl.mjs";
 
     const tabs = document.querySelectorAll("#forth-tabs button");
     let repl;
 
-    // Every tab drives the same startRepl(wasmUrl, preambleUrl) -- all seven
+    // Every tab drives the same `new REPL(module, preamble, container)` -- all seven
     // interpreters share jburgy/blog's wasi-repl.mjs. dispose() tears down
-    // the previous Terminal before the next startRepl() takes over #terminal.
+    // the previous Terminal before the next REPL takes over #terminal.
     function select(tab) {
         tabs.forEach((other) => other.setAttribute("aria-selected", String(other === tab)));
         repl?.dispose();
         const { wasm, preamble } = tab.dataset;
-        repl = preamble ? startRepl(wasm, preamble) : startRepl(wasm);
+        repl = new REPL(
+            new URL(wasm, location.href),
+            new URL(preamble, location.href),
+            document.getElementById("terminal"),
+        );
     }
 
     tabs.forEach((tab) => tab.addEventListener("click", () => select(tab)));

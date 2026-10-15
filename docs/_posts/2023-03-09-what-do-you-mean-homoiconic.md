@@ -68,8 +68,12 @@ but it's much more fun to interact with it directly:
 
 <div id="terminal"></div>
 <script type="module">
-    import { startRepl } from "/blog/wasi-repl.mjs";
-    startRepl("/blog/lisp-wasi.wasm", "lisp/eliza.lisp");
+    import { REPL } from "/blog/wasi-repl.mjs";
+    new REPL(
+        new URL("/blog/lisp-wasi.wasm", location.href),
+        new URL("/blog/lisp/eliza.lisp", location.href),
+        document.getElementById("terminal"),
+    );
 </script>
 
 The REPL above no longer drops you at a bare `* ` prompt: its preamble is now
