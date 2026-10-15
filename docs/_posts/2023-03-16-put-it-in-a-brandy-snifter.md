@@ -164,6 +164,10 @@ routine addresses &mdash; are simply hardcoded).
 
 <div id="terminal"></div>
 <script type="module">
-    import { startRepl } from "/blog/wasi-repl.mjs";
-    startRepl("/blog/TinyBasic-wasi.wasm", "TinyBasic/tictactoe.bas");
+    import { REPL } from "/blog/wasi-repl.mjs";
+    new REPL(
+        new URL("/blog/TinyBasic-wasi.wasm", location.href),
+        new URL("/blog/TinyBasic/tictactoe.bas", location.href),
+        document.getElementById("terminal"),
+    );
 </script>

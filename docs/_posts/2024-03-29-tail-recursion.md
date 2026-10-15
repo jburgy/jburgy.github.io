@@ -187,6 +187,10 @@ a well-defined signature.  It might be the
 
 <div id="terminal"></div>
 <script type="module">
-    import { startRepl } from "/blog/wasi-repl.mjs";
-    startRepl("/blog/5th-wasi.wasm");
+    import { REPL } from "/blog/wasi-repl.mjs";
+    new REPL(
+        new URL("/blog/5th-wasi.wasm", location.href),
+        new URL("/blog/forth/4th.32.fs", location.href),
+        document.getElementById("terminal"),
+    );
 </script>
