@@ -64,19 +64,76 @@ does not tolerate negative offsets the way C does
 `load<T>(M + (i << align))` otherwise.
 
 You can read the finished product [here](https://github.com/jburgy/blog/blob/main/lisp/assembly/core.ts)
-but it's much more fun to interact with it directly:
+but it's much more fun to interact with it directly. Since I wrote this post, the same language has grown
+two more implementations, so pick a tab to switch between all three (they share a terminal and the
+[same preamble](#eliza), more or less):
 
+<div id="lisp-tabs" role="tablist">
+    <button type="button" role="tab" data-wasm="/blog/lisp-wasi.wasm" data-preamble="/blog/lisp/eliza.lisp">core.ts</button>
+    <button type="button" role="tab" data-wasm="/blog/lisp-wast.wasm" data-preamble="/blog/lisp/eliza.lisp">core.wast</button>
+    <button type="button" role="tab" data-wasm="/blog/tabulate.wasm" data-preamble="/blog/lisp/eliza.f">lisp.f</button>
+</div>
 <div id="terminal"></div>
+<style>
+    #lisp-tabs {
+        display: flex;
+        gap: 0.5em;
+        margin-bottom: 0.5em;
+    }
+    #lisp-tabs button {
+        font: inherit;
+        padding: 0.3em 0.8em;
+        border: 1px solid currentColor;
+        border-radius: 0.3em;
+        background: transparent;
+        color: inherit;
+        cursor: pointer;
+    }
+    #lisp-tabs button[aria-selected="true"] {
+        font-weight: bold;
+        background: rgba(128, 128, 128, 0.25);
+    }
+</style>
 <script type="module">
     import { REPL } from "/blog/wasi-repl.mjs";
-    new REPL(
-        new URL("/blog/lisp-wasi.wasm", location.href),
-        new URL("/blog/lisp/eliza.lisp", location.href),
-        document.getElementById("terminal"),
-    );
+
+    const tabs = document.querySelectorAll("#lisp-tabs button");
+    let repl;
+
+    // Every tab drives the same `new REPL(module, preamble, container)`.
+    // dispose() tears down the previous Terminal before the next REPL takes over #terminal.
+    function select(tab) {
+        tabs.forEach((other) => other.setAttribute("aria-selected", String(other === tab)));
+        repl?.dispose();
+        const { wasm, preamble } = tab.dataset;
+        repl = new REPL(
+            new URL(wasm, location.href),
+            new URL(preamble, location.href),
+            document.getElementById("terminal"),
+        );
+    }
+
+    tabs.forEach((tab) => tab.addEventListener("click", () => select(tab)));
+    select(tabs[0]);
 </script>
 
-The REPL above no longer drops you at a bare `* ` prompt: its preamble is now
+- **`core.ts`** is the AssemblyScript translation described above. It compacts its heap after every `EVAL`.
+- **[`core.wast`](https://github.com/jburgy/blog/blob/main/lisp/assembly/core.wast)** is the same interpreter
+  written by hand in WebAssembly text format with brevity as the only goal: about 1.3 KB of wasm against 2.3 KB
+  for the compiled `core.ts`. The savings come from memory layout rather than golfing. Pointers are raw byte
+  addresses and `NIL` is 0, so `CAR` and `CDR` are single loads. Atoms live below `0x8000` and cons cells above
+  it, so telling them apart is one comparison. The tokenizer reads each token straight into the end of the
+  symbol table, so interning never copies, and compacting the heap is one `memory.copy`. Each atom also holds
+  its own value, so looking up a variable is a single load; calling a lambda swaps its arguments into the
+  parameters' slots and swaps them back afterwards (_shallow_ binding, a different implementation of the
+  _dynamic_ scoping `core.ts` already has, not a change to it).
+- **[`lisp.f`](https://github.com/jburgy/blog/blob/main/lisp/lisp.f)** is the same language in FORTH. It runs on
+  `tabulate.wast`, one of the interpreters from [the previous post about FORTH]({% post_url 2025-11-29-how-many-roads %}),
+  and replaces compaction with a mark-and-sweep garbage collector whose roots are the FORTH data and return
+  stacks. A REPL takes a single preamble, so this tab's is `jonesforth.f`, `lisp.f`, `LISP` and ELIZA
+  concatenated; give it a moment to load.
+
+<a id="eliza"></a>The REPL above no longer drops you at a bare `* ` prompt: its preamble is now
 [ELIZA](https://en.wikipedia.org/wiki/ELIZA), Joseph Weizenbaum's 1964 pattern-matching chatbot that plays
 psychotherapist by reflecting your own words back as questions. Once she greets you, just type a plain, active
 sentence of your own, like `(I AM WORRIED ABOUT MY MOTHER)` &mdash; parentheses included, since `(READ)` wants one
@@ -91,4 +148,6 @@ An enthusiastic reader looking for a learning challenge might want to tweak the 
 (use [wasm2wat](https://webassembly.github.io/wabt/demo/wasm2wat/) if necessary) and pick up some 
 [stack optimizations](http://users.ece.cmu.edu/~koopman/stack_compiler/stack_co.html)
 (particularly [intra-block stack scheduling](http://users.ece.cmu.edu/~koopman/stack_compiler/stack_co.html#intrablock) ones)
-which [binaryen](https://github.com/WebAssembly/binaryen) missed.
+which [binaryen](https://github.com/WebAssembly/binaryen) missed. I took a different route with
+[`core.wast`](https://github.com/jburgy/blog/blob/main/lisp/assembly/core.wast): rewrite from the
+source instead, where a data layout change saves more instructions than any amount of scheduling.
